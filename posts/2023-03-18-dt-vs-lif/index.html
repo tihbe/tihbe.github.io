@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ismael Balafrej">
+<meta name="dcterms.date" content="2023-03-19">
+<meta name="description" content="What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends. Although, I think the usual assumption is incorrect when using leaky-integrate-and-fire neurons.">
+
+<title>Ismael Balafrej - Selection of a timestep for SNN simulation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="Ismael Balafrej - Selection of a timestep for SNN simulation">
+<meta name="twitter:description" content="What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends.">
+<meta name="twitter:site" content="@IsmaelBalafrej">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ismael Balafrej</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html">
+ <span class="menu-text">Publications</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/tihbe"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/IsmaelBalafrej"><i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/IsmaelBalafrej"><i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#context" id="toc-context" class="nav-link active" data-scroll-target="#context">Context</a></li>
+  <li><a href="#step-1-recreating-the-simulation" id="toc-step-1-recreating-the-simulation" class="nav-link" data-scroll-target="#step-1-recreating-the-simulation">Step 1: Recreating the simulation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Selection of a timestep for SNN simulation</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">SNN</div>
+    <div class="quarto-category">LIF</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends. Although, I think the usual assumption is incorrect when using leaky-integrate-and-fire neurons.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ismael Balafrej </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 19, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="context" class="level1">
+<h1>Context</h1>
+<p>I recently saw <a href="https://twitter.com/neuralreckoning/status/1580161403415330816">this tweet</a> by Dan Goodman. In a quick experiment, they show that using a large timestep <span class="math inline">\(\delta t\)</span> during the simulation of a LIF neuron is detrimental to its behavior. Indeed, the output spiking rate of a LIF neuron with a Poisson spike input decreases when the timestep increases. It already fails at 1 ms, which is somewhat a standard size for timesteps in the CS-oriented community. Even worse, at <span class="math inline">\(\delta t=10\)</span> ms, the neuron doesn’t even spike anymore.</p>
+<p>Of course, there is a direct relationship between the choice of <span class="math inline">\(\delta t\)</span>, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large <span class="math inline">\(\delta t\)</span> for our simulation. As <a href="https://twitter.com/BellecGuill/status/1580440789217595394">Guillaume Bellec</a> pointed out, there might not even be any advantage in a machine learning setting to using a small <span class="math inline">\(\delta t\)</span>.</p>
+</section>
+<section id="step-1-recreating-the-simulation" class="level1">
+<h1>Step 1: Recreating the simulation</h1>
+<p>Let’s define a simple experiment to replicate the behavior described in the tweet. We will create 100 LIF neurons, being simulated by 100 poisson spike trains sampled at 5 Hz for 4 seconds. The LIF’s time constant is <span class="math inline">\(\tau=10\)</span> ms. The weights between the 100 inputs and 100 output neurons are randomly sampled from a normal distribution <span class="math inline">\(\mathcal{N}(0.5, 1)\)</span>.</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Configuration</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>np.random.seed(<span class="bn">0x1B</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>duration <span class="op">=</span> <span class="dv">4</span> <span class="co"># seconds</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>tau <span class="op">=</span> <span class="fl">0.010</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>thresh <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>nb_inputs <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>nb_outputs <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>input_rate <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>weights <span class="op">=</span> np.random.randn(nb_outputs, nb_inputs) <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> thresh</span>
+<span id="cb1-13"><a href="#cb1-13"></a>dts <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">5</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="dv">10</span>) <span class="co"># in seconds</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co"># Simulation</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a>spike_rates <span class="op">=</span> np.zeros((<span class="bu">len</span>(dts), nb_outputs)) <span class="co"># output</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="cf">for</span> i, dt <span class="kw">in</span> <span class="bu">enumerate</span>(dts):</span>
+<span id="cb1-19"><a href="#cb1-19"></a>    time <span class="op">=</span> np.arange(<span class="dv">0</span>, duration, dt)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    u <span class="op">=</span> np.zeros(nb_outputs)</span>
+<span id="cb1-21"><a href="#cb1-21"></a>    _exp <span class="op">=</span> np.exp(<span class="op">-</span>dt<span class="op">/</span>tau)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>    input_spikes <span class="op">=</span> np.random.poisson(lam<span class="op">=</span>input_rate<span class="op">*</span>dt, size<span class="op">=</span>(<span class="bu">len</span>(time), nb_inputs))</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    weighted_input_spikes <span class="op">=</span> input_spikes <span class="op">@</span> weights.T</span>
+<span id="cb1-24"><a href="#cb1-24"></a>    spike_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a>    <span class="cf">for</span> j, t <span class="kw">in</span> <span class="bu">enumerate</span>(time):</span>
+<span id="cb1-27"><a href="#cb1-27"></a>        u <span class="op">=</span> _exp <span class="op">*</span> u <span class="op">+</span> weighted_input_spikes[j]</span>
+<span id="cb1-28"><a href="#cb1-28"></a>        spikes <span class="op">=</span> u <span class="op">&gt;</span> thresh</span>
+<span id="cb1-29"><a href="#cb1-29"></a>        spike_count <span class="op">+=</span> spikes</span>
+<span id="cb1-30"><a href="#cb1-30"></a>        u[spikes] <span class="op">=</span> <span class="dv">0</span> <span class="co"># reset</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>    spike_rates[i] <span class="op">+=</span> spike_count <span class="op">/</span> duration</span>
+<span id="cb1-32"><a href="#cb1-32"></a>ax.errorbar(dts<span class="op">*</span><span class="dv">1000</span>, spike_rates.mean(axis<span class="op">=</span><span class="dv">1</span>), yerr<span class="op">=</span>spike_rates.std(axis<span class="op">=</span><span class="dv">1</span>), capsize<span class="op">=</span><span class="dv">5</span>,)</span>
+<span id="cb1-33"><a href="#cb1-33"></a>ax.set_xscale(<span class="st">"log"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34"></a>ax.set_xlabel(<span class="st">"dt [ms]"</span>)</span>
+<span id="cb1-35"><a href="#cb1-35"></a>ax.set_ylabel(<span class="st">"Output firing rate [sp/s]"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-2-output-1.png" width="566" height="374"></p>
+</div>
+</div>
+<p>We arrive at a similar looking plot, where the output spiking frequency is going down near <span class="math inline">\(\delta t=1\)</span>ms.</p>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(0x1B)
+duration = 10 # seconds
+tau = 0.010
+thresh = 1
+nb_inputs = 100
+nb_outputs = 100
+weights = np.random.randn(nb_outputs, nb_inputs) + 0.5 * thresh
+
+nb_samples = 5 # Samples per dt
+duration = 5 # seconds
+dts = np.logspace(-5, -2, 10) # in seconds
+
+fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+effective_spike_rates = np.zeros_like(dts)
+spike_rates = np.linspace(20, 200, 5)
+
+for in_spike_rate in spike_rates:
+    effective_spike_rates = np.zeros_like(dts)
+    for i, dt in enumerate(dts):
+        input_spikes = np.random.poisson(lam=in_spike_rate*dt, size=int(duration / dt))
+        input_spikes = np.clip(input_spikes, 0, 1) # This is the limitation
+        
+        effective_spike_rates[i] += input_spikes.sum() / duration        
+    ax.plot(dts*1000, effective_spike_rates, label=f"Input freq.: {in_spike_rate:.0f} Hz")
+    
+ax.set_ylabel("Measured output rate [Hz]")
+ax.set_xlabel("$\\delta t$ [ms]")
+ax.set_xscale("log")
+ax.legend(loc="lower left");</code></pre>
+<pre><code>for in_spike_rate in spike_rates:
+    P_failure = np.zeros_like(dts)
+    for i, dt in enumerate(dts):
+        P_failure[i] = 1-(np.exp(-in_spike_rate*dt) + np.exp(-in_spike_rate*dt)*((in_spike_rate*dt)))
+    ax[1].plot(dts*1000, P_failure, label=f"Rate parameter: {in_spike_rate}Hz")
+ax[1].set_ylabel("Probability of missed event")
+ax[1].set_xlabel("dt [ms]")
+ax[1].set_xscale("log")
+ax[1].legend(loc="upper left");</code></pre>
+<pre><code>fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+
+for refractory_period in [0.002, 0.02, 0.2]:
+    spike_rates = np.zeros((len(dts), nb_outputs)) # output
+    for i, dt in enumerate(dts):
+        time = np.arange(0, duration, dt)
+        refrac_clk = int(refractory_period/dt)
+        u = np.zeros(nb_outputs)
+        refrac_cntr = np.zeros(nb_outputs, dtype=int)
+        _exp = np.exp(-dt/tau)
+        input_spikes = np.random.poisson(lam=input_rate*dt, size=(len(time), nb_inputs))
+        weighted_input_spikes = input_spikes @ weights.T
+        spike_count = 0
+
+        for j, t in enumerate(time):
+            refrac_cntr = np.maximum(refrac_cntr-1, 0)
+            non_refrac_neurons = refrac_cntr==0
+            u[non_refrac_neurons] = _exp * u[non_refrac_neurons] + weighted_input_spikes[j, non_refrac_neurons]
+            spikes = u &gt; thresh
+            spike_count += spikes
+            refrac_cntr[spikes] += refrac_clk
+            u[spikes] = 0 # reset
+        spike_rates[i] += spike_count / duration
+    ax.errorbar(dts*1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1), capsize=5, label=f"Refractory period: {1000*refractory_period:.0e}ms")
+    ax.set_xscale("log")
+    ax.set_xlabel("dt [ms]")
+    ax.set_ylabel("Output firing rate [sp/s]")
+    ax.legend(loc="lower left")
+ax.set_yscale("log")</code></pre>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2023,
+  author = {Ismael Balafrej},
+  title = {Selection of a Timestep for {SNN} Simulation},
+  date = {2023-03-19},
+  url = {https://tihbe.github.io//posts/2023-03-18-dt-vs-lif},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Ismael Balafrej. 2023. <span>“Selection of a Timestep for SNN
+Simulation.”</span> March 19, 2023. <a href="https://tihbe.github.io//posts/2023-03-18-dt-vs-lif">https://tihbe.github.io//posts/2023-03-18-dt-vs-lif</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
