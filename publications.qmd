@@ -1,0 +1,24 @@
+# Publications
+
+- Goupy, G., Juneau-Fecteau, A., Garg, N., **Balafrej, I.**, Alibart, F., Frechette, L., Drouin, D., Beilliard, Y. Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity. Neuromorph. Comput. Eng. (2023) <https://doi.org/10.1088/2634-4386/acad98>
+
+- Garg, N., **Balafrej, I.**, Stewart C. T., Portal, JM. Bocquet, M., Querlioz, D., Drouin, D., Rouat, J., Beillard, Y., Alibart, F. Voltage-Dependent Synaptic Plasticity (VDSP): Unsupervised probabilistic Hebbian plasticity rule based on neurons membrane potential. Frontiers in Neuroscience (2022) <https://doi.org/10.3389/fnins.2022.983950>.
+
+- **Balafrej, I.**, Alibart, F. & Rouat, J. P-CRITICAL: a reservoir autoregulation plasticity rule for neuromorphic hardware. Neuromorph. Comput. Eng. (2022). <https://doi.org/10.1088/2634-4386/ac6533>.
+
+- Garg, N., **Balafrej, I.**, Beilliard, Y., Drouin, D., Alibart, F., and Rouat, R. Signals to Spikes for Neuromorphic Regulated Reservoir Computing and EMG Hand Gesture Recognition. International Conference on Neuromorphic Systems 2021, 1–8. ICONS 2021 29. New York, NY, USA: Association for Computing Machinery. <https://doi.org/10.1145/3477145.3477267>.
+
+- Celotti L., **Balafrej, I.**, Calvet, E. Improving Zero-Shot Neural Architecture Search with Parameters Scoring (2020).
+
+- Tremblay, J.P., **Balafrej, I.**, Labelle, F., Martel-Denis, F., Matte, É., Chouinard-Beaupré, J., Létourneau, A., Mercier-Nicol, A., Brodeur, S., Ferland, F., Rouat, J. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. (2018). Demonstration track, Thirty-third Conference on Neural Information Processing Systems (NeurIPS). 
+
+# Presentations
+- Garg, N., **Balafrej, I.**, Beilliard, Y., Drouin, D., Alibart, F., Rouat. Unsupervised Learning with Ferroelectric Synapses. IEEE 52nd European Solid-State Device Research Conference (2022).
+
+- **Balafrej, I.**, Alibart, F. Rouat, J. Neuromorphic Reservoirs for Energy-Efficient Task-Abstract Machine Learning Devices. Neural Interfaces and Systems Symposium (2021).
+
+- Garg, N., **Balafrej, I.**, Beilliard, Y., Drouin, D., Alibart, F., and Rouat, R. Signals to Spikes for Neuromorphic Regulated Reservoir Computing and EMG Hand Gesture Recognition. International Conference on Neuromorphic Systems 2021, 1–8. ICONS 2021 29. New York, NY, USA: Association for Computing Machinery. <https://doi.org/10.1145/3477145.3477267>.
+
+- **Balafrej, I**. Machine learning on neuromorphic processors. 88e Congrès de l’Acfas. (CANCELED - COVID, 2020)
+
+- **Balafrej, I.** Auto-regulation of Reservoirs with Potential Physiological Signal Monitoring. UNIQUE Symposium (2020)

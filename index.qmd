@@ -1,0 +1,25 @@
+---
+title: "Ismael Balafrej"
+image: https://media.licdn.com/dms/image/D4E03AQFcAgntq_arUQ/profile-displayphoto-shrink_800_800/0/1663627002191?e=1684972800&v=beta&t=4lbI3hYF9WcaaneFwwf3I3S6cY3Vtr-K1pamenKupN4
+about:
+    template: jolla
+listing:
+    contents: posts/**/*.qmd
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    fields: [date, title, reading-time, description, categories]
+    max-items: 6
+    id: last-posts
+---
+
+Hi, I'm Ismael. Welcome to my personal Blog. I currently am doing a PhD in electrical engineering at the [University of
+Sherbrooke](https://www.usherbrooke.ca/), with a thesis in machine learning and neuromorphic engineering.
+
+<br> <br>
+
+## Latest posts
+::: {#last-posts}
+:::

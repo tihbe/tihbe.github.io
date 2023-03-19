@@ -1,0 +1,23 @@
+# freeze computational output
+freeze: auto
+
+# Enable banner style title blocks
+title-block-banner: false 
+
+# Author name of all blog posts
+author: 'Ismael Balafrej'
+
+# Table of content settings
+toc: true
+toc-depth: 3
+
+page-layout: full
+
+# Add bib reference
+citation: true
+
+# Other metadata:
+# title
+# description
+# date
+# date-modified

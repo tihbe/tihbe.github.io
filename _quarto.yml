@@ -1,0 +1,37 @@
+project:
+  type: website
+execute:
+  freeze: auto
+website:
+  title: "Ismael Balafrej"
+  site-url: https://tihbe.github.io/
+  description: "This is Ismael Balafrej's personal Blog."
+  navbar:
+    search: true
+    pinned: true
+    left:
+      - text: Posts
+        href: blog.qmd
+      - text: Publications
+        href: publications.qmd
+    right:
+      - icon: github
+        href: https://github.com/tihbe
+        aria-label: GitHub
+      - icon: twitter
+        href: https://twitter.com/IsmaelBalafrej
+        aria-label: Twitter
+      - icon: linkedin
+        href: https://linkedin.com/in/IsmaelBalafrej
+        aria-label: LinkedIn
+  twitter-card: 
+    site: "@IsmaelBalafrej"
+format:
+  html:
+    css: styles.css
+    email-obfuscation: javascript
+toc: true
+code-fold: true
+code-line-numbers: true
+theme:
+  - lux

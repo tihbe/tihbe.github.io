@@ -1,0 +1,150 @@
+---
+title: "Selection of a timestep for SNN simulation"
+description: "What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends. Although, I think the usual assumption is incorrect when using leaky-integrate-and-fire neurons."
+date: "3/19/2023"
+draft: true
+categories:
+  - SNN
+  - LIF
+---
+
+# Context
+
+I recently saw [this tweet](https://twitter.com/neuralreckoning/status/1580161403415330816) by Dan Goodman. In a quick experiment, they show that using a large timestep $\delta t$ during the simulation of a LIF neuron is detrimental to its behavior. Indeed, the output spiking rate of a LIF neuron with a Poisson spike input decreases when the timestep increases. It already fails at 1 ms, which is somewhat a standard size for timesteps in the CS-oriented community. Even worse, at $\delta t=10$ ms, the neuron doesn't even spike anymore. 
+
+Of course, there is a direct relationship between the choice of $\delta t$, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large $\delta t$ for our simulation. As [Guillaume Bellec](https://twitter.com/BellecGuill/status/1580440789217595394) pointed out, there might not even be any advantage in a machine learning setting to using a small $\delta t$.
+
+
+# Step 1: Recreating the simulation
+
+Let's define a simple experiment to replicate the behavior described in the tweet. We will create 100 LIF neurons, being simulated by 100 poisson spike trains sampled at 5 Hz for 4 seconds. The LIF's time constant is $\tau=10$ ms. The weights between the 100 inputs and 100 output neurons are randomly sampled from a normal distribution $\mathcal{N}(0.5, 1)$.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Configuration
+np.random.seed(0x1B)
+duration = 4 # seconds
+tau = 0.010
+thresh = 1
+nb_inputs = 100
+nb_outputs = 100
+input_rate = 5
+weights = np.random.randn(nb_outputs, nb_inputs) + 0.5 * thresh
+dts = np.logspace(-5, -1.5, 10) # in seconds
+
+# Simulation
+fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+spike_rates = np.zeros((len(dts), nb_outputs)) # output
+for i, dt in enumerate(dts):
+    time = np.arange(0, duration, dt)
+    u = np.zeros(nb_outputs)
+    _exp = np.exp(-dt/tau)
+    input_spikes = np.random.poisson(lam=input_rate*dt, size=(len(time), nb_inputs))
+    weighted_input_spikes = input_spikes @ weights.T
+    spike_count = 0
+
+    for j, t in enumerate(time):
+        u = _exp * u + weighted_input_spikes[j]
+        spikes = u > thresh
+        spike_count += spikes
+        u[spikes] = 0 # reset
+    spike_rates[i] += spike_count / duration
+ax.errorbar(dts*1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1), capsize=5,)
+ax.set_xscale("log")
+ax.set_xlabel("dt [ms]")
+ax.set_ylabel("Output firing rate [sp/s]");
+```
+
+
+We arrive at a similar looking plot, where the output spiking frequency is going down near $\delta t=1$ms. 
+
+
+
+
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(0x1B)
+duration = 10 # seconds
+tau = 0.010
+thresh = 1
+nb_inputs = 100
+nb_outputs = 100
+weights = np.random.randn(nb_outputs, nb_inputs) + 0.5 * thresh
+
+nb_samples = 5 # Samples per dt
+duration = 5 # seconds
+dts = np.logspace(-5, -2, 10) # in seconds
+
+fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+effective_spike_rates = np.zeros_like(dts)
+spike_rates = np.linspace(20, 200, 5)
+
+for in_spike_rate in spike_rates:
+    effective_spike_rates = np.zeros_like(dts)
+    for i, dt in enumerate(dts):
+        input_spikes = np.random.poisson(lam=in_spike_rate*dt, size=int(duration / dt))
+        input_spikes = np.clip(input_spikes, 0, 1) # This is the limitation
+        
+        effective_spike_rates[i] += input_spikes.sum() / duration        
+    ax.plot(dts*1000, effective_spike_rates, label=f"Input freq.: {in_spike_rate:.0f} Hz")
+    
+ax.set_ylabel("Measured output rate [Hz]")
+ax.set_xlabel("$\\delta t$ [ms]")
+ax.set_xscale("log")
+ax.legend(loc="lower left");
+```
+
+
+
+
+
+```
+for in_spike_rate in spike_rates:
+    P_failure = np.zeros_like(dts)
+    for i, dt in enumerate(dts):
+        P_failure[i] = 1-(np.exp(-in_spike_rate*dt) + np.exp(-in_spike_rate*dt)*((in_spike_rate*dt)))
+    ax[1].plot(dts*1000, P_failure, label=f"Rate parameter: {in_spike_rate}Hz")
+ax[1].set_ylabel("Probability of missed event")
+ax[1].set_xlabel("dt [ms]")
+ax[1].set_xscale("log")
+ax[1].legend(loc="upper left");
+```
+
+
+
+```
+fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+
+for refractory_period in [0.002, 0.02, 0.2]:
+    spike_rates = np.zeros((len(dts), nb_outputs)) # output
+    for i, dt in enumerate(dts):
+        time = np.arange(0, duration, dt)
+        refrac_clk = int(refractory_period/dt)
+        u = np.zeros(nb_outputs)
+        refrac_cntr = np.zeros(nb_outputs, dtype=int)
+        _exp = np.exp(-dt/tau)
+        input_spikes = np.random.poisson(lam=input_rate*dt, size=(len(time), nb_inputs))
+        weighted_input_spikes = input_spikes @ weights.T
+        spike_count = 0
+
+        for j, t in enumerate(time):
+            refrac_cntr = np.maximum(refrac_cntr-1, 0)
+            non_refrac_neurons = refrac_cntr==0
+            u[non_refrac_neurons] = _exp * u[non_refrac_neurons] + weighted_input_spikes[j, non_refrac_neurons]
+            spikes = u > thresh
+            spike_count += spikes
+            refrac_cntr[spikes] += refrac_clk
+            u[spikes] = 0 # reset
+        spike_rates[i] += spike_count / duration
+    ax.errorbar(dts*1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1), capsize=5, label=f"Refractory period: {1000*refractory_period:.0e}ms")
+    ax.set_xscale("log")
+    ax.set_xlabel("dt [ms]")
+    ax.set_ylabel("Output firing rate [sp/s]")
+    ax.legend(loc="lower left")
+ax.set_yscale("log")
+```
