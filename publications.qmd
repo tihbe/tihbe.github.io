@@ -27,4 +27,5 @@
 
 - **Balafrej, I.**, Rouat, J. Running the CRITICAL Plasticity Rule for Loihi. 3rd Intel Neuromorphic  Research Community Workshop, Austria (2019).
 
-- Tremblay, J.P., **Balafrej, I.**, Labelle, F., Martel-Denis, F., Matte, É., Chouinard-Beaupré, J., Létourneau, A., Mercier-Nicol, A., Brodeur, S., Ferland, F., Rouat, J. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. (2018). Demonstration track, Thirty-third Conference on Neural Information Processing Systems (NeurIPS). 
+- Tremblay, J.P., **Balafrej, I.**, Labelle, F., Martel-Denis, F., Matte, É., Chouinard-Beaupré, J., Létourneau, A., Mercier-Nicol, A., Brodeur, S., Ferland, F., Rouat, J. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. (2018). Demonstration track, Thirty-third Conference on Neural Information Processing Systems (NeurIPS). [Abstract](https://devineproject.github.io/abstract_devine.pdf)
+
