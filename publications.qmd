@@ -10,15 +10,21 @@
 
 - Celotti L., **Balafrej, I.**, Calvet, E. Improving Zero-Shot Neural Architecture Search with Parameters Scoring (2020).
 
-- Tremblay, J.P., **Balafrej, I.**, Labelle, F., Martel-Denis, F., Matte, É., Chouinard-Beaupré, J., Létourneau, A., Mercier-Nicol, A., Brodeur, S., Ferland, F., Rouat, J. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. (2018). Demonstration track, Thirty-third Conference on Neural Information Processing Systems (NeurIPS). 
-
 # Presentations
 - Garg, N., **Balafrej, I.**, Beilliard, Y., Drouin, D., Alibart, F., Rouat. Unsupervised Learning with Ferroelectric Synapses. IEEE 52nd European Solid-State Device Research Conference (2022).
 
 - **Balafrej, I.**, Alibart, F. Rouat, J. Neuromorphic Reservoirs for Energy-Efficient Task-Abstract Machine Learning Devices. Neural Interfaces and Systems Symposium (2021).
 
+- **Balafrej, I.** Building hardware-friendly models for neuromorphic engineering. Workshop at the University of Montreal (2021).
+
 - Garg, N., **Balafrej, I.**, Beilliard, Y., Drouin, D., Alibart, F., and Rouat, R. Signals to Spikes for Neuromorphic Regulated Reservoir Computing and EMG Hand Gesture Recognition. International Conference on Neuromorphic Systems 2021, 1–8. ICONS 2021 29. New York, NY, USA: Association for Computing Machinery. <https://doi.org/10.1145/3477145.3477267>.
+
+- **Balafrej, I.**, Rouat, J. P-CRITICAL: A Reservoir Autoregulation Plasticity Rule Designed for Loihi. Intel Neuromorphic Research Community Forum (2020). 
 
 - **Balafrej, I**. Machine learning on neuromorphic processors. 88e Congrès de l’Acfas. (CANCELED - COVID, 2020)
 
 - **Balafrej, I.** Auto-regulation of Reservoirs with Potential Physiological Signal Monitoring. UNIQUE Symposium (2020)
+
+- **Balafrej, I.**, Rouat, J. Running the CRITICAL Plasticity Rule for Loihi. 3rd Intel Neuromorphic  Research Community Workshop, Austria (2019).
+
+- Tremblay, J.P., **Balafrej, I.**, Labelle, F., Martel-Denis, F., Matte, É., Chouinard-Beaupré, J., Létourneau, A., Mercier-Nicol, A., Brodeur, S., Ferland, F., Rouat, J. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. (2018). Demonstration track, Thirty-third Conference on Neural Information Processing Systems (NeurIPS). 
