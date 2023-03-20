@@ -1,3 +1,6 @@
+
+Here is a summary of my academic publications. You may also find new articles in my [Google Scholar](https://scholar.google.com/citations?user=PAuRZWgAAAAJ&hl=en) or [Semantic Scholar](https://www.semanticscholar.org/author/Ismael-Balafrej/1942665571) profiles.
+
 # Publications
 
 - Goupy, G., Juneau-Fecteau, A., Garg, N., **Balafrej, I.**, Alibart, F., Frechette, L., Drouin, D., Beilliard, Y. Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity. Neuromorph. Comput. Eng. (2023) <https://doi.org/10.1088/2634-4386/acad98>
