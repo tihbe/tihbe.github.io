@@ -16,7 +16,7 @@ listing:
 ---
 
 Hi, I'm Ismael. Welcome to my personal Blog. I currently am doing a PhD in electrical engineering at the [University of
-Sherbrooke](https://www.usherbrooke.ca/), with a thesis in machine learning and neuromorphic engineering.
+Sherbrooke](https://www.usherbrooke.ca/), with a thesis in machine learning and neuromorphic engineering. I post content about machine learning, spiking neural networks, data science and more. Feel free to subscribe to the [RSS feed](https://tihbe.github.io/blog.xml).
 
 <br> <br>
 

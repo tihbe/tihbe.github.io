@@ -7,7 +7,10 @@ listing:
   sort-ui: false
   filter-ui: true
   fields: [title, date, reading-time, description, categories]
-  feed: true
+  feed: 
+    type: partial
+    language: en-ca
+    description: Ismael Balafrej's personal Blog.
 page-layout: full
 title-block-banner: false
 
