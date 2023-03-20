@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: [],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -167,6 +167,36 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-anchor-id="latest-posts">Latest posts</h2>
 <div id="listing-last-posts" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="SNN,LIF" data-listing-date-sort="1679198400000" data-listing-file-modified-sort="1679269863610" data-listing-reading-time-sort="7.08">
+<a href="./posts/2023-03-18-dt-vs-lif/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Selection of a timestep for SNN simulation
+</h5>
+<div class="listing-reading-time card-text text-muted">
+7 min
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('SNN'); return false;">
+SNN
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LIF'); return false;">
+LIF
+</div>
+</div>
+<div class="card-text listing-description">
+What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends. Although, I think the usual assumption is incorrect…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Mar 19, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
