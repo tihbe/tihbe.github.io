@@ -10,7 +10,7 @@
 <atom:link href="https://tihbe.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>This is Ismael Balafrej&#39;s personal Blog.</description>
 <generator>quarto-1.2.335</generator>
-<lastBuildDate>Sun, 19 Mar 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 19 Mar 2023 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Selection of a timestep for SNN simulation</title>
   <dc:creator>Ismael Balafrej</dc:creator>
@@ -174,7 +174,7 @@ Simulation.”</span> March 19, 2023. <a href="https://tihbe.github.io//posts/20
   <category>SNN</category>
   <category>LIF</category>
   <guid>https://tihbe.github.io/posts/2023-03-18-dt-vs-lif/index.html</guid>
-  <pubDate>Sun, 19 Mar 2023 04:00:00 GMT</pubDate>
+  <pubDate>Sun, 19 Mar 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
