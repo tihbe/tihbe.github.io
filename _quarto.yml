@@ -6,6 +6,7 @@ website:
   title: "Ismael Balafrej"
   site-url: https://tihbe.github.io
   description: "This is Ismael Balafrej's personal Blog."
+  google-analytics: "G-VPT77KYSBR"
   navbar:
     search: true
     pinned: true
