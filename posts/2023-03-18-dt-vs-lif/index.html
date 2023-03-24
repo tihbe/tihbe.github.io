@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -249,7 +249,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="context" class="level1">
 <h1>Context</h1>
 <p>I recently saw <a href="https://twitter.com/neuralreckoning/status/1580161403415330816">this tweet</a> by Dan Goodman. In a quick experiment, they show that using a large timestep <span class="math inline">\(\delta t\)</span> during the simulation of a LIF neuron is detrimental to its behavior. Indeed, the output spiking rate of a LIF neuron with a Poisson spike input decreases when the timestep increases. It already fails at 1 ms, which is somewhat a standard size for timesteps in the CS-oriented community. Even worse, at <span class="math inline">\(\delta t=10\)</span> ms, the neuron doesn’t even spike anymore.</p>
-<p>Of course, there is a direct relationship between the choice of <span class="math inline">\(\delta t\)</span>, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large <span class="math inline">\(\delta t\)</span> for our simulation. As <a href="https://twitter.com/BellecGuill/status/1580440789217595394">Guillaume Bellec</a> pointed out, there might not even be any advantage in a machine learning setting to using a small <span class="math inline">\(\delta t\)</span>. Instead of simply accepting the fact that one must use a small timestep, I was wondering why is this simulation failing, even when using an exact solver instead of Euler’s method. There should be a small distinction when the spike arrives at the beginning, or the end, of a clock cycles. We somewhat over or underestimate the membrane potential by <span class="math inline">\(w\exp(\frac{-\delta t}{\tau})\)</span> depending on when the spike arrived during the clock period.</p>
+<p>Of course, there is a direct relationship between the choice of <span class="math inline">\(\delta t\)</span>, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large <span class="math inline">\(\delta t\)</span> for our simulation. As <a href="https://twitter.com/BellecGuill/status/1580440789217595394">Guillaume Bellec</a> pointed out, there might not even be any advantage in a machine learning setting to using a small <span class="math inline">\(\delta t\)</span>. Instead of simply accepting the fact that one must use a small timestep, I was wondering why is this simulation failing, even when using an exact solver instead of Euler’s method. There should be a small distinction when the spike arrives at the beginning, or the end, of a clock cycle. We somewhat over or underestimate the membrane potential by <span class="math inline">\(w\exp(\frac{-\delta t}{\tau})\)</span>, depending on when the spike arrived during the clock period.</p>
 </section>
 <section id="recreating-the-simulation" class="level1">
 <h1>Recreating the Simulation</h1>
