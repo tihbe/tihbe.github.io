@@ -4,7 +4,7 @@ execute:
   freeze: auto
 website:
   title: "Ismael Balafrej"
-  site-url: https://tihbe.github.io
+  site-url: https://ibalafrej.com
   description: "This is Ismael Balafrej's personal Blog."
   google-analytics: "G-VPT77KYSBR"
   navbar:
