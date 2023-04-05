@@ -107,7 +107,7 @@ As we see, the output firing rates align when $\delta t$ is equal to the refract
 
 The solution to this problem is quite simple. As I said before, the timestep of the simulation forces an implicit refractory period because the neuron can only spike once per timstep. If we remove this limitation, then we should remove this implicit refractory period and the output firing rate should be constant regardless of the timestep.
 
-To do so, we count the number of times the membrane potential $u(t)$ is above the threshold to estimate how many times the neuron would spike in one timestep. $n_{spikes}(t)=\lfloor \frac{\max \{u(t), 0\}}{u_{thresh}} \rfloor$. We also edit the reset, such that we remove the threshold from the membrane potential $n_{spikes}$ times, refered to as a soft-reset. This reset mechanism is more precise when dealing with large timesteps, as the accumulated membrane potential is not wasted by an early spike during a timestep. We re-simulate the first experiment with this modification, and we obtain:
+To do so, we count the number of times the membrane potential $u(t)$ is above the threshold to estimate how many times the neuron would spike in one timestep. $n_{spikes}(t)=\lfloor \frac{\max \{u(t), 0\}}{u_{thresh}} \rfloor$. We also edit the reset, such that we remove the threshold from the membrane potential $n_{spikes}$ times, referred to as a soft-reset. This reset mechanism is more precise when dealing with large timesteps, as the accumulated membrane potential is not wasted by an early spike during a timestep. We re-simulate the first experiment with this modification, and we obtain:
 
 
 ```{python}
@@ -138,4 +138,4 @@ ax.set_ylabel("Output firing rate [sp/s]");
 ```
 
 
-And voilà! We get the expected firing rate across all the timesteps. While this solution is very interesting for computational neuroscientists, it partly removes the energy-friendlyness of spiking neural networks since they are not binary anymore, and the reset involves some arithmetic.
+And voilà! We get the expected firing rate across all the timesteps. While this solution is very interesting for computational neuroscientists, it partly removes the energy friendliness of spiking neural networks since they are not binary anymore, and the reset involves some arithmetic.
