@@ -16,7 +16,7 @@
   <title>Selection of a timestep for SNN simulation</title>
   <dc:creator>Ismael Balafrej</dc:creator>
   <link>https://tihbe.github.io/posts/2023-03-18-dt-vs-lif/index.html</link>
-  <description><![CDATA[ I recently saw <a href="https://twitter.com/neuralreckoning/status/1580161403415330816">this tweet</a> by Dan Goodman. In a quick experiment, they show that using a large timestep <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t"> during the simulation of a LIF neuron is detrimental to its behavior. Indeed, the output spiking rate of a LIF neuron with a Poisson spike input decreases when the timestep increases. It already fails at 1 ms, which is somewhat a standard size for timesteps in the CS-oriented community. Even worse, at <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t=10"> ms, the neuron doesn’t even spike anymore. ]]></description>
+  <description><![CDATA[ I recently came across <a href="https://twitter.com/neuralreckoning/status/1580161403415330816">a tweet</a> by Dan Goodman, which presented a brief experiment demonstrating the detrimental effects of using a large timestep (<img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t">) during the simulation of a LIF neuron. The output spiking rate of a LIF neuron with a Poisson spike input was found to decrease as the timestep increased, with failure observed at soon as <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t=1"> ms - a standard timestep size within the CS-oriented community. ]]></description>
   <category>SNN</category>
   <category>LIF</category>
   <guid>https://tihbe.github.io/posts/2023-03-18-dt-vs-lif/index.html</guid>
