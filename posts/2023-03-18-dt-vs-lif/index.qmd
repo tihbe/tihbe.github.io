@@ -9,7 +9,7 @@ categories:
 
 # Context
 
-I recently came across [a tweet](https://twitter.com/neuralreckoning/status/1580161403415330816) by Dan Goodman, which presented a brief experiment demonstrating the detrimental effects of using a large timestep ($\delta t$) during the simulation of a LIF neuron. The output spiking rate of a LIF neuron with a Poisson spike input was found to decrease as the timestep increased, with failure observed at soon as $\delta t=1$ ms - a standard timestep size within the CS-oriented community. 
+I recently came across [a tweet](https://twitter.com/neuralreckoning/status/1580161403415330816) by Dan Goodman, which presented a brief experiment demonstrating the detrimental effects of using a large timestep ($\delta t$) during the simulation of a LIF neuron. The output spiking rate of a LIF neuron with a Poisson spike input was found to decrease as the timestep increased, with failure observed at soon as $\delta t=1$ ms, a standard timestep size within the CS-oriented community.
 
 Of course, there is a direct relationship between the choice of $\delta t$, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large $\delta t$ for our simulation. As [Guillaume Bellec](https://twitter.com/BellecGuill/status/1580440789217595394) pointed out, there might not even be any advantage in a machine learning setting to using a small $\delta t$.
 
@@ -62,7 +62,7 @@ We arrive at a similar-looking plot, where the output spiking frequency is going
 
 # Hypothesis
 
-Numerous commenters in the original thread suggested that $\delta t$ should be chosen in alignment with $\tau$. Of course, there is some influence of the chosen time constant $\tau$, as the smaller the leakage during a timestep, the smaller the error of membrane potential that can happen. However, I am skeptical of this notion due to the stochastic nature of Poisson spikes. Given that a spike can occur at any time during a timestep, it seems likely that the overestimation of membrane potential will roughly cancel out the underestimation. My hypothesis differs from this perspective. I contend that the crucial difference lies elsewhere. Specifically, owing to the nature of the simulation, a neuron can only emit a single spike within a given timestep. Consequently, the LIF neuron enters a sort of implicit refractory period for the duration of the timestep. When the timestep is exceedingly large - greater than 1 ms in this instance - the neuron experiences a prolonged refractory period, leading to the potential loss of critical input spikes as it is unable to integrate new input during this interval.
+Numerous commenters in the original thread suggested that $\delta t$ should be chosen to match $\tau$. Of course, there is some influence of the chosen time constant $\tau$, as the smaller the leakage during a timestep, the smaller the error of membrane potential that can happen. However, I am skeptical of this notion due to the stochastic nature of Poisson spikes. Given that a spike can occur at any time during a timestep, it seems likely that the overestimation of membrane potential will roughly cancel out the underestimation. My hypothesis differs from this perspective. I contend that the real difference is elsewhere. Specifically, owing to the nature of the simulation, a neuron can only emit a single spike within a given timestep. Consequently, the LIF neuron enters a sort of implicit refractory period for the duration of the timestep. When the timestep is exceedingly large (greater than 1 ms in this instance), the neuron experiences a prolonged refractory period, leading to the potential loss of important input spikes as it is unable to integrate new input during this interval.
 
 If the assumption is correct, i.e the timestep $\delta t$ if forcing an implicit refractory period, then having a large refractory period but with a smaller $\delta t$ should yield the same result as having a larger $\delta t$. If we add a refractory period to the experiment above, we'll see that they do indeed provide a similar effect:
 ```{python}
@@ -107,7 +107,7 @@ As we see, the output firing rates align when $\delta t$ is equal to the refract
 
 The solution to this problem is quite simple. As I said before, the timestep of the simulation forces an implicit refractory period because the neuron can only spike once per timstep. If we remove this limitation, then we should remove this implicit refractory period and the output firing rate should be constant regardless of the timestep.
 
-To do so, we count the number of times the membrane potential $u(t)$ is above the threshold to estimate how many times the neuron would spike in one timestep. $n_{spikes}(t)=\lfloor \frac{\max \{u(t), 0\}}{u_{thresh}} \rfloor$. We also edit the reset, such that we remove the threshold from the membrane potential $n_{spikes}$ times, refered to as a soft-reset. This reset mechanism is more precise when dealing with large timesteps, as the accumulated membrane potential is not wasted by an early spike during a timestep. We re-simulate the first experiment with this modification, and we obtain:
+To do so, we count the number of times the membrane potential $u(t)$ is above the threshold to estimate how many times the neuron would spike in one timestep. $n_{spikes}(t)=\lfloor \frac{\max \{u(t), 0\}}{u_{thresh}} \rfloor$. We also edit the reset, such that we remove the threshold from the membrane potential $n_{spikes}$ times, referred to as a soft-reset. This reset mechanism is more precise when dealing with large timesteps, as the accumulated membrane potential is not wasted by an early spike during a timestep. We re-simulate the first experiment with this modification, and we obtain:
 
 
 ```{python}
@@ -138,4 +138,4 @@ ax.set_ylabel("Output firing rate [sp/s]");
 ```
 
 
-And voilà! We get the expected firing rate across all the timesteps. While this solution is very interesting for computational neuroscientists, it partly removes the energy-friendlyness of spiking neural networks since they are not binary anymore, and the reset involves some arithmetic.
+And voilà! We get the expected firing rate across all the timesteps. While this solution is very interesting for computational neuroscientists, it partly removes the energy friendliness of spiking neural networks since they are not binary anymore, and the reset involves some arithmetic.
