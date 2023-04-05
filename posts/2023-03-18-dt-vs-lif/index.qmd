@@ -13,7 +13,7 @@ I recently came across [a tweet](https://twitter.com/neuralreckoning/status/1580
 
 Of course, there is a direct relationship between the choice of $\delta t$, and real-world simulation duration (or wall-clock time). Ideally, we would all be using a very large $\delta t$ for our simulation. As [Guillaume Bellec](https://twitter.com/BellecGuill/status/1580440789217595394) pointed out, there might not even be any advantage in a machine learning setting to using a small $\delta t$.
 
-Rather than accepting the necessity of a small timestep, it is worth investigating why the simulation fails, even when employing an exact solver instead of Euler's method. Specifically, there should only be a small distinction when the spike arrives at the beginning, or the end, of a clock cycles. We somewhat over or underestimate the membrane potential by $w\exp(\frac{-\delta t}{\tau})$ depending on when the spike arrived during the clock period.
+Rather than accepting the necessity of a small timestep, it is worth investigating why the simulation fails, even when employing an exact solver instead of Euler's method. Specifically, there should only be a small distinction when the spike arrives at the beginning, or the end, of a clock cycle. We somewhat over or underestimate the membrane potential by $w\exp(\frac{-\delta t}{\tau})$ depending on when the spike arrived during the clock period.
 
 # Recreating the Simulation
 
