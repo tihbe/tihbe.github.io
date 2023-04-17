@@ -11,7 +11,17 @@
 <description>Ismael Balafrej&#39;s personal Blog.</description>
 <language>en-ca</language>
 <generator>quarto-1.2.475</generator>
-<lastBuildDate>Sun, 19 Mar 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 17 Apr 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>PhD thesis defended !</title>
+  <dc:creator>Ismael Balafrej</dc:creator>
+  <link>https://ibalafrej.com/posts/2023-04-13-defense/index.html</link>
+  <description><![CDATA[ I’m thrilled to announce that I have completed my PhD thesis defense! It’s been a long and challenging journey, but I’m proud of all the hard work and dedication that I’ve put into this moment. ]]></description>
+  <category>PhD</category>
+  <category>ECG</category>
+  <guid>https://ibalafrej.com/posts/2023-04-13-defense/index.html</guid>
+  <pubDate>Mon, 17 Apr 2023 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Selection of a timestep for SNN simulation</title>
   <dc:creator>Ismael Balafrej</dc:creator>
