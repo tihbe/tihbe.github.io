@@ -27,6 +27,7 @@ website:
         aria-label: LinkedIn
   twitter-card: 
     site: "@IsmaelBalafrej"
+    creator: "@IsmaelBalafrej"
 format:
   html:
     css: styles.css
