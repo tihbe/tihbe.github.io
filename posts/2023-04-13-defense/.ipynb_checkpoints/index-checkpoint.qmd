@@ -1,0 +1,42 @@
+---
+title: ""
+description: ""
+date: "4/13/2023"
+categories:
+  - PhD
+  - ECG
+---
+
+
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+```
+
+
+
+```{python}
+HR_data = pd.read_csv("data/HR.txt", sep=";")
+HR_data['time'] =  pd.to_datetime(HR_data['Phone timestamp'] + "000", format='%Y-%m-%dT%H:%M:%S.%f')
+print(HR_data.head())
+```
+
+```{python}
+fig, ax = plt.subplots(figsize=(10, 4))
+ax.plot(HR_data["time"], HR_data["HR [bpm]"])
+xformatter = mdates.DateFormatter('%H:%M')
+ax.xaxis.set_major_formatter(xformatter)
+```
+
+
+```{python}
+ECG_data = pd.read_csv("data/ECG.txt", sep=";")
+```
+
+```{python}
+ECG_data.head()
+
+
+```

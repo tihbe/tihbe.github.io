@@ -1,0 +1,79 @@
+---
+title: "PhD thesis defended !"
+description: "Like a proper nerd, I wore an ECG during my thesis defense. Here is the data !"
+date: "4/17/2023"
+categories:
+  - PhD
+  - ECG
+citation: false
+---
+
+```{python}
+#| echo: false
+import os
+import numpy as np
+import pandas as pd
+from datetime import datetime
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+```
+
+
+```{python}
+#| echo: false
+#delta = HR_data["time"].iloc[-1] - HR_data["time"].iloc[0]#, HR_data["HR [bpm]"]
+#sampling_rate = len(HR_data["HR [bpm]"]) / delta.seconds
+#ECG_data = pd.read_csv("data/ECG.txt", sep=";")
+#ECG_data['time'] =  pd.to_datetime(ECG_data['Phone timestamp'] + "000", format='%Y-%m-%dT%H:%M:%S.%f')
+```
+
+
+I'm thrilled to announce that I have completed my PhD thesis defense! It's been a long and challenging journey, but I'm proud of all the hard work and dedication that I've put into this moment. 
+
+Although I am not an easily stressed person, I thought it would be interesting to capture the intensity of my experience during the defense. To do so, I wore an electrocardiogram during the entire event. In the plot below, the data is presented with arrows indicating the various moments. During the presentation part, my heart rate remained high but relatively stable. As I answered questions from the committee, my heart rate fluctuated, reflecting the varying levels of stress and anxiety that I experienced.
+
+```{python}
+#| echo: false
+#| warning: false
+#| fig-cap: "Heart rate in beats per minute during my PhD thesis defense on April 13th, 2023."
+#| fig-align: center
+
+HR_data = pd.read_csv("data/HR.txt", sep=";")
+HR_data['time'] =  pd.to_datetime(HR_data['Phone timestamp'] + "000", format='%Y-%m-%dT%H:%M:%S.%f')
+
+with plt.xkcd():
+    # smoothed version
+    kernel_size = 200
+    kernel = np.ones(kernel_size) / kernel_size
+    fig, ax = plt.subplots(figsize=(10, 4), tight_layout=True)
+    hr = np.convolve(HR_data["HR [bpm]"], kernel, "same")
+    ax.plot(HR_data["time"][kernel_size:-kernel_size], hr[kernel_size:-kernel_size])
+    xformatter = mdates.DateFormatter('%H:%M')
+    ax.xaxis.set_major_formatter(xformatter)
+    ax.set_ylabel("Heart Rate")
+    ax.set_xlim(right=datetime(2023, 4, 13, 11, 0, 0))
+
+    ax.annotate(
+        "PRESENTATION START",
+        xy=(datetime(2023, 4, 13, 8, 9, 0), 85), arrowprops=dict(arrowstyle='->'), xytext=(datetime(2023, 4, 13, 7, 45, 0), 95))
+    
+    ax.annotate(
+        "ALL THE QUESTIONS",
+        xy=(datetime(2023, 4, 13, 9, 1, 0), 82.2), arrowprops=dict(arrowstyle='->'), xytext=(datetime(2023, 4, 13, 9, 45, 0), 95), ha="center")
+    
+    for h, m, hr in [(9, 6, 81.2), (9, 11, 80.8), (9, 24, 80.8), (9, 32, 82.7), (9, 38, 79), (9, 45, 82.1), (9, 52, 80.3), (10, 2, 81.2), (10, 12, 80.8), (10, 21, 79.4), (10, 31, 82.2)]:
+        #ax.arrow(x=datetime(2023, 4, 13, h, m, 0), y=hr, dx=3, dy=3, length_includes_head=True)
+        ax.annotate(
+        " "*len("ALL THE QUESTIONS"),
+        xy=(datetime(2023, 4, 13, h, m, 0), hr), arrowprops=dict(arrowstyle='->'), xytext=(datetime(2023, 4, 13, 9, 45, 0), 95), ha="center")
+        
+    ax.annotate(
+        "RESULT",
+        xy=(datetime(2023, 4, 13, 10, 50, 0), 90.8), arrowprops=dict(arrowstyle='->'), xytext=(datetime(2023, 4, 13, 10, 45, 0), 95), ha="center")
+    
+    fig.savefig("HR.png", bbox_inches="tight")
+```
+
+This plot does not reflect any meaningful data and only grossly reflects the physical response of my body, I did find it interesting to see all the bumps directly correlated with the various questions. While these bumps could be stress-induced, they may also only reflect the act of speaking with hand movements increasing the necessary blood flow. I enjoyed gathering the extra data, and now I see this plot as a reminder of my success and my ability to overcome challenges in the future. If you're interested in using the data, is it freely available [here (HR)](./data/HR.txt) and [here (ECG)](./data/ECG.txt).
+
+I'm incredibly grateful to my advisors, committee members, friends, and family for their unwavering support throughout this process. Their encouragement and guidance have been invaluable, and I couldn't have done this without them. Once again, I'm proud to have completed my PhD thesis defense and excited to see where this accomplishment takes me in my future professional endeavors.
