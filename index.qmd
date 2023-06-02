@@ -1,6 +1,6 @@
 ---
 title: "Ismael Balafrej"
-image: https://media.licdn.com/dms/image/D4E03AQFcAgntq_arUQ/profile-displayphoto-shrink_800_800/0/1663627002191?e=1684972800&v=beta&t=4lbI3hYF9WcaaneFwwf3I3S6cY3Vtr-K1pamenKupN4
+image: images/profilepic.jpg
 about:
     template: jolla
 listing:
