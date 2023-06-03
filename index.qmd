@@ -1,6 +1,7 @@
 ---
 title: "Ismael Balafrej"
 image: images/profilepic.jpg
+toc: false
 about:
     template: jolla
 listing:
