@@ -30,7 +30,7 @@ website:
     creator: "@IsmaelBalafrej"
 format:
   html:
-    css: styles.css
+    css: [styles.css, https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css]
     email-obfuscation: javascript
 toc: true
 code-fold: true

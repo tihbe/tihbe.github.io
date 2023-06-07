@@ -1,5 +1,5 @@
 
-Here is a summary of my academic publications. You may also find new articles in my [Google Scholar](https://scholar.google.com/citations?user=PAuRZWgAAAAJ&hl=en) or [Semantic Scholar](https://www.semanticscholar.org/author/Ismael-Balafrej/1942665571) profiles.
+Here is a summary of my academic publications. You may also find new articles in my [Google Scholar <i class="ai ai-google-scholar"></i>](https://scholar.google.com/citations?user=PAuRZWgAAAAJ&hl=en) or [Semantic Scholar <i class="ai ai-semantic-scholar"></i>](https://www.semanticscholar.org/author/Ismael-Balafrej/1942665571) profiles.
 
 # Publications
 
