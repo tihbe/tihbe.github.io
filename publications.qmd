@@ -3,6 +3,8 @@ Here is a summary of my academic publications. You may also find new articles in
 
 # Publications
 
+- **Balafrej, I.**, Janzakova, K., Kumar, A., Garg, N., Scholaert, C., Rouat, J., Drouin, D., Coffinier, Y., Pecqueur, S., and Alibart, F. Structural Plasticity for Neuromorphic Networks with Electropolymerized Dendritic PEDOT Connections. Nature Communications. (2023) <https://doi.org/10.1038/s41467-023-43887-8>
+  
 - Goupy, G., Juneau-Fecteau, A., Garg, N., **Balafrej, I.**, Alibart, F., Frechette, L., Drouin, D., Beilliard, Y. Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity. Neuromorph. Comput. Eng. (2023) <https://doi.org/10.1088/2634-4386/acad98>
 
 - Garg, N., **Balafrej, I.**, Stewart C. T., Portal, JM. Bocquet, M., Querlioz, D., Drouin, D., Rouat, J., Beillard, Y., Alibart, F. Voltage-Dependent Synaptic Plasticity (VDSP): Unsupervised probabilistic Hebbian plasticity rule based on neurons membrane potential. Frontiers in Neuroscience (2022) <https://doi.org/10.3389/fnins.2022.983950>.
