@@ -1,0 +1,17 @@
+
+---
+title: "What if you could grow an AI chip ? 🧠 "
+description: "New publication alert !"
+date: "12/08/2023"
+categories:
+  - publication
+---
+
+GPUs are not very efficient for machine learning, but they are dominant in the market because custom chips - with their respective AI models - are expensive to design and manufacture. Imagine if we could grow AI devices using data.
+
+I'm thrilled to share that our latest study on the topic has just been published in Nature Communications! 🎉 In collaboration with IEMN, 3IT, Université de Sherbrooke and LN2 , we investigate how electropolymerization of PEDOT-PSS fibers can be used to replicate brain-like growth of dendritic connections. This new structural plasticity scheme produces sparse ANNs with no oversampling of connections, making them efficient during training and inference on several machine learning tasks.
+
+I want to thank all the co-authors - Kamila Janzakova, Ankush Kumar, Nikhil Garg, Corentin Scholaert, Jean Rouat, Dominique Drouin, Yannick Coffinier, Sébastien Pecqueur and Fabien Alibart - for making this study possible.
+
+See the full publication at <https://doi.org/10.1038/s41467-023-43887-8>.
+
