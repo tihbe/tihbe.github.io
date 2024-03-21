@@ -10,8 +10,18 @@
 <atom:link href="https://ibalafrej.com/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Ismael Balafrej&#39;s personal Blog.</description>
 <language>en-ca</language>
-<generator>quarto-1.4.550</generator>
-<lastBuildDate>Fri, 08 Dec 2023 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.551</generator>
+<lastBuildDate>Wed, 20 Mar 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Unexpected coin flip experiment</title>
+  <dc:creator>Ismael Balafrej</dc:creator>
+  <link>https://ibalafrej.com/posts/2023-03-20.html</link>
+  <description><![CDATA[ In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation. ]]></description>
+  <category>simulation</category>
+  <category>statistics</category>
+  <guid>https://ibalafrej.com/posts/2023-03-20.html</guid>
+  <pubDate>Wed, 20 Mar 2024 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>What if you could grow an AI chip ? 🧠</title>
   <dc:creator>Ismael Balafrej</dc:creator>

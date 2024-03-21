@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ismael Balafrej">
-<meta name="dcterms.date" content="2023-04-17">
-<meta name="description" content="Like a proper nerd, I wore an ECG during my thesis defense. Here is the data !">
+<meta name="dcterms.date" content="2024-03-20">
+<meta name="description" content="In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.">
 
-<title>Ismael Balafrej - PhD thesis defended !</title>
+<title>Ismael Balafrej - Unexpected coin flip experiment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,58 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,10 +113,10 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-<meta name="twitter:title" content="Ismael Balafrej - PhD thesis defended !">
-<meta name="twitter:description" content="Like a proper nerd, I wore an ECG during my thesis defense. Here is the data !">
+<meta name="twitter:title" content="Ismael Balafrej - Unexpected coin flip experiment">
+<meta name="twitter:description" content="In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.">
 <meta name="twitter:creator" content="@IsmaelBalafrej">
 <meta name="twitter:site" content="@IsmaelBalafrej">
 <meta name="twitter:card" content="summary">
@@ -95,7 +129,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Ismael Balafrej</span>
     </a>
   </div>
@@ -106,11 +140,11 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../blog.html"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../publications.html"> 
+    <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
 </ul>
@@ -149,16 +183,16 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">PhD thesis defended !</h1>
+<h1 class="title">Unexpected coin flip experiment</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">PhD</div>
-    <div class="quarto-category">ECG</div>
+    <div class="quarto-category">simulation</div>
+    <div class="quarto-category">statistics</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Like a proper nerd, I wore an ECG during my thesis defense. Here is the data !
+    In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.
   </div>
 </div>
 
@@ -175,7 +209,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 17, 2023</p>
+      <p class="date">March 20, 2024</p>
     </div>
   </div>
   
@@ -187,24 +221,211 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </header>
 
 
-<p>I’m thrilled to announce that I have completed my PhD thesis defense! It’s been a long and challenging journey, but I’m proud of all the hard work and dedication that I’ve put into this moment.</p>
-<p>Although I am not an easily stressed person, I thought it would be interesting to capture the intensity of my experience during the defense. To do so, I wore an electrocardiogram during the entire event. In the plot below, the data is presented with arrows indicating the various moments. During the presentation part, my heart rate remained high but relatively stable. As I answered questions from the committee, my heart rate fluctuated, reflecting the varying levels of stress and anxiety that I experienced.</p>
-<div class="cell" data-execution_count="3">
+<p>Interesting idea from this <a href="https://twitter.com/littmath/status/1769044719034647001">X post by <span class="citation" data-cites="littmath">@littmath</span></a>:</p>
+<blockquote class="blockquote">
+<p>Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g.&nbsp;for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?</p>
+</blockquote>
+<p>If we pause to analyze, it might initially seem that Alice has the upper hand. Consider a perfect scenario: if the sequence were all heads (HHHHHHHHHH), Alice could rack up to 9 points out of 10 flips. On the flip side (pun intended), in a mixed sequence like HTHTHTHTHT, Bob would only manage to score 5 points out of 10. This reasoning suggests Alice might have a better chance of winning, right?</p>
+<p>But here’s where it gets intriguing. By conducting a Monte Carlo simulation with N=1M iterations, we uncover a surprising truth: Bob is actually more likely to win:</p>
+<div class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>np.random.seed(<span class="bn">0x1B</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>N <span class="op">=</span> <span class="dv">1_000_000</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>bob_wins <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>alice_wins <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    flips <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">100</span>)  <span class="co"># 0: head, 1: tail</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    flips_diff <span class="op">=</span> np.diff(flips)  <span class="co"># 1 for TH, -1 for HT, 0 otherwise</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    points_alice <span class="op">=</span> np.<span class="bu">sum</span>((flips_diff <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (flips[:<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">0</span>))  <span class="co"># HH</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    points_bob <span class="op">=</span> np.<span class="bu">sum</span>(flips_diff <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>)  <span class="co"># HT</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="cf">if</span> points_bob <span class="op">&gt;</span> points_alice:</span>
+<span id="cb1-15"><a href="#cb1-15"></a>        bob_wins <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cf">elif</span> points_bob <span class="op">&lt;</span> points_alice:</span>
+<span id="cb1-17"><a href="#cb1-17"></a>        alice_wins <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb1-20"><a href="#cb1-20"></a>ax.bar(</span>
+<span id="cb1-21"><a href="#cb1-21"></a>    [<span class="st">"Bob wins"</span>, <span class="st">"Alice wins"</span>],</span>
+<span id="cb1-22"><a href="#cb1-22"></a>    [bob_wins <span class="op">/</span> N, alice_wins <span class="op">/</span> N],</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    <span class="fl">0.5</span>,</span>
+<span id="cb1-24"><a href="#cb1-24"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a>ax.set_ylabel(<span class="st">"Probability"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26"></a>ax.set_ylim([<span class="fl">0.45</span>, <span class="fl">0.5</span>])</span>
+<span id="cb1-27"><a href="#cb1-27"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb1-28"><a href="#cb1-28"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>ax.spines[<span class="st">'left'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb1-30"><a href="#cb1-30"></a>ax.grid(axis<span class="op">=</span><span class="st">'y'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="939" height="362" class="figure-img"></p>
-<figcaption>Heart rate in beats per minute during my PhD thesis defense on April 13th, 2023.</figcaption>
+<p><img src="2023-03-20_files/figure-html/cell-2-output-1.png" width="374" height="268" class="figure-img"></p>
+<figcaption>Probability of winning the coin-pair flip game for Bob and Alice.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>This plot does not reflect any meaningful data and only grossly reflects the physical response of my body, I did find it interesting to see all the bumps directly correlated with the various questions. While these bumps could be stress-induced, they may also only reflect the act of speaking with hand movements increasing the necessary blood flow. I enjoyed gathering the extra data, and now I see this plot as a reminder of my success and my ability to overcome challenges in the future. If you’re interested in using the data, is it freely available <a href="./data/HR.txt">here (HR)</a> and <a href="./data/ECG.zip">here (ECG)</a>.</p>
-<p>I’m incredibly grateful to my advisors, committee members, friends, and family for their unwavering support throughout this process. Their encouragement and guidance have been invaluable, and I couldn’t have done this without them. Once again, I’m proud to have completed my PhD thesis defense and excited to see where this accomplishment takes me in my future professional endeavors.</p>
+<p>The nuance here is that Alice might have the potential to score more points in a single game, but when we look at the bigger picture, Bob wins more frequently. Let’s enumerate all possible outcomes with just 4 coin flips to understand why:</p>
+<div class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>md <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ss">| Flips | Points Alice | Points Bob | Winner | </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="ss">|-------|--------------|------------|--------|</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="ss">"""</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="cf">for</span> l <span class="kw">in</span> product(<span class="st">"TH"</span>, repeat<span class="op">=</span><span class="dv">4</span>):</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    flips <span class="op">=</span> <span class="st">""</span>.join(l)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    points_alice <span class="op">=</span> points_bob <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="cf">for</span> pair <span class="kw">in</span> <span class="bu">zip</span>(flips[:<span class="op">-</span><span class="dv">1</span>], flips[<span class="dv">1</span>:]):</span>
+<span id="cb2-13"><a href="#cb2-13"></a>        <span class="cf">if</span> pair <span class="op">==</span> (<span class="st">"H"</span>, <span class="st">"H"</span>):</span>
+<span id="cb2-14"><a href="#cb2-14"></a>            points_alice <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>        <span class="cf">elif</span> pair <span class="op">==</span> (<span class="st">"H"</span>, <span class="st">"T"</span>):</span>
+<span id="cb2-16"><a href="#cb2-16"></a>            points_bob <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>    winner <span class="op">=</span> <span class="st">"Draw"</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>    <span class="cf">if</span> points_alice <span class="op">&gt;</span> points_bob:</span>
+<span id="cb2-19"><a href="#cb2-19"></a>        winner <span class="op">=</span> <span class="st">"Alice"</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>    <span class="cf">elif</span> points_alice <span class="op">&lt;</span> points_bob:</span>
+<span id="cb2-21"><a href="#cb2-21"></a>        winner <span class="op">=</span> <span class="st">"Bob"</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>    md <span class="op">+=</span> <span class="ss">f"| </span><span class="sc">{</span>flips<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>points_alice<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>points_bob<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss"> |</span><span class="ch">\n</span><span class="ss">"</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a></span>
+<span id="cb2-24"><a href="#cb2-24"></a>Markdown(md)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th>Flips</th>
+<th>Points Alice</th>
+<th>Points Bob</th>
+<th>Winner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TTTT</td>
+<td>0</td>
+<td>0</td>
+<td>Draw</td>
+</tr>
+<tr class="even">
+<td>TTTH</td>
+<td>0</td>
+<td>0</td>
+<td>Draw</td>
+</tr>
+<tr class="odd">
+<td>TTHT</td>
+<td>0</td>
+<td>1</td>
+<td>Bob</td>
+</tr>
+<tr class="even">
+<td>TTHH</td>
+<td>1</td>
+<td>0</td>
+<td>Alice</td>
+</tr>
+<tr class="odd">
+<td>THTT</td>
+<td>0</td>
+<td>1</td>
+<td>Bob</td>
+</tr>
+<tr class="even">
+<td>THTH</td>
+<td>0</td>
+<td>1</td>
+<td>Bob</td>
+</tr>
+<tr class="odd">
+<td>THHT</td>
+<td>1</td>
+<td>1</td>
+<td>Draw</td>
+</tr>
+<tr class="even">
+<td>THHH</td>
+<td>2</td>
+<td>0</td>
+<td>Alice</td>
+</tr>
+<tr class="odd">
+<td>HTTT</td>
+<td>0</td>
+<td>1</td>
+<td>Bob</td>
+</tr>
+<tr class="even">
+<td>HTTH</td>
+<td>0</td>
+<td>1</td>
+<td>Bob</td>
+</tr>
+<tr class="odd">
+<td>HTHT</td>
+<td>0</td>
+<td>2</td>
+<td>Bob</td>
+</tr>
+<tr class="even">
+<td>HTHH</td>
+<td>1</td>
+<td>1</td>
+<td>Draw</td>
+</tr>
+<tr class="odd">
+<td>HHTT</td>
+<td>1</td>
+<td>1</td>
+<td>Draw</td>
+</tr>
+<tr class="even">
+<td>HHTH</td>
+<td>1</td>
+<td>1</td>
+<td>Draw</td>
+</tr>
+<tr class="odd">
+<td>HHHT</td>
+<td>2</td>
+<td>1</td>
+<td>Alice</td>
+</tr>
+<tr class="even">
+<td>HHHH</td>
+<td>3</td>
+<td>0</td>
+<td>Alice</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This detailed breakdown showcases Bob’s advantage, who wins more often than Alice in this simplified scenario. The total number of points in all games for both Alice and Bob is equal, 12. Yet, Bob wins more often by a small margin. This exploration not only demonstrates the surprising outcomes that can emerge from seemingly straightforward situations but also highlights the beauty of Monte Carlo simulations in revealing the unexpected.</p>
 
 
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2024,
+  author = {Balafrej, Ismael},
+  title = {Unexpected Coin Flip Experiment},
+  date = {2024-03-20},
+  url = {https://ibalafrej.com/posts/2023-03-20.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Balafrej, Ismael. 2024. <span>“Unexpected Coin Flip Experiment.”</span>
+March 20, 2024. <a href="https://ibalafrej.com/posts/2023-03-20.html">https://ibalafrej.com/posts/2023-03-20.html</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
