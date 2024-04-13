@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ismael Balafrej">
+<meta name="dcterms.date" content="2024-04-11">
+<meta name="description" content="This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government’s decision to phase out the Roulez Vert program on the value.">
+
+<title>Ismael Balafrej - Are electric cars a worse investment ?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VPT77KYSBR"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<meta name="twitter:title" content="Ismael Balafrej - Are electric cars a worse investment ?">
+<meta name="twitter:description" content="This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government's decision to phase out the Roulez Vert program on…">
+<meta name="twitter:creator" content="@IsmaelBalafrej">
+<meta name="twitter:site" content="@IsmaelBalafrej">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ismael Balafrej</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html">
+ <span class="menu-text">Publications</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/tihbe"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/IsmaelBalafrej"><i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/IsmaelBalafrej"><i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#acquiring-used-vehicle-market-data" id="toc-acquiring-used-vehicle-market-data" class="nav-link active" data-scroll-target="#acquiring-used-vehicle-market-data">Acquiring used vehicle market data</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data visualization</a></li>
+  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Are electric cars a worse investment ?</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Data Science</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government’s decision to phase out the Roulez Vert program on the value.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ismael Balafrej </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 11, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Electric vehicles (EVs) are generaly more expensive than their gasoline counterpart. Yet, adoption has still be relatively high thanks to governement incentives and the cheap cost of electricity in the province of Quebec. But, as the <a href="https://www.quebec.ca/transports/transport-electrique/aide-financiere-vehicule-electrique/services-en-ligne-roulez-vert">Roulez Vert</a> program from the government of Quebec is slowly getting phased out, it is worth examining more precicely the financial impact of EVs. The program’s initial goal was to promote EVs with monetary incentives (up to $7,000 CAD for new cars and $3,500 CAD for used cars). Removing this program means that every EV purchased starting on January 1, 2025, will be more expensive.</p>
+<p>This presents a unique opportunity for acquiring an EV this year with a lower value depreciation than what would traditionally be expected, as the cost of EVs will slowly increase over the next few years. That is, of course, under the assumption that the cost of new EVs will remain relatively stable over the next few years.</p>
+<p>My understanding of EVs is that they should hold value longer than your typical gasoline vehicle. There are fewer parts involved in the engine, and the battery capacity can remain relatively stable over a huge number of recharge cycles. The brake pads can be changed less often thanks to the regenerative braking system. Rusting should be roughly similar to gasoline vehicles. The main disadvantage is that battery capacity has been increasing significantly with every new generation of EVs. Therefore, there is an incentive to upgrade your car and thus saturate the used EV market, which decreases prices and depreciates the value of the car faster.</p>
+<p>Before making any assumptions, it is best to refer to data to see how, with a constant government incentive over the past few years, the EVs in the Montreal market area have been depreciating in value using gasoline vehicles as a baseline.</p>
+<section id="acquiring-used-vehicle-market-data" class="level2">
+<h2 class="anchored" data-anchor-id="acquiring-used-vehicle-market-data">Acquiring used vehicle market data</h2>
+<p>To do so, I first scraped some used vehicle market data using the <a href="https://www.webscraper.io/">Web Scraper Chrome extension</a>. I then used the <a href="https://github.com/AbhiOnlyOne/us-car-models-data">US car models GitHub repository</a> to parse the vehicle make and model out of the text description for each vehicle.</p>
+<p>Here are the first 5 rows of this new dataset:</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Code for parsing us-car-models-data (make and models)</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>us_car_models_df <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> glob.glob(<span class="st">"data/us-car-models-data/*.csv"</span>):</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    current_year <span class="op">=</span> pd.read_csv(<span class="bu">file</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">if</span> us_car_models_df <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-6"><a href="#cb1-6"></a>        us_car_models_df <span class="op">=</span> current_year</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>        us_car_models_df <span class="op">=</span> pd.concat([us_car_models_df, current_year])</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a>all_cars_models <span class="op">=</span> us_car_models_df.model.unique().tolist()</span>
+<span id="cb1-11"><a href="#cb1-11"></a>all_cars_models <span class="op">=</span> <span class="bu">sorted</span>(all_cars_models, key<span class="op">=</span><span class="bu">len</span>, reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># Code for parsing scaped vehicle data</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>evs <span class="op">=</span> pd.read_csv(<span class="st">"data/electric_cars.csv"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>gas <span class="op">=</span> pd.read_csv(<span class="st">"data/gasoline_cars.csv"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a>evs[<span class="st">"engine_type"</span>] <span class="op">=</span> <span class="st">"electric"</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>gas[<span class="st">"engine_type"</span>] <span class="op">=</span> <span class="st">"gasoline"</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>df <span class="op">=</span> pd.concat([evs, gas]).drop_duplicates()</span>
+<span id="cb1-19"><a href="#cb1-19"></a></span>
+<span id="cb1-20"><a href="#cb1-20"></a>df[<span class="st">"vehicle-name"</span>] <span class="op">=</span> df[<span class="st">"vehicle-name"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb1-21"><a href="#cb1-21"></a>df[<span class="st">"year"</span>] <span class="op">=</span> df[<span class="st">"vehicle-name"</span>].<span class="bu">str</span>[:<span class="dv">4</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>df[<span class="st">"price"</span>] <span class="op">=</span> (</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    df[<span class="st">"price"</span>].<span class="bu">str</span>.extract(<span class="st">"([\d,]+)"</span>, expand<span class="op">=</span><span class="va">False</span>).<span class="bu">str</span>.replace(<span class="st">","</span>, <span class="st">""</span>).astype(<span class="bu">float</span>)</span>
+<span id="cb1-24"><a href="#cb1-24"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a>df <span class="op">=</span> df[df[<span class="st">"year"</span>] <span class="op">&gt;</span> <span class="dv">2010</span>]</span>
+<span id="cb1-28"><a href="#cb1-28"></a>df[<span class="st">"make"</span>] <span class="op">=</span> df[<span class="st">"vehicle-name"</span>].<span class="bu">str</span>.extract(<span class="st">"\d+\s+([A-Za-z\-]+)\s"</span>, expand<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a></span>
+<span id="cb1-30"><a href="#cb1-30"></a><span class="kw">def</span> find_model_in_paragraph(text):</span>
+<span id="cb1-31"><a href="#cb1-31"></a>    reg <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">'[^a-z0-9]'</span>)</span>
+<span id="cb1-32"><a href="#cb1-32"></a>    <span class="cf">for</span> model <span class="kw">in</span> all_cars_models:</span>
+<span id="cb1-33"><a href="#cb1-33"></a>        <span class="cf">if</span> reg.sub(<span class="st">''</span>, model.lower()) <span class="kw">in</span> reg.sub(<span class="st">''</span>, text.lower()):</span>
+<span id="cb1-34"><a href="#cb1-34"></a>            <span class="cf">return</span> model</span>
+<span id="cb1-35"><a href="#cb1-35"></a>    <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a>df[<span class="st">"model"</span>] <span class="op">=</span> df[<span class="st">"vehicle-name"</span>].<span class="bu">apply</span>(find_model_in_paragraph)</span>
+<span id="cb1-38"><a href="#cb1-38"></a></span>
+<span id="cb1-39"><a href="#cb1-39"></a>df[<span class="st">"mileage"</span>] <span class="op">=</span> df.mileage.<span class="bu">str</span>.replace(<span class="st">"[km,]"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">True</span>).astype(<span class="bu">float</span>)</span>
+<span id="cb1-40"><a href="#cb1-40"></a>df[<span class="st">"vehicle_age"</span>] <span class="op">=</span> <span class="dv">2025</span> <span class="op">-</span> df.year</span>
+<span id="cb1-41"><a href="#cb1-41"></a>df.drop(</span>
+<span id="cb1-42"><a href="#cb1-42"></a>    [<span class="st">"vehicle-name"</span>, <span class="st">"vehicle-desc"</span>, <span class="st">"pagination"</span>, <span class="st">"web-scraper-order"</span>, <span class="st">"web-scraper-start-url"</span>], axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>) <span class="co"># drop unwanted columns</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>df.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-45"><a href="#cb1-45"></a>df.year <span class="op">=</span> df.year.astype(<span class="bu">int</span>)</span>
+<span id="cb1-46"><a href="#cb1-46"></a></span>
+<span id="cb1-47"><a href="#cb1-47"></a><span class="bu">print</span>(df.head(<span class="dv">5</span>))</span>
+<span id="cb1-48"><a href="#cb1-48"></a>df[<span class="st">"MakeModel"</span>] <span class="op">=</span> (df[<span class="st">"make"</span>] <span class="op">+</span> <span class="st">" "</span> <span class="op">+</span> df[<span class="st">"model"</span>]).astype(<span class="st">"category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mileage    price engine_type  year       make      model  vehicle_age
+0  27707.0  24995.0    electric  2022      Mazda      MX-30          3.0
+1   5923.0  58995.0    electric  2023       Audi  Q4 e-tron          2.0
+2  66068.0  22988.0    electric  2018  Chevrolet    Bolt EV          7.0
+3  45669.0  30985.0    electric  2020        Kia     Optima          5.0
+4  39169.0  38895.0    electric  2022    Hyundai        Ion          3.0</code></pre>
+</div>
+</div>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
+<p>We can start our analysis with some visualization of this newly created dataset.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Vehicle age</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>hist_data <span class="op">=</span> np.unique(df.vehicle_age, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Vehicle age"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># Engine type</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>hist_data <span class="op">=</span> np.unique(df.engine_type, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_xlabel(<span class="st">"Engine type"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># Mileage</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>bin_size <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>bins, counts <span class="op">=</span> np.unique(df.mileage.astype(<span class="bu">int</span>)<span class="op">//</span>bin_size, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>bins <span class="op">*=</span> bin_size</span>
+<span id="cb3-19"><a href="#cb3-19"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].bar(bins<span class="op">/</span><span class="dv">1000</span>, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>, width<span class="op">=</span>bin_size<span class="op">/</span><span class="dv">1000</span>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Mileage [Thousand of km]"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># Top 15 auto maker</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>bins, counts <span class="op">=</span> np.unique(df.make, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-25"><a href="#cb3-25"></a>top_idx <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-26"><a href="#cb3-26"></a>bins <span class="op">=</span> bins[top_idx[:<span class="dv">15</span>]]</span>
+<span id="cb3-27"><a href="#cb3-27"></a>counts <span class="op">=</span> counts[top_idx[:<span class="dv">15</span>]]</span>
+<span id="cb3-28"><a href="#cb3-28"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].bar(bins, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].set_xticklabels(bins, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb3-30"><a href="#cb3-30"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].text(<span class="dv">9</span>, <span class="dv">900</span>, <span class="st">"(Only showing the top 15 auto maker)"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="950" height="758" class="figure-img"></p>
+<p></p><figcaption class="figure-caption">Histogram for each column of the dataset.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>avg_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.mean().reset_index()</span>
+<span id="cb4-4"><a href="#cb4-4"></a>med_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.median().reset_index()</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Plotting</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>sns.lineplot(data<span class="op">=</span>avg_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb4-8"><a href="#cb4-8"></a>sns.lineplot(data<span class="op">=</span>med_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb4-9"><a href="#cb4-9"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'Average Vehicle Price by Engine Type'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Median Vehicle Price by Engine Type'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>axs[<span class="dv">0</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>axs[<span class="dv">1</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>axs[<span class="dv">0</span>].set_ylabel(<span class="st">'Price ($ CAD)'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a>axs[<span class="dv">0</span>].legend(title<span class="op">=</span><span class="st">'Engine Type'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="950" height="470"></p>
+</div>
+</div>
+</section>
+<section id="modeling" class="level2">
+<h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
+<p>To validate this conclusion, I created a simple linear mixed-effect regression model to predict vehicle prices using mileage, age, and engine type. There are some biases that are unaccounted for: the options added to the vehicle and the MSRP. We still can get a rough estimate by inspecting the parameters of the learned model of the impact the engine type has on value depreciation.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>model <span class="op">=</span> smf.mixedlm(<span class="st">"price ~ engine_type*mileage + engine_type*vehicle_age"</span>, df, groups<span class="op">=</span><span class="st">"MakeModel"</span>).fit()</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                             Mixed Linear Model Regression Results
+================================================================================================
+Model:                         MixedLM             Dependent Variable:             price        
+No. Observations:              10521               Method:                         REML         
+No. Groups:                    626                 Scale:                          88717001.9691
+Min. group size:               1                   Log-Likelihood:                 -112977.0568 
+Max. group size:               239                 Converged:                      Yes          
+Mean group size:               16.8                                                             
+------------------------------------------------------------------------------------------------
+                                        Coef.       Std.Err.    z    P&gt;|z|   [0.025     0.975]  
+------------------------------------------------------------------------------------------------
+Intercept                                79703.870  2847.004  27.996 0.000  74123.844  85283.895
+engine_type[T.gasoline]                 -13121.545   909.000 -14.435 0.000 -14903.152 -11339.938
+mileage                                     -0.097     0.007 -13.308 0.000     -0.112     -0.083
+engine_type[T.gasoline]:mileage              0.022     0.008   2.609 0.009      0.005      0.038
+vehicle_age                              -3333.582   157.698 -21.139 0.000  -3642.665  -3024.500
+engine_type[T.gasoline]:vehicle_age        628.861   176.837   3.556 0.000    282.267    975.455
+MakeModel Var                       4686726889.814 29359.948                                    
+================================================================================================
+</code></pre>
+</div>
+</div>
+<p>What’s most interesting about the results are the coefficients. We notice that, as expected and on average, every km driven (mileage) decreases the value of the vehicle by $0.097 and every year added decreases it by $3,333.58. The model uses EVs as a baseline, and we can notice that gasoline vehicles increase the value of the car by $0.022 for every km and $628.86 for every year. Now, these numbers are inexact; the relationship between these variables is most likely not linear. The sign of the coefficient is, however, undeniable: gasoline vehicles hold their value longer than their electrical counterparts.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>It is evident that EVs undergo greater depreciation than gasoline cars. However, this difference appears primarily in vehicles older than 5 years. Five years ago marked a significant increase in the popularity of EVs in Canada, notably with the release of the Tesla Model 3. The technology has advanced considerably since then, and it is somewhat expected that the early models of EVs did not perform well in the market and are thus resold at lower values.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2024,
+  author = {Ismael Balafrej},
+  title = {Are Electric Cars a Worse Investment\,?},
+  date = {2024-04-11},
+  url = {https://ibalafrej.com/posts/2024-04-11-ev-depreciation},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2024" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Ismael Balafrej. 2024. <span>“Are Electric Cars a Worse
+Investment ?”</span> April 11, 2024. <a href="https://ibalafrej.com/posts/2024-04-11-ev-depreciation">https://ibalafrej.com/posts/2024-04-11-ev-depreciation</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
