@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-04-11">
 <meta name="description" content="This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government’s decision to phase out the Roulez Vert program on the value.">
 
-<title>Ismael Balafrej - Are electric cars a worse investment ?</title>
+<title>Are electric cars a worse investment ? – Ismael Balafrej</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,11 +20,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -49,43 +50,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -100,17 +71,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-5359b888323dbf908b9fd79aa8d2fcd7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,8 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VPT77KYSBR"></script>
@@ -136,57 +115,62 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-<meta name="twitter:title" content="Ismael Balafrej - Are electric cars a worse investment ?">
-<meta name="twitter:description" content="This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government's decision to phase out the Roulez Vert program on…">
+<meta name="twitter:title" content="Are electric cars a worse investment ? – Ismael Balafrej">
+<meta name="twitter:description" content="This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government’s decision to phase out the Roulez Vert program on the value.">
+<meta name="twitter:image" content="https://ibalafrej.com/posts/2024-04-11-ev-depreciation/index_files/figure-html/cell-4-output-1.png">
 <meta name="twitter:creator" content="@IsmaelBalafrej">
 <meta name="twitter:site" content="@IsmaelBalafrej">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="1516">
+<meta name="twitter:image-width" content="1900">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Ismael Balafrej</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../blog.html">
- <span class="menu-text">Posts</span></a>
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../publications.html">
- <span class="menu-text">Publications</span></a>
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/tihbe"><i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/tihbe"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/IsmaelBalafrej"><i class="bi bi-twitter" role="img" aria-label="Twitter">
+    <a class="nav-link" href="https://twitter.com/IsmaelBalafrej"> <i class="bi bi-twitter" role="img" aria-label="Twitter">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/IsmaelBalafrej"><i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+    <a class="nav-link" href="https://linkedin.com/in/IsmaelBalafrej"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -224,7 +208,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </div>
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -244,7 +228,9 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
   </div>
   
 
+
 </header>
+
 
 <p>Electric vehicles (EVs) are generaly more expensive than their gasoline counterpart. Yet, adoption has still be relatively high thanks to governement incentives and the cheap cost of electricity in the province of Quebec. But, as the <a href="https://www.quebec.ca/transports/transport-electrique/aide-financiere-vehicule-electrique/services-en-ligne-roulez-vert">Roulez Vert</a> program from the government of Quebec is slowly getting phased out, it is worth examining more precicely the financial impact of EVs. The program’s initial goal was to promote EVs with monetary incentives (up to $7,000 CAD for new cars and $3,500 CAD for used cars). Removing this program means that every EV purchased starting on January 1, 2025, will be more expensive.</p>
 <p>This presents a unique opportunity for acquiring an EV this year with a lower value depreciation than what would traditionally be expected, as the cost of EVs will slowly increase over the next few years. That is, of course, under the assumption that the cost of new EVs will remain relatively stable over the next few years.</p>
@@ -254,12 +240,12 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="acquiring-used-vehicle-market-data">Acquiring used vehicle market data</h2>
 <p>To do so, I first scraped some used vehicle market data using the <a href="https://www.webscraper.io/">Web Scraper Chrome extension</a>. I then used the <a href="https://github.com/AbhiOnlyOne/us-car-models-data">US car models GitHub repository</a> to parse the vehicle make and model out of the text description for each vehicle.</p>
 <p>Here are the first 5 rows of this new dataset:</p>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="a639335d" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Code for parsing us-car-models-data (make and models)</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>us_car_models_df <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> glob.glob(<span class="st">"data/us-car-models-data/*.csv"</span>):</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> glob.glob(<span class="st">"data/us-car-models/*.csv"</span>):</span>
 <span id="cb1-4"><a href="#cb1-4"></a>    current_year <span class="op">=</span> pd.read_csv(<span class="bu">file</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">if</span> us_car_models_df <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb1-6"><a href="#cb1-6"></a>        us_car_models_df <span class="op">=</span> current_year</span>
@@ -319,8 +305,8 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="data-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
 <p>We can start our analysis with some visualization of this newly created dataset.</p>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="536b891b" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
@@ -358,14 +344,14 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-4-output-1.png" width="950" height="758" class="figure-img"></p>
-<p></p><figcaption class="figure-caption">Histogram for each column of the dataset.</figcaption><p></p>
+<figcaption>Histogram for each column of the dataset.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.</p>
-<div class="cell" data-execution_count="4">
-<details>
+<div id="dd090d99" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
@@ -384,15 +370,19 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <span id="cb4-15"><a href="#cb4-15"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-1.png" width="950" height="470"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="950" height="470" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="modeling" class="level2">
 <h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
 <p>To validate this conclusion, I created a simple linear mixed-effect regression model to predict vehicle prices using mileage, age, and engine type. There are some biases that are unaccounted for: the options added to the vehicle and the MSRP. We still can get a rough estimate by inspecting the parameters of the learned model of the impact the engine type has on value depreciation.</p>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="68242ade" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
@@ -405,20 +395,20 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 ================================================================================================
 Model:                         MixedLM             Dependent Variable:             price        
 No. Observations:              10521               Method:                         REML         
-No. Groups:                    626                 Scale:                          88717001.9691
-Min. group size:               1                   Log-Likelihood:                 -112977.0568 
+No. Groups:                    605                 Scale:                          84622503.7037
+Min. group size:               1                   Log-Likelihood:                 -112702.7451 
 Max. group size:               239                 Converged:                      Yes          
-Mean group size:               16.8                                                             
+Mean group size:               17.4                                                             
 ------------------------------------------------------------------------------------------------
                                         Coef.       Std.Err.    z    P&gt;|z|   [0.025     0.975]  
 ------------------------------------------------------------------------------------------------
-Intercept                                79703.870  2847.004  27.996 0.000  74123.844  85283.895
-engine_type[T.gasoline]                 -13121.545   909.000 -14.435 0.000 -14903.152 -11339.938
-mileage                                     -0.097     0.007 -13.308 0.000     -0.112     -0.083
-engine_type[T.gasoline]:mileage              0.022     0.008   2.609 0.009      0.005      0.038
-vehicle_age                              -3333.582   157.698 -21.139 0.000  -3642.665  -3024.500
-engine_type[T.gasoline]:vehicle_age        628.861   176.837   3.556 0.000    282.267    975.455
-MakeModel Var                       4686726889.814 29359.948                                    
+Intercept                                80101.989  2946.860  27.182 0.000  74326.250  85877.729
+engine_type[T.gasoline]                 -12552.305   915.781 -13.707 0.000 -14347.202 -10757.408
+mileage                                     -0.096     0.007 -13.464 0.000     -0.110     -0.082
+engine_type[T.gasoline]:mileage              0.020     0.008   2.402 0.016      0.004      0.036
+vehicle_age                              -3181.227   154.415 -20.602 0.000  -3483.875  -2878.579
+engine_type[T.gasoline]:vehicle_age        502.186   173.016   2.903 0.004    163.081    841.291
+MakeModel Var                       4876999762.524 31746.467                                    
 ================================================================================================
 </code></pre>
 </div>
@@ -432,16 +422,16 @@ MakeModel Var                       4686726889.814 29359.948
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2024,
-  author = {Ismael Balafrej},
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2024,
+  author = {Balafrej, Ismael},
   title = {Are Electric Cars a Worse Investment\,?},
   date = {2024-04-11},
-  url = {https://ibalafrej.com/posts/2024-04-11-ev-depreciation},
+  url = {https://ibalafrej.com/posts/2024-04-11-ev-depreciation/},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2024" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Ismael Balafrej. 2024. <span>“Are Electric Cars a Worse
-Investment ?”</span> April 11, 2024. <a href="https://ibalafrej.com/posts/2024-04-11-ev-depreciation">https://ibalafrej.com/posts/2024-04-11-ev-depreciation</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Balafrej, Ismael. 2024. <span>“Are Electric Cars a Worse
+Investment ?”</span> April 11, 2024. <a href="https://ibalafrej.com/posts/2024-04-11-ev-depreciation/">https://ibalafrej.com/posts/2024-04-11-ev-depreciation/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -470,12 +460,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -507,11 +500,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ibalafrej\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -521,8 +551,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -534,9 +573,244 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -577,6 +851,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

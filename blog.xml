@@ -10,55 +10,55 @@
 <atom:link href="https://ibalafrej.com/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Ismael Balafrej&#39;s personal Blog.</description>
 <language>en-ca</language>
-<generator>quarto-1.2.335</generator>
-<lastBuildDate>Thu, 11 Apr 2024 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Thu, 11 Apr 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Are electric cars a worse investment ?</title>
   <dc:creator>Ismael Balafrej</dc:creator>
-  <link>https://ibalafrej.com/posts/2024-04-11-ev-depreciation/index.html</link>
-  <description><![CDATA[ Electric vehicles (EVs) are generaly more expensive than their gasoline counterpart. Yet, adoption has still be relatively high thanks to governement incentives and the cheap cost of electricity in the province of Quebec. But, as the <a href="https://www.quebec.ca/transports/transport-electrique/aide-financiere-vehicule-electrique/services-en-ligne-roulez-vert">Roulez Vert</a> program from the government of Quebec is slowly getting phased out, it is worth examining more precicely the financial impact of EVs. The program’s initial goal was to promote EVs with monetary incentives (up to $7,000 CAD for new cars and $3,500 CAD for used cars). Removing this program means that every EV purchased starting on January 1, 2025, will be more expensive. ]]></description>
+  <link>https://ibalafrej.com/posts/2024-04-11-ev-depreciation/</link>
+  <description><![CDATA[ This post examines the value depreciation of electric vehicle (EV) in the Montreal area, with an analysis of the impact of the Quebec government’s decision to phase out the Roulez Vert program on the value. ]]></description>
   <category>Data Science</category>
-  <guid>https://ibalafrej.com/posts/2024-04-11-ev-depreciation/index.html</guid>
-  <pubDate>Thu, 11 Apr 2024 04:00:00 GMT</pubDate>
+  <guid>https://ibalafrej.com/posts/2024-04-11-ev-depreciation/</guid>
+  <pubDate>Thu, 11 Apr 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Unexpected coin flip experiment</title>
   <dc:creator>Ismael Balafrej</dc:creator>
   <link>https://ibalafrej.com/posts/2023-03-20.html</link>
-  <description><![CDATA[ Interesting idea from this <a href="https://twitter.com/littmath/status/1769044719034647001">X post by <span class="citation" data-cites="littmath">@littmath</span></a>: ]]></description>
+  <description><![CDATA[ In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation. ]]></description>
   <category>simulation</category>
   <category>statistics</category>
   <guid>https://ibalafrej.com/posts/2023-03-20.html</guid>
-  <pubDate>Wed, 20 Mar 2024 04:00:00 GMT</pubDate>
+  <pubDate>Wed, 20 Mar 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What if you could grow an AI chip ? 🧠</title>
   <dc:creator>Ismael Balafrej</dc:creator>
   <link>https://ibalafrej.com/posts/2023-12-08.html</link>
-  <description><![CDATA[ GPUs are not very efficient for machine learning, but they are dominant in the market because custom chips - with their respective AI models - are expensive to design and manufacture. Imagine if we could grow AI devices using data. ]]></description>
+  <description><![CDATA[ New publication alert ! ]]></description>
   <category>publication</category>
   <guid>https://ibalafrej.com/posts/2023-12-08.html</guid>
-  <pubDate>Fri, 08 Dec 2023 05:00:00 GMT</pubDate>
+  <pubDate>Fri, 08 Dec 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>PhD thesis defended !</title>
   <dc:creator>Ismael Balafrej</dc:creator>
-  <link>https://ibalafrej.com/posts/2023-04-13-defense/index.html</link>
-  <description><![CDATA[ I’m thrilled to announce that I have completed my PhD thesis defense! It’s been a long and challenging journey, but I’m proud of all the hard work and dedication that I’ve put into this moment. ]]></description>
+  <link>https://ibalafrej.com/posts/2023-04-13-defense/</link>
+  <description><![CDATA[ Like a proper nerd, I wore an ECG during my thesis defense. Here is the data ! ]]></description>
   <category>PhD</category>
   <category>ECG</category>
-  <guid>https://ibalafrej.com/posts/2023-04-13-defense/index.html</guid>
-  <pubDate>Mon, 17 Apr 2023 04:00:00 GMT</pubDate>
+  <guid>https://ibalafrej.com/posts/2023-04-13-defense/</guid>
+  <pubDate>Mon, 17 Apr 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Selection of a timestep for SNN simulation</title>
   <dc:creator>Ismael Balafrej</dc:creator>
-  <link>https://ibalafrej.com/posts/2023-03-18-dt-vs-lif/index.html</link>
-  <description><![CDATA[ I recently came across <a href="https://twitter.com/neuralreckoning/status/1580161403415330816">a tweet</a> by Dan Goodman, which presented a brief experiment demonstrating the detrimental effects of using a large timestep (<img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t">) during the simulation of a LIF neuron. The output spiking rate of a LIF neuron with a Poisson spike input was found to decrease as the timestep increased, with failure observed at soon as <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20t=1"> ms - a standard timestep size within the CS-oriented community. ]]></description>
+  <link>https://ibalafrej.com/posts/2023-03-18-dt-vs-lif/</link>
+  <description><![CDATA[ What is the proper timestep to select when simulating a spiking neural network ? The answer is, of course, it depends. Although, I think the usual assumption is incorrect when using leaky-integrate-and-fire neurons. Here’s why ! ]]></description>
   <category>SNN</category>
   <category>LIF</category>
-  <guid>https://ibalafrej.com/posts/2023-03-18-dt-vs-lif/index.html</guid>
-  <pubDate>Sun, 19 Mar 2023 04:00:00 GMT</pubDate>
+  <guid>https://ibalafrej.com/posts/2023-03-18-dt-vs-lif/</guid>
+  <pubDate>Sun, 19 Mar 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
