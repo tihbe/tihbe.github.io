@@ -18,15 +18,15 @@ jobs:
           ssh-key: ${{ secrets.git_ssh_key }}
 
       - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+        uses: quarto-dev/quarto-actions/setup@v2.1.4
 
       - name: Quarto html render
-        uses: quarto-dev/quarto-actions/render@v2
+        uses: quarto-dev/quarto-actions/render@v2.1.4
         with:
           to: html
       
       - name: Quarto publish
-        uses: quarto-dev/quarto-actions/publish@v2
+        uses: quarto-dev/quarto-actions/publish@v2.1.4
         with:
           target: gh-pages
           render: false
