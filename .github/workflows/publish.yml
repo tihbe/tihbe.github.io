@@ -22,7 +22,7 @@ jobs:
       - name: Install Jupyter dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install jupyter nbformat
+          python3 -m pip install -r requirements.txt
       - name: Quarto publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
