@@ -18,10 +18,13 @@ jobs:
           ssh-key: ${{ secrets.git_ssh_key }}
 
       - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2.1.4
-
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Install Jupyter dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install jupyter nbformat
       - name: Quarto publish
-        uses: quarto-dev/quarto-actions/publish@v2.1.4
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
         env:
