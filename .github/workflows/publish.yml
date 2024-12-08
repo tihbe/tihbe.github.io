@@ -16,6 +16,7 @@ jobs:
         with:
           lfs: 'true'
           ssh-key: ${{ secrets.git_ssh_key }}
+          submodules: recursive
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
