@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5359b888323dbf908b9fd79aa8d2fcd7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-27208713591bdc81d15d2ab76ca6d3ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -240,7 +240,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="acquiring-used-vehicle-market-data">Acquiring used vehicle market data</h2>
 <p>To do so, I first scraped some used vehicle market data using the <a href="https://www.webscraper.io/">Web Scraper Chrome extension</a>. I then used the <a href="https://github.com/AbhiOnlyOne/us-car-models-data">US car models GitHub repository</a> to parse the vehicle make and model out of the text description for each vehicle.</p>
 <p>Here are the first 5 rows of this new dataset:</p>
-<div id="a639335d" class="cell" data-execution_count="2">
+<div id="b81551be" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Code for parsing us-car-models-data (make and models)</span></span>
@@ -292,6 +292,16 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <span id="cb1-47"><a href="#cb1-47"></a><span class="bu">print</span>(df.head(<span class="dv">5</span>))</span>
 <span id="cb1-48"><a href="#cb1-48"></a>df[<span class="st">"MakeModel"</span>] <span class="op">=</span> (df[<span class="st">"make"</span>] <span class="op">+</span> <span class="st">" "</span> <span class="op">+</span> df[<span class="st">"model"</span>]).astype(<span class="st">"category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:23: SyntaxWarning: invalid escape sequence '\d'
+&lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
+&lt;&gt;:23: SyntaxWarning: invalid escape sequence '\d'
+&lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
+/tmp/ipykernel_2457/632754913.py:23: SyntaxWarning: invalid escape sequence '\d'
+  df["price"].str.extract("([\d,]+)", expand=False).str.replace(",", "").astype(float)
+/tmp/ipykernel_2457/632754913.py:28: SyntaxWarning: invalid escape sequence '\d'
+  df["make"] = df["vehicle-name"].str.extract("\d+\s+([A-Za-z\-]+)\s", expand=False)</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   mileage    price engine_type  year       make      model  vehicle_age
 0  27707.0  24995.0    electric  2022      Mazda      MX-30          3.0
@@ -305,40 +315,40 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="data-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
 <p>We can start our analysis with some visualization of this newly created dataset.</p>
-<div id="536b891b" class="cell" data-execution_count="3">
+<div id="04fe1bf3" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Vehicle age</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>hist_data <span class="op">=</span> np.unique(df.vehicle_age, return_counts<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Vehicle age"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># Engine type</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>hist_data <span class="op">=</span> np.unique(df.engine_type, return_counts<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_xlabel(<span class="st">"Engine type"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># Mileage</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>bin_size <span class="op">=</span> <span class="dv">5000</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a>bins, counts <span class="op">=</span> np.unique(df.mileage.astype(<span class="bu">int</span>)<span class="op">//</span>bin_size, return_counts<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-18"><a href="#cb3-18"></a>bins <span class="op">*=</span> bin_size</span>
-<span id="cb3-19"><a href="#cb3-19"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].bar(bins<span class="op">/</span><span class="dv">1000</span>, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>, width<span class="op">=</span>bin_size<span class="op">/</span><span class="dv">1000</span>)</span>
-<span id="cb3-20"><a href="#cb3-20"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Mileage [Thousand of km]"</span>)</span>
-<span id="cb3-21"><a href="#cb3-21"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># Top 15 auto maker</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a>bins, counts <span class="op">=</span> np.unique(df.make, return_counts<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-25"><a href="#cb3-25"></a>top_idx <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb3-26"><a href="#cb3-26"></a>bins <span class="op">=</span> bins[top_idx[:<span class="dv">15</span>]]</span>
-<span id="cb3-27"><a href="#cb3-27"></a>counts <span class="op">=</span> counts[top_idx[:<span class="dv">15</span>]]</span>
-<span id="cb3-28"><a href="#cb3-28"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].bar(bins, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb3-29"><a href="#cb3-29"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].set_xticklabels(bins, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
-<span id="cb3-30"><a href="#cb3-30"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].text(<span class="dv">9</span>, <span class="dv">900</span>, <span class="st">"(Only showing the top 15 auto maker)"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Vehicle age</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>hist_data <span class="op">=</span> np.unique(df.vehicle_age, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Vehicle age"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>axs[<span class="dv">0</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># Engine type</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>hist_data <span class="op">=</span> np.unique(df.engine_type, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].bar(<span class="op">*</span>hist_data, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_xlabel(<span class="st">"Engine type"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>axs[<span class="dv">0</span>][<span class="dv">1</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># Mileage</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>bin_size <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>bins, counts <span class="op">=</span> np.unique(df.mileage.astype(<span class="bu">int</span>)<span class="op">//</span>bin_size, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>bins <span class="op">*=</span> bin_size</span>
+<span id="cb4-19"><a href="#cb4-19"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].bar(bins<span class="op">/</span><span class="dv">1000</span>, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>, width<span class="op">=</span>bin_size<span class="op">/</span><span class="dv">1000</span>)</span>
+<span id="cb4-20"><a href="#cb4-20"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_xlabel(<span class="st">"Mileage [Thousand of km]"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21"></a>axs[<span class="dv">1</span>][<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22"></a></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Top 15 auto maker</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>bins, counts <span class="op">=</span> np.unique(df.make, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-25"><a href="#cb4-25"></a>top_idx <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-26"><a href="#cb4-26"></a>bins <span class="op">=</span> bins[top_idx[:<span class="dv">15</span>]]</span>
+<span id="cb4-27"><a href="#cb4-27"></a>counts <span class="op">=</span> counts[top_idx[:<span class="dv">15</span>]]</span>
+<span id="cb4-28"><a href="#cb4-28"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].bar(bins, counts, edgecolor<span class="op">=</span><span class="st">"black"</span>, align<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].set_xticklabels(bins, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30"></a>axs[<span class="dv">1</span>][<span class="dv">1</span>].text(<span class="dv">9</span>, <span class="dv">900</span>, <span class="st">"(Only showing the top 15 auto maker)"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -350,24 +360,24 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </div>
 </div>
 <p>To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.</p>
-<div id="dd090d99" class="cell" data-execution_count="4">
+<div id="b7a58842" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a>avg_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.mean().reset_index()</span>
-<span id="cb4-4"><a href="#cb4-4"></a>med_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.median().reset_index()</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Plotting</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>sns.lineplot(data<span class="op">=</span>avg_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
-<span id="cb4-8"><a href="#cb4-8"></a>sns.lineplot(data<span class="op">=</span>med_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
-<span id="cb4-9"><a href="#cb4-9"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'Average Vehicle Price by Engine Type'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Median Vehicle Price by Engine Type'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>axs[<span class="dv">0</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>axs[<span class="dv">1</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>axs[<span class="dv">0</span>].set_ylabel(<span class="st">'Price ($ CAD)'</span>)</span>
-<span id="cb4-14"><a href="#cb4-14"></a>axs[<span class="dv">0</span>].legend(title<span class="op">=</span><span class="st">'Engine Type'</span>)</span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>avg_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.mean().reset_index()</span>
+<span id="cb5-4"><a href="#cb5-4"></a>med_price_by_age <span class="op">=</span> df.groupby([<span class="st">'vehicle_age'</span>, <span class="st">'engine_type'</span>]).price.median().reset_index()</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># Plotting</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>sns.lineplot(data<span class="op">=</span>avg_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb5-8"><a href="#cb5-8"></a>sns.lineplot(data<span class="op">=</span>med_price_by_age, x<span class="op">=</span><span class="st">'vehicle_age'</span>, y<span class="op">=</span><span class="st">'price'</span>, hue<span class="op">=</span><span class="st">'engine_type'</span>, marker<span class="op">=</span><span class="st">"o"</span>, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb5-9"><a href="#cb5-9"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'Average Vehicle Price by Engine Type'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Median Vehicle Price by Engine Type'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>axs[<span class="dv">0</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>axs[<span class="dv">1</span>].set_xlabel(<span class="st">'Vehicle Age (Years)'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>axs[<span class="dv">0</span>].set_ylabel(<span class="st">'Price ($ CAD)'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>axs[<span class="dv">0</span>].legend(title<span class="op">=</span><span class="st">'Engine Type'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -381,34 +391,34 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="modeling" class="level2">
 <h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
 <p>To validate this conclusion, I created a simple linear mixed-effect regression model to predict vehicle prices using mileage, age, and engine type. There are some biases that are unaccounted for: the options added to the vehicle and the MSRP. We still can get a rough estimate by inspecting the parameters of the learned model of the impact the engine type has on value depreciation.</p>
-<div id="68242ade" class="cell" data-execution_count="5">
+<div id="9f0041fd" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>model <span class="op">=</span> smf.mixedlm(<span class="st">"price ~ engine_type*mileage + engine_type*vehicle_age"</span>, df, groups<span class="op">=</span><span class="st">"MakeModel"</span>).fit()</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>model <span class="op">=</span> smf.mixedlm(<span class="st">"price ~ engine_type*mileage + engine_type*vehicle_age"</span>, df, groups<span class="op">=</span><span class="st">"MakeModel"</span>).fit()</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                             Mixed Linear Model Regression Results
 ================================================================================================
 Model:                         MixedLM             Dependent Variable:             price        
 No. Observations:              10521               Method:                         REML         
-No. Groups:                    605                 Scale:                          84622503.7037
-Min. group size:               1                   Log-Likelihood:                 -112702.7451 
+No. Groups:                    616                 Scale:                          88290233.5685
+Min. group size:               1                   Log-Likelihood:                 -112934.6100 
 Max. group size:               239                 Converged:                      Yes          
-Mean group size:               17.4                                                             
+Mean group size:               17.1                                                             
 ------------------------------------------------------------------------------------------------
                                         Coef.       Std.Err.    z    P&gt;|z|   [0.025     0.975]  
 ------------------------------------------------------------------------------------------------
-Intercept                                80101.989  2946.860  27.182 0.000  74326.250  85877.729
-engine_type[T.gasoline]                 -12552.305   915.781 -13.707 0.000 -14347.202 -10757.408
-mileage                                     -0.096     0.007 -13.464 0.000     -0.110     -0.082
-engine_type[T.gasoline]:mileage              0.020     0.008   2.402 0.016      0.004      0.036
-vehicle_age                              -3181.227   154.415 -20.602 0.000  -3483.875  -2878.579
-engine_type[T.gasoline]:vehicle_age        502.186   173.016   2.903 0.004    163.081    841.291
-MakeModel Var                       4876999762.524 31746.467                                    
+Intercept                                81416.899  2885.697  28.214 0.000  75761.038  87072.761
+engine_type[T.gasoline]                 -14846.084   910.602 -16.304 0.000 -16630.832 -13061.337
+mileage                                     -0.097     0.007 -13.318 0.000     -0.112     -0.083
+engine_type[T.gasoline]:mileage              0.021     0.008   2.544 0.011      0.005      0.038
+vehicle_age                              -3335.096   156.869 -21.260 0.000  -3642.553  -3027.639
+engine_type[T.gasoline]:vehicle_age        631.906   175.991   3.591 0.000    286.970    976.843
+MakeModel Var                       4747308614.661 30028.055                                    
 ================================================================================================
 </code></pre>
 </div>
