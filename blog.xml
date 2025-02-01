@@ -10,8 +10,17 @@
 <atom:link href="https://ibalafrej.com/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Ismael Balafrej&#39;s personal Blog.</description>
 <language>en-ca</language>
-<generator>quarto-1.6.39</generator>
-<lastBuildDate>Thu, 11 Apr 2024 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.40</generator>
+<lastBuildDate>Thu, 02 Jan 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Growing Challenge of Deepfakes and the Future of Detection</title>
+  <dc:creator>Ismael Balafrej</dc:creator>
+  <link>https://ibalafrej.com/posts/2025-01-02.html</link>
+  <description><![CDATA[ New publication alert! ]]></description>
+  <category>publication</category>
+  <guid>https://ibalafrej.com/posts/2025-01-02.html</guid>
+  <pubDate>Thu, 02 Jan 2025 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Are electric cars a worse investment ?</title>
   <dc:creator>Ismael Balafrej</dc:creator>

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ismael Balafrej">
-<meta name="dcterms.date" content="2024-03-20">
-<meta name="description" content="In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.">
+<meta name="dcterms.date" content="2025-01-02">
+<meta name="description" content="New publication alert!">
 
-<title>Unexpected coin flip experiment – Ismael Balafrej</title>
+<title>The Growing Challenge of Deepfakes and the Future of Detection – Ismael Balafrej</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -115,14 +81,11 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-<meta name="twitter:title" content="Unexpected coin flip experiment – Ismael Balafrej">
-<meta name="twitter:description" content="In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.">
-<meta name="twitter:image" content="https://ibalafrej.com/posts/2023-03-20_files/figure-html/cell-2-output-1.png">
+<meta name="twitter:title" content="The Growing Challenge of Deepfakes and the Future of Detection – Ismael Balafrej">
+<meta name="twitter:description" content="New publication alert!">
 <meta name="twitter:creator" content="@IsmaelBalafrej">
 <meta name="twitter:site" content="@IsmaelBalafrej">
-<meta name="twitter:image-height" content="536">
-<meta name="twitter:image-width" content="748">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -186,16 +149,15 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Unexpected coin flip experiment</h1>
+<h1 class="title">The Growing Challenge of Deepfakes and the Future of Detection</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">simulation</div>
-    <div class="quarto-category">statistics</div>
+    <div class="quarto-category">publication</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    In this post, I explore a seemingly straightforward coin flip game between two players. Interestingly, the intuitive approach fails when validated with a Monte Carlo simulation.
+    New publication alert!
   </div>
 </div>
 
@@ -212,7 +174,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 20, 2024</p>
+      <p class="date">January 2, 2025</p>
     </div>
   </div>
   
@@ -224,210 +186,24 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </header>
 
 
-<p>Interesting idea from this <a href="https://twitter.com/littmath/status/1769044719034647001">X post by <span class="citation" data-cites="littmath">@littmath</span></a>:</p>
-<blockquote class="blockquote">
-<p>Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g.&nbsp;for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?</p>
-</blockquote>
-<p>If we pause to analyze, it might initially seem that Alice has the upper hand. Consider a perfect scenario: if the sequence were all heads (HHHHHHHHHH), Alice could rack up to 9 points out of 10 flips. On the flip side (pun intended), in a mixed sequence like HTHTHTHTHT, Bob would only manage to score 5 points out of 10. This reasoning suggests Alice might have a better chance of winning, right?</p>
-<p>But here’s where it gets intriguing. By conducting a Monte Carlo simulation with N=1M iterations, we uncover a surprising truth: Bob is actually more likely to win:</p>
-<div class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a>np.random.seed(<span class="bn">0x1B</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>N <span class="op">=</span> <span class="dv">1_000_000</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>bob_wins <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>alice_wins <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb1-10"><a href="#cb1-10"></a>    flips <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">100</span>)  <span class="co"># 0: head, 1: tail</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>    flips_diff <span class="op">=</span> np.diff(flips)  <span class="co"># 1 for TH, -1 for HT, 0 otherwise</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>    points_alice <span class="op">=</span> np.<span class="bu">sum</span>((flips_diff <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (flips[:<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">0</span>))  <span class="co"># HH</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>    points_bob <span class="op">=</span> np.<span class="bu">sum</span>(flips_diff <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>)  <span class="co"># HT</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>    <span class="cf">if</span> points_bob <span class="op">&gt;</span> points_alice:</span>
-<span id="cb1-15"><a href="#cb1-15"></a>        bob_wins <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cf">elif</span> points_bob <span class="op">&lt;</span> points_alice:</span>
-<span id="cb1-17"><a href="#cb1-17"></a>        alice_wins <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
-<span id="cb1-20"><a href="#cb1-20"></a>ax.bar(</span>
-<span id="cb1-21"><a href="#cb1-21"></a>    [<span class="st">"Bob wins"</span>, <span class="st">"Alice wins"</span>],</span>
-<span id="cb1-22"><a href="#cb1-22"></a>    [bob_wins <span class="op">/</span> N, alice_wins <span class="op">/</span> N],</span>
-<span id="cb1-23"><a href="#cb1-23"></a>    <span class="fl">0.5</span>,</span>
-<span id="cb1-24"><a href="#cb1-24"></a>)</span>
-<span id="cb1-25"><a href="#cb1-25"></a>ax.set_ylabel(<span class="st">"Probability"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26"></a>ax.set_ylim([<span class="fl">0.45</span>, <span class="fl">0.5</span>])</span>
-<span id="cb1-27"><a href="#cb1-27"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-28"><a href="#cb1-28"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-29"><a href="#cb1-29"></a>ax.spines[<span class="st">'left'</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-30"><a href="#cb1-30"></a>ax.grid(axis<span class="op">=</span><span class="st">'y'</span>)</span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="2023-03-20_files/figure-html/cell-2-output-1.png" width="374" height="268" class="figure-img"></p>
-<figcaption>Probability of winning the coin-pair flip game for Bob and Alice.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The nuance here is that Alice might have the potential to score more points in a single game, but when we look at the bigger picture, Bob wins more frequently. Let’s enumerate all possible outcomes with just 4 coin flips to understand why:</p>
-<div class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a>md <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="ss">| Flips | Points Alice | Points Bob | Winner | </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="ss">|-------|--------------|------------|--------|</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="ss">"""</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="cf">for</span> l <span class="kw">in</span> product(<span class="st">"TH"</span>, repeat<span class="op">=</span><span class="dv">4</span>):</span>
-<span id="cb2-10"><a href="#cb2-10"></a>    flips <span class="op">=</span> <span class="st">""</span>.join(l)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>    points_alice <span class="op">=</span> points_bob <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>    <span class="cf">for</span> pair <span class="kw">in</span> <span class="bu">zip</span>(flips[:<span class="op">-</span><span class="dv">1</span>], flips[<span class="dv">1</span>:]):</span>
-<span id="cb2-13"><a href="#cb2-13"></a>        <span class="cf">if</span> pair <span class="op">==</span> (<span class="st">"H"</span>, <span class="st">"H"</span>):</span>
-<span id="cb2-14"><a href="#cb2-14"></a>            points_alice <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a>        <span class="cf">elif</span> pair <span class="op">==</span> (<span class="st">"H"</span>, <span class="st">"T"</span>):</span>
-<span id="cb2-16"><a href="#cb2-16"></a>            points_bob <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>    winner <span class="op">=</span> <span class="st">"Draw"</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>    <span class="cf">if</span> points_alice <span class="op">&gt;</span> points_bob:</span>
-<span id="cb2-19"><a href="#cb2-19"></a>        winner <span class="op">=</span> <span class="st">"Alice"</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a>    <span class="cf">elif</span> points_alice <span class="op">&lt;</span> points_bob:</span>
-<span id="cb2-21"><a href="#cb2-21"></a>        winner <span class="op">=</span> <span class="st">"Bob"</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a>    md <span class="op">+=</span> <span class="ss">f"| </span><span class="sc">{</span>flips<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>points_alice<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>points_bob<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>winner<span class="sc">}</span><span class="ss"> |</span><span class="ch">\n</span><span class="ss">"</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a></span>
-<span id="cb2-24"><a href="#cb2-24"></a>Markdown(md)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th>Flips</th>
-<th>Points Alice</th>
-<th>Points Bob</th>
-<th>Winner</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>TTTT</td>
-<td>0</td>
-<td>0</td>
-<td>Draw</td>
-</tr>
-<tr class="even">
-<td>TTTH</td>
-<td>0</td>
-<td>0</td>
-<td>Draw</td>
-</tr>
-<tr class="odd">
-<td>TTHT</td>
-<td>0</td>
-<td>1</td>
-<td>Bob</td>
-</tr>
-<tr class="even">
-<td>TTHH</td>
-<td>1</td>
-<td>0</td>
-<td>Alice</td>
-</tr>
-<tr class="odd">
-<td>THTT</td>
-<td>0</td>
-<td>1</td>
-<td>Bob</td>
-</tr>
-<tr class="even">
-<td>THTH</td>
-<td>0</td>
-<td>1</td>
-<td>Bob</td>
-</tr>
-<tr class="odd">
-<td>THHT</td>
-<td>1</td>
-<td>1</td>
-<td>Draw</td>
-</tr>
-<tr class="even">
-<td>THHH</td>
-<td>2</td>
-<td>0</td>
-<td>Alice</td>
-</tr>
-<tr class="odd">
-<td>HTTT</td>
-<td>0</td>
-<td>1</td>
-<td>Bob</td>
-</tr>
-<tr class="even">
-<td>HTTH</td>
-<td>0</td>
-<td>1</td>
-<td>Bob</td>
-</tr>
-<tr class="odd">
-<td>HTHT</td>
-<td>0</td>
-<td>2</td>
-<td>Bob</td>
-</tr>
-<tr class="even">
-<td>HTHH</td>
-<td>1</td>
-<td>1</td>
-<td>Draw</td>
-</tr>
-<tr class="odd">
-<td>HHTT</td>
-<td>1</td>
-<td>1</td>
-<td>Draw</td>
-</tr>
-<tr class="even">
-<td>HHTH</td>
-<td>1</td>
-<td>1</td>
-<td>Draw</td>
-</tr>
-<tr class="odd">
-<td>HHHT</td>
-<td>2</td>
-<td>1</td>
-<td>Alice</td>
-</tr>
-<tr class="even">
-<td>HHHH</td>
-<td>3</td>
-<td>0</td>
-<td>Alice</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>This detailed breakdown showcases Bob’s advantage, who wins more often than Alice in this simplified scenario. The total number of points in all games for both Alice and Bob is equal, 12. Yet, Bob wins more often by a small margin. This exploration not only demonstrates the surprising outcomes that can emerge from seemingly straightforward situations but also highlights the beauty of Monte Carlo simulations in revealing the unexpected.</p>
+<p>Deepfake technology has advanced rapidly, making it increasingly difficult to distinguish real from manipulated media. Powered by generative AI techniques like GANs and diffusion models, deepfakes can seamlessly alter videos, swap faces, and even clone voices, raising serious concerns about misinformation, identity theft, and political manipulation. As deepfake tools become more accessible, the need for effective detection methods is more urgent than ever.</p>
+<p>Most current deepfake detection methods rely on deep learning models that require significant computational resources, often making them impractical for everyday users. Many solutions depend on cloud-based processing, limiting accessibility and increasing latency. This creates a major gap—while deepfake generation tools are widely available, detection remains out of reach for most people.</p>
+<p>In this <a href="https://www.nature.com/articles/s41598-024-31084-1">new article</a>, we present a new approach to efficient deepfake detection, addressing the challenge of balancing accuracy with computational efficiency. By leveraging optimized neural networks and innovative inference techniques, we demonstrate how detection can be made more accessible without sacrificing performance.</p>
+<p>Deepfake detection is an ongoing arms race, and scalable, real-time solutions are essential to maintaining trust in digital media. As deepfake generation evolves, so must detection strategies. The future lies in lightweight, adaptive, and multimodal detection systems that can be deployed at scale—ensuring that truth remains distinguishable from fiction.</p>
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2024,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{balafrej2025,
   author = {Balafrej, Ismael},
-  title = {Unexpected Coin Flip Experiment},
-  date = {2024-03-20},
-  url = {https://ibalafrej.com/posts/2023-03-20.html},
+  title = {The {Growing} {Challenge} of {Deepfakes} and the {Future} of
+    {Detection}},
+  date = {2025-01-02},
+  url = {https://ibalafrej.com/posts/2025-01-02.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Balafrej, Ismael. 2024. <span>“Unexpected Coin Flip Experiment.”</span>
-March 20, 2024. <a href="https://ibalafrej.com/posts/2023-03-20.html">https://ibalafrej.com/posts/2023-03-20.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-balafrej2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Balafrej, Ismael. 2025. <span>“The Growing Challenge of Deepfakes and
+the Future of Detection.”</span> January 2, 2025. <a href="https://ibalafrej.com/posts/2025-01-02.html">https://ibalafrej.com/posts/2025-01-02.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

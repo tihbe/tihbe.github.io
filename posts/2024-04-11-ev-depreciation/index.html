@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-27208713591bdc81d15d2ab76ca6d3ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-096a3e80ce2fc443ab554b28b562d874.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -240,7 +240,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="acquiring-used-vehicle-market-data">Acquiring used vehicle market data</h2>
 <p>To do so, I first scraped some used vehicle market data using the <a href="https://www.webscraper.io/">Web Scraper Chrome extension</a>. I then used the <a href="https://github.com/AbhiOnlyOne/us-car-models-data">US car models GitHub repository</a> to parse the vehicle make and model out of the text description for each vehicle.</p>
 <p>Here are the first 5 rows of this new dataset:</p>
-<div id="b81551be" class="cell" data-execution_count="2">
+<div id="1e5b494d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Code for parsing us-car-models-data (make and models)</span></span>
@@ -297,9 +297,9 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 &lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
 &lt;&gt;:23: SyntaxWarning: invalid escape sequence '\d'
 &lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
-/tmp/ipykernel_2457/632754913.py:23: SyntaxWarning: invalid escape sequence '\d'
+/tmp/ipykernel_2486/632754913.py:23: SyntaxWarning: invalid escape sequence '\d'
   df["price"].str.extract("([\d,]+)", expand=False).str.replace(",", "").astype(float)
-/tmp/ipykernel_2457/632754913.py:28: SyntaxWarning: invalid escape sequence '\d'
+/tmp/ipykernel_2486/632754913.py:28: SyntaxWarning: invalid escape sequence '\d'
   df["make"] = df["vehicle-name"].str.extract("\d+\s+([A-Za-z\-]+)\s", expand=False)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -315,7 +315,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="data-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
 <p>We can start our analysis with some visualization of this newly created dataset.</p>
-<div id="04fe1bf3" class="cell" data-execution_count="3">
+<div id="0f410be4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
@@ -360,7 +360,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </div>
 </div>
 <p>To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.</p>
-<div id="b7a58842" class="cell" data-execution_count="4">
+<div id="fe424d4d" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
@@ -391,7 +391,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="modeling" class="level2">
 <h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
 <p>To validate this conclusion, I created a simple linear mixed-effect regression model to predict vehicle prices using mileage, age, and engine type. There are some biases that are unaccounted for: the options added to the vehicle and the MSRP. We still can get a rough estimate by inspecting the parameters of the learned model of the impact the engine type has on value depreciation.</p>
-<div id="9f0041fd" class="cell" data-execution_count="5">
+<div id="7995d068" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
@@ -405,20 +405,20 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 ================================================================================================
 Model:                         MixedLM             Dependent Variable:             price        
 No. Observations:              10521               Method:                         REML         
-No. Groups:                    616                 Scale:                          88290233.5685
-Min. group size:               1                   Log-Likelihood:                 -112934.6100 
+No. Groups:                    622                 Scale:                          88165180.8210
+Min. group size:               1                   Log-Likelihood:                 -112938.8227 
 Max. group size:               239                 Converged:                      Yes          
-Mean group size:               17.1                                                             
+Mean group size:               16.9                                                             
 ------------------------------------------------------------------------------------------------
                                         Coef.       Std.Err.    z    P&gt;|z|   [0.025     0.975]  
 ------------------------------------------------------------------------------------------------
-Intercept                                81416.899  2885.697  28.214 0.000  75761.038  87072.761
-engine_type[T.gasoline]                 -14846.084   910.602 -16.304 0.000 -16630.832 -13061.337
-mileage                                     -0.097     0.007 -13.318 0.000     -0.112     -0.083
-engine_type[T.gasoline]:mileage              0.021     0.008   2.544 0.011      0.005      0.038
-vehicle_age                              -3335.096   156.869 -21.260 0.000  -3642.553  -3027.639
-engine_type[T.gasoline]:vehicle_age        631.906   175.991   3.591 0.000    286.970    976.843
-MakeModel Var                       4747308614.661 30028.055                                    
+Intercept                                80996.549  2861.541  28.305 0.000  75388.032  86605.066
+engine_type[T.gasoline]                 -14556.443   914.453 -15.918 0.000 -16348.739 -12764.147
+mileage                                     -0.097     0.007 -13.358 0.000     -0.112     -0.083
+engine_type[T.gasoline]:mileage              0.022     0.008   2.580 0.010      0.005      0.038
+vehicle_age                              -3314.227   156.865 -21.128 0.000  -3621.677  -3006.777
+engine_type[T.gasoline]:vehicle_age        611.466   175.913   3.476 0.001    266.682    956.249
+MakeModel Var                       4705610841.560 29653.939                                    
 ================================================================================================
 </code></pre>
 </div>
