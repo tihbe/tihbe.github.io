@@ -240,7 +240,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="acquiring-used-vehicle-market-data">Acquiring used vehicle market data</h2>
 <p>To do so, I first scraped some used vehicle market data using the <a href="https://www.webscraper.io/">Web Scraper Chrome extension</a>. I then used the <a href="https://github.com/AbhiOnlyOne/us-car-models-data">US car models GitHub repository</a> to parse the vehicle make and model out of the text description for each vehicle.</p>
 <p>Here are the first 5 rows of this new dataset:</p>
-<div id="030c68b4" class="cell" data-execution_count="2">
+<div id="14e64a3f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Code for parsing us-car-models-data (make and models)</span></span>
@@ -297,9 +297,9 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 &lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
 &lt;&gt;:23: SyntaxWarning: invalid escape sequence '\d'
 &lt;&gt;:28: SyntaxWarning: invalid escape sequence '\d'
-/tmp/ipykernel_2532/632754913.py:23: SyntaxWarning: invalid escape sequence '\d'
+/tmp/ipykernel_2553/632754913.py:23: SyntaxWarning: invalid escape sequence '\d'
   df["price"].str.extract("([\d,]+)", expand=False).str.replace(",", "").astype(float)
-/tmp/ipykernel_2532/632754913.py:28: SyntaxWarning: invalid escape sequence '\d'
+/tmp/ipykernel_2553/632754913.py:28: SyntaxWarning: invalid escape sequence '\d'
   df["make"] = df["vehicle-name"].str.extract("\d+\s+([A-Za-z\-]+)\s", expand=False)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -315,7 +315,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="data-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
 <p>We can start our analysis with some visualization of this newly created dataset.</p>
-<div id="41c851c1" class="cell" data-execution_count="3">
+<div id="a2b7517e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
@@ -360,7 +360,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </div>
 </div>
 <p>To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.</p>
-<div id="bacdfc2b" class="cell" data-execution_count="4">
+<div id="891e2dc0" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), tight_layout<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
@@ -391,7 +391,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <section id="modeling" class="level2">
 <h2 class="anchored" data-anchor-id="modeling">Modeling</h2>
 <p>To validate this conclusion, I created a simple linear mixed-effect regression model to predict vehicle prices using mileage, age, and engine type. There are some biases that are unaccounted for: the options added to the vehicle and the MSRP. We still can get a rough estimate by inspecting the parameters of the learned model of the impact the engine type has on value depreciation.</p>
-<div id="3a0b060c" class="cell" data-execution_count="5">
+<div id="ad0174a2" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
