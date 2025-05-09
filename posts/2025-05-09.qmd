@@ -1,0 +1,24 @@
+---
+title: "Boosting RSNNs for Long-Term Memory"
+description: "Because even spiking neurons deserve a memory boost!"
+date: "09/05/2025"
+categories:
+  - publication
+  - snn
+---
+
+I'm excited to share that our latest work, titled "Enhancing temporal learning in recurrent spiking networks for neuromorphic applications" has just been published in Neuromorphic Computing and Engineering.
+
+In this paper, we tackle one of the biggest limitations of training RSNNs with binary spikes, i.e., handling long temporal dependencies. Backpropagation through time becomes increasingly unstable in such settings, but we introduce three key innovations to overcome this:
+
+Synaptic Delays at the neuron level, helping gradients skip time steps and keeping the firing rate efficient.
+
+Branching Factor Regularization, inspired by biological systems, which stabilizes dynamics and simplifies training by including a time-local loss component.
+
+Surrogate Gradient Redesign, where we expand the function's support to better accommodate long-range dependencies during learning.
+
+Together, these changes dramatically improve performance, as we observed on benchmarks such as the permuted sequential MNIST (psMNIST), where we achieved state-of-the-art results (for spiking models).
+
+We believe this work is a step toward making RSNNs more practical and scalable for neuromorphic hardware, both digital and analog. If you're working on biologically inspired computing or just curious about the future of efficient neural architectures, I invite you to take a look at the full article.
+
+<https://doi.org/10.1088/2634-4386/add293>
