@@ -3,7 +3,9 @@ Here is a summary of my academic publications. You may also find new articles in
 
 # Publications
 
-- [In review] Garg, N., **Balafrej, I.**, Palhares, J., Begon-Lours, L., Florini, D., Falcone, D., Stecconi, T., Bragaglia, V., Offrein, B., Portal, J.-M., Querlioz, D., Beilliard, Y., Drouin, D., Alibart, F. Unsupervised Local Learning Based on Voltage-Dependent Synaptic Plasticity for Resistive and Ferroelectric Synapses. (2024) <https://dx.doi.org/10.21203/rs.3.rs-5295706/v1>
+- **Balafrej, I.**, Bahadi, S.. Rouat, J., and Alibart, F. Enhancing Temporal Learning in Recurrent Spiking Networks for Neuromorphic Applications. Neuromorph. Comput. Eng. (2025) <https://doi.org/10.1088/2634-4386/add293>
+
+- [In review] Garg, N., **Balafrej, I.**, Palhares, J., Begon-Lours, L., Florini, D., Falcone, D., Stecconi, T., Bragaglia, V., Offrein, B., Portal, J.-M., Querlioz, D., Beilliard, Y., Drouin, D., Alibart, F. Unsupervised Local Learning Based on Voltage-Dependent Synaptic Plasticity for Resistive and Ferroelectric Synapses. (2025) <https://dx.doi.org/10.21203/rs.3.rs-5295706/v1>
   
 - **Balafrej, I.**, Dahmane, M. Enhancing Practicality and Efficiency of Deepfake Detection. Scientific Reports. (2024). <https://doi.org/10.1038/s41598-024-82223-y>.
   
