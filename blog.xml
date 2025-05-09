@@ -10,8 +10,18 @@
 <atom:link href="https://ibalafrej.com/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Ismael Balafrej&#39;s personal Blog.</description>
 <language>en-ca</language>
-<generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 01 Feb 2025 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.7.30</generator>
+<lastBuildDate>Fri, 05 Sep 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Boosting RSNNs for Long-Term Memory</title>
+  <dc:creator>Ismael Balafrej</dc:creator>
+  <link>https://ibalafrej.com/posts/2025-05-09.html</link>
+  <description><![CDATA[ Because even spiking neurons deserve a memory boost! ]]></description>
+  <category>publication</category>
+  <category>snn</category>
+  <guid>https://ibalafrej.com/posts/2025-05-09.html</guid>
+  <pubDate>Fri, 05 Sep 2025 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>The Growing Challenge of Deepfakes and the Future of Detection</title>
   <dc:creator>Ismael Balafrej</dc:creator>

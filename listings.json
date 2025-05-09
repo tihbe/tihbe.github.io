@@ -1,7 +1,8 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/blog.html",
     "items": [
+      "/posts/2025-05-09.html",
       "/posts/2025-02-01.html",
       "/posts/2024-04-11-ev-depreciation/index.html",
       "/posts/2023-03-20.html",
@@ -11,8 +12,9 @@
     ]
   },
   {
-    "listing": "/blog.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/2025-05-09.html",
       "/posts/2025-02-01.html",
       "/posts/2024-04-11-ev-depreciation/index.html",
       "/posts/2023-03-20.html",
