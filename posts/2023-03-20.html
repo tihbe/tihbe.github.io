@@ -234,8 +234,8 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <p>Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g.&nbsp;for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?</p>
 </blockquote>
 <p>If we pause to analyze, it might initially seem that Alice has the upper hand. Consider a perfect scenario: if the sequence were all heads (HHHHHHHHHH), Alice could rack up to 9 points out of 10 flips. On the flip side (pun intended), in a mixed sequence like HTHTHTHTHT, Bob would only manage to score 5 points out of 10. This reasoning suggests Alice might have a better chance of winning, right?</p>
-<p>But here’s where it gets intriguing. By conducting a Monte Carlo simulation with N=1M iterations, we uncover a surprising truth: Bob is actually more likely to win:</p>
-<div class="cell" data-execution_count="1">
+<p>But the Monte Carlo simulation says otherwise. With N=1M iterations, Bob comes out ahead:</p>
+<div id="c014c566" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -279,8 +279,8 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>The nuance here is that Alice might have the potential to score more points in a single game, but when we look at the bigger picture, Bob wins more frequently. Let’s enumerate all possible outcomes with just 4 coin flips to understand why:</p>
-<div class="cell" data-execution_count="2">
+<p>The catch is that Alice might score more points in a single game, but Bob wins more games. Let’s enumerate all possible outcomes with just 4 coin flips to understand why:</p>
+<div id="7a8c8cc5" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
@@ -308,7 +308,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 <span id="cb2-23"><a href="#cb2-23"></a></span>
 <span id="cb2-24"><a href="#cb2-24"></a>Markdown(md)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -419,7 +419,7 @@ gtag('config', 'G-VPT77KYSBR', { 'anonymize_ip': true});
 </table>
 </div>
 </div>
-<p>This detailed breakdown showcases Bob’s advantage, who wins more often than Alice in this simplified scenario. The total number of points in all games for both Alice and Bob is equal, 12. Yet, Bob wins more often by a small margin. This exploration not only demonstrates the surprising outcomes that can emerge from seemingly straightforward situations but also highlights the beauty of Monte Carlo simulations in revealing the unexpected.</p>
+<p>The breakdown shows Bob’s advantage: he wins more often than Alice in this simplified scenario. The total points across all games are equal (12 each), yet Bob wins more often by a small margin. Worth keeping in mind the next time a probability problem looks obvious.</p>
 
 
 
