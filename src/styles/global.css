@@ -156,6 +156,49 @@ pre {
   margin: 1.75rem 0;
 }
 
+details.code-block {
+  margin: 1.75rem 0;
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+details.code-block summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+details.code-block summary::-webkit-details-marker { display: none; }
+
+details.code-block summary::before {
+  content: '▶';
+  font-size: 0.6em;
+  opacity: 0.5;
+  transition: transform 0.15s ease;
+}
+
+details.code-block[open] summary::before {
+  transform: rotate(90deg);
+}
+
+details.code-block[open] summary {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+details.code-block pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
 .prose table {
   width: 100%;
   border-collapse: collapse;

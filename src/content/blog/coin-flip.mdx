@@ -5,6 +5,8 @@ date: 2024-03-20
 tags: ["simulation", "statistics"]
 ---
 
+import PlotlyChart from '../../components/PlotlyChart.astro';
+
 Interesting idea from this [X post by @littmath](https://twitter.com/littmath/status/1769044719034647001):
 
 > Flip a fair coin 100 times — it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g. for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?
@@ -15,7 +17,6 @@ But the Monte Carlo simulation says otherwise. With N=1M iterations, Bob comes o
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
 np.random.seed(0x1B)
 N = 1_000_000
@@ -33,10 +34,24 @@ for i in range(N):
         alice_wins += 1
 ```
 
-<figure>
-  <img src="/figures/coin-fig1.png" alt="Probability of winning the coin-pair flip game for Bob and Alice" />
-  <figcaption>Probability of winning the coin-pair flip game for Bob and Alice (N = 1,000,000 simulations).</figcaption>
-</figure>
+<PlotlyChart
+  caption="Probability of winning the coin-pair flip game for Bob and Alice (N = 1,000,000 simulations)."
+  height={340}
+  data={[{
+    type: 'bar',
+    x: ['Bob', 'Alice', 'Draw'],
+    y: [48.53, 45.80, 5.67],
+    marker: { color: ['#7c6dfa', '#e8b86d', '#6b6660'] },
+    text: ['48.53%', '45.80%', '5.67%'],
+    textposition: 'outside',
+    textfont: { color: '#e2ddd4' },
+    hovertemplate: '%{x}: %{y:.2f}%<extra></extra>',
+  }]}
+  layout={{
+    yaxis: { title: { text: 'Win probability (%)' }, range: [0, 60] },
+    xaxis: { title: { text: '' } },
+  }}
+/>
 
 The catch is that Alice might score more points in a single game, but Bob wins more games. Let's enumerate all possible outcomes with just 4 coin flips to understand why:
 

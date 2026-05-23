@@ -1,0 +1,111 @@
+---
+interface Props {
+  data?: any[];
+  layout?: Record<string, any>;
+  dataSrc?: string;
+  height?: number;
+  caption?: string;
+}
+const { data, layout = {}, dataSrc, height = 380, caption } = Astro.props;
+
+const base = {
+  paper_bgcolor: '#111114',
+  plot_bgcolor: '#111114',
+  font: { color: '#e2ddd4', family: 'JetBrains Mono, Fira Code, monospace', size: 12 },
+  xaxis: {
+    gridcolor: 'rgba(255,255,255,0.07)',
+    zerolinecolor: 'rgba(255,255,255,0.10)',
+    linecolor: 'rgba(255,255,255,0.15)',
+    tickcolor: 'rgba(255,255,255,0.15)',
+  },
+  yaxis: {
+    gridcolor: 'rgba(255,255,255,0.07)',
+    zerolinecolor: 'rgba(255,255,255,0.10)',
+    linecolor: 'rgba(255,255,255,0.15)',
+    tickcolor: 'rgba(255,255,255,0.15)',
+  },
+  margin: { t: 40, r: 24, b: 56, l: 64 },
+  legend: {
+    bgcolor: 'rgba(17,17,20,0.85)',
+    bordercolor: 'rgba(255,255,255,0.10)',
+    borderwidth: 1,
+  },
+  height,
+  autosize: true,
+};
+
+const merged = {
+  ...base,
+  ...layout,
+  xaxis: { ...base.xaxis, ...layout.xaxis },
+  yaxis: { ...base.yaxis, ...layout.yaxis },
+};
+
+const inlineSpec = !dataSrc && data ? JSON.stringify({ data, layout: merged }) : null;
+---
+
+<figure class="plotly-figure">
+  <div
+    class="plotly-wrap"
+    data-plotly={inlineSpec ?? undefined}
+    data-plotly-src={dataSrc ?? undefined}
+    data-plotly-layout={dataSrc ? JSON.stringify(merged) : undefined}
+  ></div>
+  {caption && <figcaption set:html={caption} />}
+</figure>
+
+<script>
+  function loadPlotly(): Promise<void> {
+    if ((window as any).Plotly) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+      s.onload = () => resolve();
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initCharts() {
+    const inline = document.querySelectorAll<HTMLElement>('[data-plotly]');
+    const remote = document.querySelectorAll<HTMLElement>('[data-plotly-src]');
+    if (!inline.length && !remote.length) return;
+
+    await loadPlotly();
+
+    inline.forEach(el => {
+      if (el.dataset.plotlyInited) return;
+      el.dataset.plotlyInited = '1';
+      const { data, layout } = JSON.parse(el.dataset.plotly!);
+      (window as any).Plotly.newPlot(el, data, layout, { responsive: true, displayModeBar: false });
+    });
+
+    await Promise.all(Array.from(remote).map(async el => {
+      if (el.dataset.plotlyInited) return;
+      el.dataset.plotlyInited = '1';
+      const src = el.dataset.plotlySrc!;
+      const baseLayout = JSON.parse(el.dataset.plotlyLayout!);
+      const spec = await fetch(src).then(r => r.json());
+      const layout = { ...baseLayout, ...spec.layout,
+        xaxis: { ...baseLayout.xaxis, ...(spec.layout?.xaxis ?? {}) },
+        yaxis: { ...baseLayout.yaxis, ...(spec.layout?.yaxis ?? {}) },
+        annotations: spec.annotations ?? spec.layout?.annotations,
+      };
+      (window as any).Plotly.newPlot(el, spec.data, layout, { responsive: true, displayModeBar: false });
+    }));
+  }
+
+  document.addEventListener('astro:page-load', initCharts);
+</script>
+
+<style>
+  .plotly-figure {
+    margin: 1.75rem 0;
+  }
+  .plotly-wrap {
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+</style>

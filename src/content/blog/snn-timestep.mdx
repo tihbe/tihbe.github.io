@@ -5,6 +5,8 @@ date: 2023-03-18
 tags: ["snn", "lif"]
 ---
 
+import PlotlyChart from '../../components/PlotlyChart.astro';
+
 ## Context
 
 I recently came across [a tweet](https://twitter.com/neuralreckoning/status/1580161403415330816) by Dan Goodman, which presented a brief experiment demonstrating the detrimental effects of using a large timestep ($\delta t$) during the simulation of a LIF neuron. The output spiking rate of a LIF neuron with a Poisson spike input was found to decrease as the timestep increased, with failure observed at soon as $\delta t=1$ ms, a standard timestep size within the CS-oriented community.
@@ -19,7 +21,7 @@ A straightforward experiment can be devised to replicate the behavior outlined i
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 np.random.seed(0x1B)
 duration = 4  # seconds
@@ -31,7 +33,6 @@ input_rate = 5  # Hz
 weights = np.random.randn(nb_outputs, nb_inputs) * 0.5 + 0.1
 dts = np.logspace(-5, -1.5, 10)  # in seconds
 
-fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
 spike_rates = np.zeros((len(dts), nb_outputs))
 for i, dt in enumerate(dts):
     time = np.arange(0, duration, dt)
@@ -48,16 +49,40 @@ for i, dt in enumerate(dts):
         u[spikes] = 0  # reset
     spike_rates[i] += spike_count / duration
 
-ax.errorbar(dts * 1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1), capsize=5)
-ax.set_xscale("log")
-ax.set_xlabel("$\\delta t$ [ms]")
-ax.set_ylabel("Output firing rate [sp/s]")
+fig = go.Figure(go.Scatter(
+    x=dts * 1000, y=spike_rates.mean(axis=1),
+    error_y=dict(type='data', array=spike_rates.std(axis=1), visible=True),
+    mode='lines+markers',
+))
+fig.update_layout(
+    xaxis=dict(title='δt [ms]', type='log'),
+    yaxis=dict(title='Output firing rate [sp/s]'),
+)
+fig.show()
 ```
 
-<figure>
-  <img src="/figures/snn-fig1.png" alt="Output firing rate as a function of timestep size for LIF neurons" />
-  <figcaption>Output firing rate vs. $\delta t$ — the spiking frequency drops near $\delta t = 1$ ms.</figcaption>
-</figure>
+<PlotlyChart
+  caption="Output firing rate vs. δt — the spiking frequency drops near δt = 1 ms."
+  data={[{
+    type: 'scatter',
+    mode: 'lines+markers',
+    x: [0.01, 0.02448, 0.05995, 0.14678, 0.35938, 0.87992, 2.1544, 5.275, 12.915, 31.623],
+    y: [43.989, 41.446, 43.472, 42.193, 41.600, 40.025, 37.216, 33.423, 27.252, 18.909],
+    error_y: {
+      type: 'data',
+      array: [13.017, 12.296, 12.791, 12.597, 12.173, 11.618, 10.864, 9.776, 7.407, 4.713],
+      visible: true,
+      color: 'rgba(124,109,250,0.35)',
+    },
+    line: { color: '#7c6dfa' },
+    marker: { color: '#7c6dfa', size: 6 },
+    hovertemplate: 'δt = %{x:.4g} ms<br>Rate = %{y:.2f} sp/s<extra></extra>',
+  }]}
+  layout={{
+    xaxis: { title: { text: 'δt [ms]' }, type: 'log' },
+    yaxis: { title: { text: 'Output firing rate [sp/s]' } },
+  }}
+/>
 
 We arrive at a similar-looking plot, where the output spiking frequency is going down near $\delta t=1$ ms.
 
@@ -70,7 +95,7 @@ My hypothesis differs from this perspective. I contend that the real difference 
 If the assumption is correct — i.e. the timestep $\delta t$ is forcing an implicit refractory period — then having a large refractory period but with a smaller $\delta t$ should yield the same result as having a larger $\delta t$. If we add a refractory period to the experiment above, we'll see that they do indeed provide a similar effect:
 
 ```python
-fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+fig = go.Figure()
 
 for refractory_period in [0.001, 0.01, 0.1]:
     spike_rates = np.zeros((len(dts), nb_outputs))
@@ -95,19 +120,54 @@ for refractory_period in [0.001, 0.01, 0.1]:
 
         spike_rates[i] += spike_count / duration
 
-    ax.errorbar(dts * 1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1),
-                capsize=5, label=f"Refrac.: {1000 * refractory_period:.1f}ms")
+    fig.add_trace(go.Scatter(
+        x=dts * 1000, y=spike_rates.mean(axis=1),
+        error_y=dict(type='data', array=spike_rates.std(axis=1), visible=True),
+        mode='lines+markers',
+        name=f"Refrac.: {1000 * refractory_period:.1f}ms",
+    ))
 
-ax.set_xscale("log")
-ax.set_xlabel("$\\delta t$ [ms]")
-ax.set_ylabel("Output firing rate [sp/s]")
-ax.legend(loc="lower left")
+fig.update_layout(
+    xaxis=dict(title='δt [ms]', type='log'),
+    yaxis=dict(title='Output firing rate [sp/s]'),
+)
+fig.show()
 ```
 
-<figure>
-  <img src="/figures/snn-fig2.png" alt="Output firing rate with explicit refractory periods" />
-  <figcaption>Adding explicit refractory periods produces the same degradation pattern as large $\delta t$.</figcaption>
-</figure>
+<PlotlyChart
+  caption="Adding explicit refractory periods produces the same degradation pattern as large δt."
+  data={[
+    {
+      type: 'scatter', mode: 'lines+markers', name: 'Refrac. 1 ms',
+      x: [0.01, 0.02448, 0.05995, 0.14678, 0.35938, 0.87992, 2.1544, 5.275, 12.915, 31.623],
+      y: [40.003, 41.351, 41.561, 39.276, 40.037, 39.231, 37.637, 34.311, 28.205, 19.199],
+      error_y: { type: 'data', array: [11.449, 11.688, 11.897, 11.305, 11.451, 11.148, 11.200, 9.998, 7.785, 4.928], visible: true, color: 'rgba(124,109,250,0.30)' },
+      line: { color: '#7c6dfa' }, marker: { color: '#7c6dfa', size: 6 },
+      hovertemplate: 'δt = %{x:.4g} ms<br>Rate = %{y:.2f} sp/s<extra></extra>',
+    },
+    {
+      type: 'scatter', mode: 'lines+markers', name: 'Refrac. 10 ms',
+      x: [0.01, 0.02448, 0.05995, 0.14678, 0.35938, 0.87992, 2.1544, 5.275, 12.915, 31.623],
+      y: [28.926, 28.861, 28.973, 29.068, 28.456, 28.583, 28.178, 27.963, 27.804, 19.191],
+      error_y: { type: 'data', array: [6.239, 6.261, 6.278, 6.323, 6.309, 6.319, 6.490, 7.089, 7.713, 4.963], visible: true, color: 'rgba(232,184,109,0.30)' },
+      line: { color: '#e8b86d' }, marker: { color: '#e8b86d', size: 6 },
+      hovertemplate: 'δt = %{x:.4g} ms<br>Rate = %{y:.2f} sp/s<extra></extra>',
+    },
+    {
+      type: 'scatter', mode: 'lines+markers', name: 'Refrac. 100 ms',
+      x: [0.01, 0.02448, 0.05995, 0.14678, 0.35938, 0.87992, 2.1544, 5.275, 12.915, 31.623],
+      y: [8.067, 8.054, 8.009, 8.127, 8.082, 8.039, 7.900, 8.037, 7.979, 6.718],
+      error_y: { type: 'data', array: [0.619, 0.620, 0.623, 0.608, 0.609, 0.635, 0.661, 0.716, 0.752, 0.801], visible: true, color: 'rgba(109,232,184,0.30)' },
+      line: { color: '#6de8b8' }, marker: { color: '#6de8b8', size: 6 },
+      hovertemplate: 'δt = %{x:.4g} ms<br>Rate = %{y:.2f} sp/s<extra></extra>',
+    },
+  ]}
+  layout={{
+    xaxis: { title: { text: 'δt [ms]' }, type: 'log' },
+    yaxis: { title: { text: 'Output firing rate [sp/s]' } },
+    legend: { x: 0.02, y: 0.05, xanchor: 'left', yanchor: 'bottom' },
+  }}
+/>
 
 As we see, the output firing rates align when $\delta t$ is equal to the refractory period. Therefore, the model is actually correct — the only difference is that we have to consider that the effective refractory period is equal to the maximum between $\delta t$ and the explicit refractory period.
 
@@ -123,7 +183,6 @@ We also edit the reset so that we subtract the threshold $n_{\text{spikes}}$ tim
 
 ```python
 np.random.seed(0x1B)
-fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
 spike_rates = np.zeros((len(dts), nb_outputs))
 for i, dt in enumerate(dts):
     time = np.arange(0, duration, dt)
@@ -141,15 +200,39 @@ for i, dt in enumerate(dts):
 
     spike_rates[i] += spike_count / duration
 
-ax.errorbar(dts * 1000, spike_rates.mean(axis=1), yerr=spike_rates.std(axis=1), capsize=5)
-ax.set_xscale("log")
-ax.set_xlabel("$\\delta t$ [ms]")
-ax.set_ylabel("Output firing rate [sp/s]")
+fig = go.Figure(go.Scatter(
+    x=dts * 1000, y=spike_rates.mean(axis=1),
+    error_y=dict(type='data', array=spike_rates.std(axis=1), visible=True),
+    mode='lines+markers',
+))
+fig.update_layout(
+    xaxis=dict(title='δt [ms]', type='log'),
+    yaxis=dict(title='Output firing rate [sp/s]'),
+)
+fig.show()
 ```
 
-<figure>
-  <img src="/figures/snn-fig4.png" alt="Output firing rate with soft reset and multiple spikes per timestep" />
-  <figcaption>With soft reset and multiple spikes per timestep, the firing rate is stable across all $\delta t$ values.</figcaption>
-</figure>
+<PlotlyChart
+  caption="With soft reset and multiple spikes per timestep, the firing rate is stable across all δt values."
+  data={[{
+    type: 'scatter',
+    mode: 'lines+markers',
+    x: [0.01, 0.02448, 0.05995, 0.14678, 0.35938, 0.87992, 2.1544, 5.275, 12.915, 31.623],
+    y: [51.568, 48.853, 50.516, 49.512, 48.492, 47.859, 48.293, 46.494, 46.389, 48.121],
+    error_y: {
+      type: 'data',
+      array: [16.076, 15.393, 15.801, 15.457, 15.103, 14.939, 15.702, 15.559, 16.455, 18.520],
+      visible: true,
+      color: 'rgba(109,232,184,0.35)',
+    },
+    line: { color: '#6de8b8' },
+    marker: { color: '#6de8b8', size: 6 },
+    hovertemplate: 'δt = %{x:.4g} ms<br>Rate = %{y:.2f} sp/s<extra></extra>',
+  }]}
+  layout={{
+    xaxis: { title: { text: 'δt [ms]' }, type: 'log' },
+    yaxis: { title: { text: 'Output firing rate [sp/s]' } },
+  }}
+/>
 
 And voilà! We get the expected firing rate across all the timesteps. While this solution is very interesting for computational neuroscientists, it partly removes the energy friendliness of spiking neural networks since they are no longer binary, and the reset involves some arithmetic.

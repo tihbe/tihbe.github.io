@@ -102,3 +102,20 @@ const formatted = new Intl.DateTimeFormat('en-US', {
     text-decoration: none;
   }
 </style>
+
+<script>
+  function wrapCodeBlocks() {
+    document.querySelectorAll<HTMLElement>('.prose pre[data-language="python"]:not([data-wrapped])').forEach(pre => {
+      pre.dataset.wrapped = '1';
+      const details = document.createElement('details');
+      details.className = 'code-block';
+      const summary = document.createElement('summary');
+      summary.textContent = 'python';
+      details.appendChild(summary);
+      pre.parentNode!.insertBefore(details, pre);
+      details.appendChild(pre);
+    });
+  }
+
+  document.addEventListener('astro:page-load', wrapCodeBlocks);
+</script>

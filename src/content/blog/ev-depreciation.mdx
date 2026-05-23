@@ -6,8 +6,9 @@ tags: ["data science"]
 ---
 
 import FigNote from '../../components/FigNote.astro';
+import PlotlyChart from '../../components/PlotlyChart.astro';
 
-Electric vehicles (EVs) are generally more expensive than their gasoline counterparts. Yet, adoption has still been relatively high thanks to government incentives and the cheap cost of electricity in the province of Quebec. But, as the [Roulez Vert](https://www.quebec.ca/transports/transport-electrique/aide-financiere-vehicule-electrique/services-en-ligne-roulez-vert) program from the government of Quebec is slowly being phased out, it is worth examining more precisely the financial impact of EVs. The program's initial goal was to promote EVs with monetary incentives (up to $7,000 CAD for new cars and $3,500 CAD for used cars). Removing this program means that every EV purchased starting on January 1, 2025, will be more expensive.
+Electric vehicles (EVs) are generally more expensive than their gasoline counterparts. Yet, adoption has still been relatively high thanks to government incentives and the cheap cost of electricity in the province of Quebec. But, as the [Roulez Vert](https://www.quebec.ca/transports/transport-electrique/aide-financiere-vehicule-electrique/services-en-ligne-roulez-vert) program from the government of Quebec is slowly being phased out, it is worth examining more precisely the financial impact of EVs. The program's initial goal was to promote EVs with monetary incentives (up to \$7,000 CAD for new cars and \$3,500 CAD for used cars). Removing this program means that every EV purchased starting on January 1, 2025, will be more expensive.
 
 This presents a unique opportunity for acquiring an EV this year with a lower value depreciation than what would traditionally be expected, as the cost of EVs will slowly increase over the next few years.
 
@@ -21,8 +22,8 @@ I scraped some used vehicle market data using the [Web Scraper Chrome extension]
 
 ```python
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import glob
 import numpy as np
 import re
@@ -78,54 +79,97 @@ df["MakeModel"] = (df["make"] + " " + df["model"]).astype("category")
 We can start our analysis with some visualization of this newly created dataset.
 
 ```python
-fig, axs = plt.subplots(2, 2, figsize=(10, 8), tight_layout=True)
+fig = make_subplots(rows=2, cols=2)
 
-hist_data = np.unique(df.vehicle_age, return_counts=True)
-axs[0][0].bar(*hist_data, edgecolor="black", align="center")
-axs[0][0].set_xlabel("Vehicle age")
-axs[0][0].set_ylabel("Count")
+ages, age_counts = np.unique(df.vehicle_age, return_counts=True)
+fig.add_trace(go.Bar(x=ages, y=age_counts, name='Vehicle age'), row=1, col=1)
 
-hist_data = np.unique(df.engine_type, return_counts=True)
-axs[0][1].bar(*hist_data, edgecolor="black", align="center")
-axs[0][1].set_xlabel("Engine type")
+engine_types, engine_counts = np.unique(df.engine_type, return_counts=True)
+fig.add_trace(go.Bar(x=engine_types, y=engine_counts, name='Engine type'), row=1, col=2)
 
 bin_size = 5000
 bins, counts = np.unique(df.mileage.astype(int) // bin_size, return_counts=True)
-bins *= bin_size
-axs[1][0].bar(bins / 1000, counts, edgecolor="black", align="center", width=bin_size / 1000)
-axs[1][0].set_xlabel("Mileage [Thousand of km]")
+fig.add_trace(go.Bar(x=bins * bin_size / 1000, y=counts, name='Mileage'), row=2, col=1)
 
-bins, counts = np.unique(df.make, return_counts=True)
-top_idx = np.argsort(counts)[::-1]
-bins = bins[top_idx[:15]]
-counts = counts[top_idx[:15]]
-axs[1][1].bar(bins, counts, edgecolor="black", align="center")
-axs[1][1].set_xticklabels(bins, rotation=45, ha='right')
+makes, make_counts = np.unique(df.make, return_counts=True)
+top_idx = np.argsort(make_counts)[::-1][:15]
+fig.add_trace(go.Bar(x=makes[top_idx], y=make_counts[top_idx], name='Top 15 makes'), row=2, col=2)
+
+fig.update_layout(showlegend=False)
+fig.update_xaxes(title_text='Vehicle age (years)', row=1, col=1)
+fig.update_yaxes(title_text='Count', row=1, col=1)
+fig.update_xaxes(title_text='Engine type', row=1, col=2)
+fig.update_xaxes(title_text='Mileage (thousand km)', row=2, col=1)
+fig.update_yaxes(title_text='Count', row=2, col=1)
+fig.update_xaxes(tickangle=-40, row=2, col=2)
+fig.show()
 ```
 
-<figure>
-  <img src="/figures/ev-hist.png" alt="Histograms of dataset columns: vehicle age, engine type, mileage, top 15 makes" />
-  <figcaption>Histogram for each column of the dataset.</figcaption>
-</figure>
+<PlotlyChart
+  caption="Histogram for each column of the dataset."
+  height={520}
+  data={[
+    { type: 'bar', name: 'Vehicle age', x: [1,2,3,4,5,6,7,8,9,10,11,12,13], y: [127,1041,1550,1865,1948,1524,1136,720,525,45,28,9,3], marker: { color: '#7c6dfa' }, xaxis: 'x', yaxis: 'y', hovertemplate: 'Age %{x} yr: %{y} vehicles<extra></extra>' },
+    { type: 'bar', name: 'Engine type', x: ['electric','gasoline'], y: [2541,7980], marker: { color: ['#7c6dfa','#e8b86d'] }, xaxis: 'x2', yaxis: 'y2', hovertemplate: '%{x}: %{y}<extra></extra>' },
+    { type: 'bar', name: 'Mileage', x: [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,295,300], y: [284,354,391,427,451,427,502,498,505,481,559,543,512,501,429,415,413,383,411,384,334,288,255,224,195,183,166,156,134,133,97,88,79,58,58,44,44,32,27,24,20,14,15,9,9,7,7,4,5,4,3,3,3,1,1,2,1,1,1,2,2], marker: { color: '#6de8b8' }, xaxis: 'x3', yaxis: 'y3', hovertemplate: '%{x}k km: %{y}<extra></extra>' },
+    { type: 'bar', name: 'Top 15 makes', x: ['Hyundai','Nissan','Volkswagen','Kia','Toyota','Chevrolet','Audi','Honda','Mazda','Ford','BMW','Mercedes-Benz','Tesla','Jeep','Subaru'], y: [998,787,741,632,628,579,564,530,524,492,472,348,343,303], marker: { color: '#e8b86d' }, xaxis: 'x4', yaxis: 'y4', hovertemplate: '%{x}: %{y}<extra></extra>' },
+  ]}
+  layout={{
+    grid: { rows: 2, columns: 2, pattern: 'independent' },
+    xaxis:  { title: { text: 'Vehicle age (years)' }, anchor: 'y' },
+    yaxis:  { title: { text: 'Count' }, anchor: 'x' },
+    xaxis2: { title: { text: 'Engine type' }, anchor: 'y2' },
+    yaxis2: { anchor: 'x2' },
+    xaxis3: { title: { text: 'Mileage (thousand km)' }, anchor: 'y3' },
+    yaxis3: { title: { text: 'Count' }, anchor: 'x3' },
+    xaxis4: { tickangle: -40, anchor: 'y4' },
+    yaxis4: { anchor: 'x4' },
+    showlegend: false,
+    bargap: 0.1,
+  }}
+/>
 
 To examine the effect of engine type on vehicle price depreciation, we can calculate both the average and median prices for vehicles of varying ages.
 
 ```python
-fig, axs = plt.subplots(1, 2, figsize=(10, 5), tight_layout=True, sharey=True)
-
 avg_price_by_age = df.groupby(['vehicle_age', 'engine_type']).price.mean().reset_index()
 med_price_by_age = df.groupby(['vehicle_age', 'engine_type']).price.median().reset_index()
 
-sns.lineplot(data=avg_price_by_age, x='vehicle_age', y='price', hue='engine_type', marker="o", ax=axs[0])
-sns.lineplot(data=med_price_by_age, x='vehicle_age', y='price', hue='engine_type', marker="o", ax=axs[1])
-axs[0].set_title('Average Vehicle Price by Engine Type')
-axs[1].set_title('Median Vehicle Price by Engine Type')
+fig = make_subplots(rows=1, cols=2, shared_yaxes=True)
+
+for engine_type in ['electric', 'gasoline']:
+    avg = avg_price_by_age[avg_price_by_age.engine_type == engine_type]
+    med = med_price_by_age[med_price_by_age.engine_type == engine_type]
+    fig.add_trace(go.Scatter(x=avg.vehicle_age, y=avg.price, mode='lines+markers', name=f'{engine_type} (avg)'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=med.vehicle_age, y=med.price, mode='lines+markers', name=f'{engine_type} (median)', line=dict(dash='dot')), row=1, col=2)
+
+fig.update_xaxes(title_text='Vehicle age (years)')
+fig.update_yaxes(title_text='Price ($ CAD)', tickformat=',.0f', row=1, col=1)
+fig.show()
 ```
 
-<figure>
-  <img src="/figures/ev-avg-price.png" alt="Average and median vehicle price by engine type and vehicle age" />
-  <figcaption>Average and median vehicle price by engine type.</figcaption>
-</figure>
+<PlotlyChart
+  caption="Average and median vehicle price by engine type."
+  height={420}
+  data={[
+    { type: 'scatter', mode: 'lines+markers', name: 'Electric (avg)', x: [1,2,3,4,5,6,7,8,9,10,11,12,13], y: [75605,67966,50789,38977,30703,24430,24642,26085,15995,15168,16207,14209,8808], line: { color: '#7c6dfa' }, marker: { color: '#7c6dfa', size: 6 }, xaxis: 'x', yaxis: 'y', hovertemplate: 'Age %{x}yr — Avg: $%{y:,.0f}<extra></extra>' },
+    { type: 'scatter', mode: 'lines+markers', name: 'Gasoline (avg)', x: [1,2,3,4,5,6,7,8,9], y: [68931,56636,40482,34829,33119,27683,25779,23307,18368], line: { color: '#e8b86d' }, marker: { color: '#e8b86d', size: 6 }, xaxis: 'x', yaxis: 'y', hovertemplate: 'Age %{x}yr — Avg: $%{y:,.0f}<extra></extra>' },
+    { type: 'scatter', mode: 'lines+markers', name: 'Electric (median)', x: [1,2,3,4,5,6,7,8,9,10,11,12,13], y: [63844,52986,40849,32545,24997,21994,19988,18795,11990,10888,9999,9900,8997], line: { color: '#7c6dfa', dash: 'dot' }, marker: { color: '#7c6dfa', size: 6 }, xaxis: 'x2', yaxis: 'y2', hovertemplate: 'Age %{x}yr — Med: $%{y:,.0f}<extra></extra>' },
+    { type: 'scatter', mode: 'lines+markers', name: 'Gasoline (median)', x: [1,2,3,4,5,6,7,8,9], y: [55495,44985,35999,29689,29495,24990,22999,19295,16912], line: { color: '#e8b86d', dash: 'dot' }, marker: { color: '#e8b86d', size: 6 }, xaxis: 'x2', yaxis: 'y2', hovertemplate: 'Age %{x}yr — Med: $%{y:,.0f}<extra></extra>' },
+  ]}
+  layout={{
+    grid: { rows: 1, columns: 2, pattern: 'independent' },
+    xaxis:  { title: { text: 'Vehicle age (years)' }, anchor: 'y' },
+    yaxis:  { title: { text: 'Price ($ CAD)' }, anchor: 'x', tickformat: ',.0f' },
+    xaxis2: { title: { text: 'Vehicle age (years)' }, anchor: 'y2' },
+    yaxis2: { anchor: 'x2', tickformat: ',.0f' },
+    annotations: [
+      { text: 'Average price', xref: 'paper', yref: 'paper', x: 0.22, y: 1.04, showarrow: false, font: { color: '#6b6660', size: 11 } },
+      { text: 'Median price',  xref: 'paper', yref: 'paper', x: 0.78, y: 1.04, showarrow: false, font: { color: '#6b6660', size: 11 } },
+    ],
+    legend: { orientation: 'h', y: -0.18 },
+  }}
+/>
 
 ## Modeling
 
@@ -142,12 +186,63 @@ model = smf.mixedlm(
 print(model.summary())
 ```
 
-<figure>
-  <img src="/figures/ev-model-summary.png" alt="Mixed-effect regression model summary" />
-  <figcaption>Mixed-effects model summary.</figcaption>
-</figure>
+<PlotlyChart
+  caption="Number of listings per make/model in the dataset (top 50). Used as grouping variable in the mixed-effects model."
+  height={520}
+  data={[
+    {
+      type: 'bar',
+      orientation: 'v',
+      x: ['Audi Quattro','Tesla Model 3','Nissan LEAF','Honda Civic','Chevrolet Bolt EV','Volkswagen Tiguan','Hyundai Kona Electric','Mazda CX-5','Nissan Rogue','Hyundai Elantra','Toyota RAV4','Honda CR-V','Mazda MAZDA3','Hyundai Tucson','Hyundai Kona','Hyundai Ioniq Electric','Nissan Sentra','BMW ES','Volkswagen Jetta','Ford Mustang MACH-E','Subaru Crosstrek','Volkswagen Golf','Toyota Corolla','Ford Escape','Honda HR-V','Toyota Prius Prime','Volkswagen e-Golf','Kia Soul EV','Kia Forte','Jeep Cherokee','Kia Sportage','Kia Sorento','Kia Seltos','Mazda CX-3','Hyundai Santa Fe','Hyundai IONIQ 5','Nissan Kicks','Mitsubishi Outlander PHEV','Toyota bZ4X','Acura RDX','Subaru Outback','Ram 500','Lexus 300','Jeep Grand Cherokee L','Mazda CX-30','Mercedes-Benz C-Class','Subaru Impreza','Toyota Highlander','Tesla Model S','Mercedes-Benz 300'],
+      y: [239,221,206,201,194,194,188,161,160,152,143,140,126,116,110,108,103,102,92,92,84,83,82,82,82,80,77,75,73,73,73,73,70,70,68,66,64,64,64,64,63,62,60,59,59,58,56,56,55,55],
+      marker: { color: '#7c6dfa' },
+      hovertemplate: '%{x}: %{y} listings<extra></extra>',
+    }
+  ]}
+  layout={{
+    xaxis: { tickangle: -45, title: { text: 'Make / Model' } },
+    yaxis: { title: { text: 'Number of listings' } },
+    bargap: 0.15,
+    showlegend: false,
+    margin: { t: 40, r: 24, b: 200, l: 64 },
+  }}
+/>
 
-What's most interesting about the results are the coefficients. We notice that, as expected and on average, every km driven (mileage) decreases the value of the vehicle by $0.097 and every year added decreases it by $3,333.58. The model uses EVs as a baseline, and we can notice that gasoline vehicles *increase* the value of the car by $0.022 for every km and $628.86 for every year. Now, these numbers are inexact — the relationship between these variables is most likely not linear. The sign of the coefficient is, however, undeniable: gasoline vehicles hold their value longer than their electrical counterparts.
+<PlotlyChart
+  caption="Mixed-effects model coefficient summary."
+  height={300}
+  data={[
+    {
+      type: 'table',
+      columnwidth: [220, 90, 90, 60, 70, 100, 100],
+      header: {
+        values: ['Parameter', 'Coef.', 'Std. Err.', 'z', 'P>|z|', '[0.025', '0.975]'],
+        fill: { color: '#1a1a20' },
+        font: { color: '#e2ddd4', family: 'JetBrains Mono, monospace', size: 11 },
+        align: ['left', 'right', 'right', 'right', 'right', 'right', 'right'],
+        line: { color: 'rgba(255,255,255,0.07)', width: 1 },
+      },
+      cells: {
+        values: [
+          ['Intercept', 'engine_type[gasoline]', 'mileage', 'engine_type[gasoline] × mileage', 'vehicle_age', 'engine_type[gasoline] × vehicle_age'],
+          [81002.16, -14713.69, -0.097, 0.021, -3327.24, 635.18],
+          [2848.49, 913.32, 0.007, 0.008, 156.996, 176.115],
+          [28.44, -16.11, -13.32, 2.50, -21.19, 3.61],
+          ['<0.001', '<0.001', '<0.001', '0.012', '<0.001', '<0.001'],
+          [75419.23, -16503.76, -0.112, 0.005, -3634.95, 290.00],
+          [86585.09, -12923.63, -0.083, 0.037, -3019.53, 980.36],
+        ],
+        fill: { color: ['#111114'] },
+        font: { color: ['#e2ddd4', '#e2ddd4', '#6b6660', '#6b6660', '#6b6660', '#6b6660', '#6b6660'], family: 'JetBrains Mono, monospace', size: 11 },
+        align: ['left', 'right', 'right', 'right', 'right', 'right', 'right'],
+        line: { color: 'rgba(255,255,255,0.07)', width: 1 },
+      },
+    }
+  ]}
+  layout={{ margin: { t: 16, r: 8, b: 16, l: 8 }, showlegend: false }}
+/>
+
+What's most interesting about the results are the coefficients. We notice that, as expected and on average, every km driven (mileage) decreases the value of the vehicle by \$0.097 and every year added decreases it by \$3,327. The model uses EVs as a baseline, and we can notice that gasoline vehicles *increase* the value of the car by \$0.021 for every km and \$635 for every year. Now, these numbers are inexact — the relationship between these variables is most likely not linear. The sign of the coefficient is, however, undeniable: gasoline vehicles hold their value longer than their electrical counterparts.
 
 ## Conclusion
 
