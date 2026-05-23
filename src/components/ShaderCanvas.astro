@@ -34,9 +34,6 @@ const CFG = {
   speed: 0.22,         // global time multiplier
 
   // ── Wave sources ──────────────────────────────────────────────────────────
-  // Each source drifts on a Lissajous path:
-  //   x(t) = 0.5 + orbitRadius * sin(ax * t + phiX)
-  //   y(t) = 0.5 + orbitRadius * sin(ay * t + phiY)
   sources: [
     { ax: 1.3, ay: 1.7, phiX: 0.00, phiY: 1.10 },
     { ax: 2.1, ay: 0.9, phiX: 2.30, phiY: 0.50 },
@@ -44,13 +41,9 @@ const CFG = {
     { ax: 0.8, ay: 1.4, phiX: 4.20, phiY: 2.00 },
     { ax: 2.5, ay: 1.1, phiX: 0.90, phiY: 4.50 },
   ],
-  // Radius of each source's orbit as a fraction of canvas space [0, 0.5]
   orbitRadius: 0.44,
-  // Spatial frequency — rings per unit canvas width (higher = more rings)
   waveFreq: 4.2,
-  // How fast ring fronts travel outward (in normalised units per second)
   waveSpeed: 2.2,
-  // Attenuation of amplitude with distance (higher = rings fade faster)
   attenuation: 4.0,
 
   // ── Vignette ──────────────────────────────────────────────────────────────
@@ -71,6 +64,20 @@ const CFG = {
 
   // ── Brightness bias ───────────────────────────────────────────────────────
   brightnessBias: -0.08,
+
+  // ── Mouse virtual source ──────────────────────────────────────────────────
+  mouseLerp: 0.05,
+  mouseStrength: 0.07,
+
+  // ── Touch pulse (mobile) ──────────────────────────────────────────────────
+  // Peak contribution — must exceed ~0.25 to visibly shift dither levels
+  touchStrength: 0.6,
+  // Exponential decay rate (higher = fades faster); ~1/decay seconds to near-zero
+  touchDecay: 4.0,
+  // Attenuation with distance — lower than main sources so the splash spreads wider
+  touchAttenuation: 1.8,
+  // Pulses older than this (ms) are pruned from the active list
+  touchMaxAge: 1400,
 
 };
 // ─────────────────────────────────────────────────────────────────────────────
@@ -120,7 +127,14 @@ function makeTile(cell: number, tile: typeof CFG.tiles[0]): OffscreenCanvas {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Holds cleanup for the currently running animation so it can be torn down
+// before a View Transition swap replaces the DOM.
+let stopAnimation: (() => void) | null = null;
+
 function run() {
+  stopAnimation?.();
+  stopAnimation = null;
+
   const canvas = document.getElementById('dither-canvas') as HTMLCanvasElement | null;
   if (!canvas) return;
 
@@ -131,8 +145,9 @@ function run() {
 
   let tiles: OffscreenCanvas[] = CFG.tiles.map(t => makeTile(CFG.cellSize, t));
   let W = 0, H = 0, cols = 0, rows = 0;
-
   let cellSize = CFG.cellSize;
+
+  const ro = new ResizeObserver(resize);
 
   function resize() {
     const pr = CFG.pixelRatio > 0 ? CFG.pixelRatio : Math.min(devicePixelRatio, 2);
@@ -142,17 +157,52 @@ function run() {
     canvas.height = Math.round(H * pr);
     ctx.resetTransform();
     ctx.scale(pr, pr);
-    // Scale cell size so density stays consistent across screen widths
     cellSize = Math.max(6, Math.round(CFG.cellSize * W / 1280));
     cols = Math.ceil(W / cellSize) + 1;
     rows = Math.ceil(H / cellSize) + 1;
     tiles = CFG.tiles.map(t => makeTile(cellSize, t));
   }
 
-  new ResizeObserver(resize).observe(canvas);
+  ro.observe(canvas);
   resize();
 
+  // ── Mouse virtual source ─────────────────────────────────────────────────
+  let mouseTargetX = 0.5, mouseTargetY = 0.5;
+  let virtualX     = 0.5, virtualY     = 0.5;
+  let mouseInside  = false;
+
+  function onMouseMove(e: MouseEvent) {
+    const rect = canvas.getBoundingClientRect();
+    mouseTargetX = (e.clientX - rect.left)  / rect.width;
+    mouseTargetY = (e.clientY - rect.top)   / rect.height;
+    mouseInside  = true;
+  }
+  function onMouseLeave() { mouseInside = false; }
+
+  canvas.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('mouseleave', onMouseLeave);
+
+  // ── Touch pulses (mobile) ─────────────────────────────────────────────────
+  // Each entry is a point source that decays exponentially after the tap.
+  interface Pulse { x: number; y: number; t0: number; }
+  let pulses: Pulse[] = [];
+
+  function onTouchStart(e: TouchEvent) {
+    const rect = canvas.getBoundingClientRect();
+    for (const touch of e.changedTouches) {
+      pulses.push({
+        x:  (touch.clientX - rect.left) / rect.width,
+        y:  (touch.clientY - rect.top)  / rect.height,
+        t0: performance.now(),
+      });
+    }
+  }
+
+  canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+
   // ── Radial wave brightness ───────────────────────────────────────────────
+  let frameNow = 0;  // updated at the top of each frame so brightness() can read it
+
   function brightness(nx: number, ny: number, t: number): number {
     let v = 0;
     for (const s of CFG.sources) {
@@ -161,14 +211,31 @@ function run() {
       const dx = nx - sx;
       const dy = ny - sy;
       const d  = Math.sqrt(dx * dx + dy * dy);
-      // Circular wavefront: phase = distance × freq − time × speed
       const wave = Math.sin(d * CFG.waveFreq * Math.PI * 2 - t * CFG.waveSpeed);
-      // Amplitude falls off with distance from source
       const att  = 1 / (1 + d * CFG.attenuation);
       v += wave * att;
     }
-    // Normalise superposition to [0, 1]
     v = v / CFG.sources.length * 0.5 + 0.5 + CFG.brightnessBias;
+
+    // Mouse virtual source — subtle extra ripple centred on lagged cursor
+    if (mouseInside) {
+      const mdx = nx - virtualX, mdy = ny - virtualY;
+      const md  = Math.sqrt(mdx * mdx + mdy * mdy);
+      const mWave = Math.sin(md * CFG.waveFreq * Math.PI * 2 - t * CFG.waveSpeed);
+      const mAtt  = 1 / (1 + md * CFG.attenuation);
+      v += mWave * mAtt * CFG.mouseStrength;
+    }
+
+    // Touch pulses — each tap spawns a decaying wave source
+    for (const p of pulses) {
+      const elapsed = (frameNow - p.t0) / 1000;
+      const decay   = Math.exp(-CFG.touchDecay * elapsed);
+      const pdx = nx - p.x, pdy = ny - p.y;
+      const pd  = Math.sqrt(pdx * pdx + pdy * pdy);
+      const pWave = Math.sin(pd * CFG.waveFreq * Math.PI * 2 - t * CFG.waveSpeed);
+      const pAtt  = 1 / (1 + pd * CFG.touchAttenuation);
+      v += pWave * pAtt * CFG.touchStrength * decay;
+    }
 
     // Radial vignette
     const dx = nx - 0.5, dy = ny - 0.5;
@@ -188,6 +255,14 @@ function run() {
     raf = requestAnimationFrame(frame);
     if (now - lastFrame < msPerFrame - 1) return;
     lastFrame = now;
+    frameNow  = now;
+
+    // Advance virtual source toward cursor with lag
+    virtualX += (mouseTargetX - virtualX) * CFG.mouseLerp;
+    virtualY += (mouseTargetY - virtualY) * CFG.mouseLerp;
+
+    // Prune expired pulses
+    pulses = pulses.filter(p => now - p.t0 < CFG.touchMaxAge);
 
     const t = (now - t0) / 1000 * CFG.speed;
 
@@ -207,19 +282,39 @@ function run() {
     }
   }
 
-  document.addEventListener('visibilitychange', () => {
+  function onVisibility() {
     if (document.hidden) {
       cancelAnimationFrame(raf);
     } else {
       t0 = performance.now() - (lastFrame / CFG.speed * 1000);
       raf = requestAnimationFrame(frame);
     }
-  });
+  }
+  document.addEventListener('visibilitychange', onVisibility);
 
   raf = requestAnimationFrame(frame);
+
+  stopAnimation = () => {
+    cancelAnimationFrame(raf);
+    ro.disconnect();
+    canvas.removeEventListener('mousemove', onMouseMove);
+    canvas.removeEventListener('mouseleave', onMouseLeave);
+    canvas.removeEventListener('touchstart', onTouchStart);
+    document.removeEventListener('visibilitychange', onVisibility);
+  };
 }
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  run();
-}
+// Re-run on every page load (initial + View Transition navigations).
+// astro:page-load fires for the very first load too, so no separate call needed.
+document.addEventListener('astro:page-load', () => {
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    run();
+  }
+});
+
+// Tear down before the DOM is swapped out so the RAF doesn't linger.
+document.addEventListener('astro:before-swap', () => {
+  stopAnimation?.();
+  stopAnimation = null;
+});
 </script>
