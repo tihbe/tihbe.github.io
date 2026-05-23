@@ -1,0 +1,140 @@
+---
+const links = [
+  { label: 'Blog',         href: '/blog' },
+  { label: 'Publications', href: '/publications' },
+  { label: 'Projects',     href: '/projects' },
+  { label: 'About',        href: '/about' },
+];
+---
+
+<header id="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="wordmark">Ismael Balafrej</a>
+
+    <nav aria-label="Site navigation">
+      {links.map(l => (
+        <a href={l.href} class="nav-link">{l.label}</a>
+      ))}
+    </nav>
+
+    <!-- Mobile toggle -->
+    <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" aria-hidden="true">
+    {links.map(l => (
+      <a href={l.href} class="mobile-link">{l.label}</a>
+    ))}
+  </div>
+</header>
+
+<style>
+  #site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 12, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    text-decoration: none;
+    margin-right: auto;
+    letter-spacing: 0.01em;
+  }
+  .wordmark:hover { text-decoration: none; opacity: 0.85; }
+
+  nav {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--color-text); text-decoration: none; }
+
+#nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    margin-right: -6px;
+  }
+
+  .burger-line {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--color-text);
+    transition: transform 0.25s, opacity 0.25s;
+  }
+
+  #mobile-menu {
+    display: none;
+    flex-direction: column;
+    padding: 1rem 1.5rem 1.5rem;
+    gap: 1.25rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  #mobile-menu.open {
+    display: flex;
+  }
+
+  .mobile-link {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    font-family: var(--font-serif);
+  }
+
+  @media (max-width: 700px) {
+    nav, .social-links { display: none; }
+    #nav-toggle { display: flex; }
+  }
+</style>
+
+<script>
+const toggle = document.getElementById('nav-toggle');
+const menu   = document.getElementById('mobile-menu');
+
+toggle?.addEventListener('click', () => {
+  const open = menu?.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+  menu?.setAttribute('aria-hidden', String(!open));
+});
+
+menu?.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    menu.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+  });
+});
+</script>

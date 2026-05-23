@@ -1,0 +1,104 @@
+---
+import Base from './Base.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, date, tags } = post.data;
+
+const formatted = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(date);
+---
+
+<Base title={title} description={description}>
+  <article class="post-article">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>{formatted}</time>
+        {tags.length > 0 && (
+          <ul class="post-tags">
+            {tags.map(t => <li><span class="tag-pill">{t}</span></li>)}
+          </ul>
+        )}
+      </div>
+      <h1>{title}</h1>
+      <p class="post-desc">{description}</p>
+      <hr />
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <div class="post-footer">
+      <a href="/blog" class="back-link">← All posts</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-article {
+    max-width: 72ch;
+    margin-inline: auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  .post-header {
+    margin-bottom: 3rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  time {
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .post-tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  h1 {
+    margin: 0 0 0.85rem;
+  }
+
+  .post-desc {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .post-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .back-link {
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+  }
+  .back-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+
+interface Project {
+  title: string;
+  description: string;
+  type: 'web' | 'package';
+  url: string;
+  screenshot?: string;
+  badge?: string;  // e.g. "PyPI" or "GitHub"
+  badgeUrl?: string;
+}
+
+const projects: Project[] = [
+  {
+    title: 'RunScan',
+    description: 'Take a photo of your treadmill screen and it logs the run to Strava. AI reads pace, distance, and time off the display. No manual entry.',
+    type: 'web',
+    url: 'https://runscan.ibapps.net',
+    screenshot: '/screenshots/runscan.png',
+  },
+  {
+    title: 'ebdataset',
+    description: 'Python API for loading event-based neuromorphic datasets. Covers 7 datasets including IBM DVS Gestures, N-MNIST, and NCaltech101, with sparse NumPy and dense PyTorch representations.',
+    type: 'package',
+    url: 'https://pypi.org/project/ebdataset/',
+    badge: 'PyPI',
+    badgeUrl: 'https://pypi.org/project/ebdataset/',
+  },
+  {
+    title: 'Notes',
+    description: 'Note-taking app with no backend. Everything is stored in the URL itself, compressed. Share a note by sharing the link.',
+    type: 'web',
+    url: 'https://notes.ibapps.net',
+    screenshot: '/screenshots/notes.png',
+  },
+  {
+    title: 'WordChain',
+    description: 'A word puzzle game where each move connects words one letter at a time. Simple rules, satisfying chains.',
+    type: 'web',
+    url: 'https://wordchain.ibapps.net',
+    screenshot: '/screenshots/wordchain.png',
+  },
+  {
+    title: 'Sound Meter',
+    description: 'Ambient sound analyzer that runs in the browser. Measures decibel levels and shows frequency content in real time, straight from the microphone. Nothing is installed, nothing is sent anywhere.',
+    type: 'web',
+    url: 'https://sound.ibapps.net',
+    screenshot: '/screenshots/sound.png',
+  },
+  {
+    title: 'dirlog',
+    description: 'Python utility for ML experiment logging. Run it once and it creates a timestamped directory for the experiment, then saves configs, results, and logs with a minimal API.',
+    type: 'package',
+    url: 'https://github.com/tihbe/dirlog',
+    badge: 'GitHub',
+    badgeUrl: 'https://github.com/tihbe/dirlog',
+  },
+];
+---
+
+<Base
+  title="Projects"
+  description="Personal projects by Ismael Balafrej — web tools, Python packages, and side experiments."
+>
+  <div class="projects-page">
+    <header class="page-header reveal">
+      <h1>Projects</h1>
+      <p>Side projects, tools, and experiments.</p>
+    </header>
+
+    <div class="projects-grid">
+      {projects.map(p => (
+        <a href={p.url} target="_blank" rel="noopener noreferrer" class="project-card reveal">
+          {p.screenshot && (
+            <div class="card-screenshot">
+              <img src={p.screenshot} alt={`${p.title} screenshot`} loading="lazy" />
+            </div>
+          )}
+          {!p.screenshot && (
+            <div class="card-icon-area">
+              <span class="card-icon-glyph">{p.title[0]}</span>
+            </div>
+          )}
+          <div class="card-body">
+            <div class="card-header-row">
+              <h2 class="card-title">{p.title}</h2>
+              <span class={`card-type ${p.type}`}>
+                {p.type === 'web' ? 'web app' : p.badge ?? 'package'}
+              </span>
+            </div>
+            <p class="card-desc">{p.description}</p>
+            <span class="card-link">
+              {p.type === 'web' ? p.url.replace('https://', '') : p.url.replace('https://', '')}
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10L10 2M10 2H5M10 2v5"/></svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .projects-page {
+    max-width: 900px;
+    margin-inline: auto;
+    padding: 5rem 1.5rem 6rem;
+  }
+
+  .page-header {
+    margin-bottom: 3.5rem;
+  }
+  .page-header h1 { margin-bottom: 0.5rem; }
+  .page-header p { color: var(--color-muted); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-rule);
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--color-surface);
+    transition: border-color 0.22s, transform 0.22s;
+  }
+  .project-card:hover {
+    border-color: rgba(124, 109, 250, 0.45);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  .card-screenshot {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-rule);
+    background: #0d0d10;
+  }
+  .card-screenshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    filter: brightness(0.92);
+    transition: filter 0.22s;
+  }
+  .project-card:hover .card-screenshot img {
+    filter: brightness(1);
+  }
+
+  .card-icon-area {
+    aspect-ratio: 16 / 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d0d10 0%, #15121f 100%);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .card-icon-glyph {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    color: var(--color-accent);
+    opacity: 0.4;
+    user-select: none;
+  }
+
+  .card-body {
+    padding: 1.25rem 1.4rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+  }
+
+  .card-header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-family: var(--font-serif);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .card-type {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.18em 0.6em;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-type.web {
+    color: #5fb89a;
+    border: 1px solid rgba(95, 184, 154, 0.3);
+  }
+  .card-type.package {
+    color: var(--color-accent);
+    border: 1px solid rgba(124, 109, 250, 0.35);
+  }
+
+  .card-desc {
+    font-size: 0.84rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    margin: 0;
+    flex: 1;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    margin-top: 0.25rem;
+    transition: color 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .project-card:hover .card-link {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 480px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

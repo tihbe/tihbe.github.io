@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+import PubRow from '../components/PubRow.astro';
+
+const publications = [
+  {
+    year: 2026,
+    authors: 'Garg, N., Balafrej, I., Palhares, J., Begon-Lours, L., Florini, D., Falcone, D., Stecconi, T., Bragaglia, V., Offrein, B., Portal, J.-M., Querlioz, D., Beilliard, Y., Drouin, D., Alibart, F.',
+    title: 'Unsupervised local learning based on voltage-dependent synaptic plasticity for resistive and ferroelectric synapses.',
+    venue: 'Communications Materials 7, 19 (2026)',
+    doi: '10.1038/s43246-025-01033-5',
+  },
+  {
+    year: 2025,
+    authors: 'Balafrej, I., Bahadi, S., Rouat, J., Alibart, F.',
+    title: 'Enhancing Temporal Learning in Recurrent Spiking Networks for Neuromorphic Applications.',
+    venue: 'Neuromorphic Computing and Engineering (2025)',
+    doi: '10.1088/2634-4386/add293',
+  },
+  {
+    year: 2024,
+    authors: 'Balafrej, I., Dahmane, M.',
+    title: 'Enhancing Practicality and Efficiency of Deepfake Detection.',
+    venue: 'Scientific Reports (2024)',
+    doi: '10.1038/s41598-024-82223-y',
+  },
+  {
+    year: 2023,
+    authors: 'Balafrej, I., Janzakova, K., Kumar, A., Garg, N., Scholaert, C., Rouat, J., Drouin, D., Coffinier, Y., Pecqueur, S., Alibart, F.',
+    title: 'Structural Plasticity for Neuromorphic Networks with Electropolymerized Dendritic PEDOT Connections.',
+    venue: 'Nature Communications (2023)',
+    doi: '10.1038/s41467-023-43887-8',
+  },
+  {
+    year: 2023,
+    authors: 'Goupy, G., Juneau-Fecteau, A., Garg, N., Balafrej, I., Alibart, F., Frechette, L., Drouin, D., Beilliard, Y.',
+    title: 'Unsupervised and efficient learning in sparsely activated convolutional spiking neural networks enabled by voltage-dependent synaptic plasticity.',
+    venue: 'Neuromorphic Computing and Engineering (2023)',
+    doi: '10.1088/2634-4386/acad98',
+  },
+  {
+    year: 2022,
+    authors: 'Garg, N., Balafrej, I., Stewart, C. T., Portal, J.-M., Bocquet, M., Querlioz, D., Drouin, D., Rouat, J., Beilliard, Y., Alibart, F.',
+    title: 'Voltage-Dependent Synaptic Plasticity (VDSP): Unsupervised probabilistic Hebbian plasticity rule based on neurons membrane potential.',
+    venue: 'Frontiers in Neuroscience (2022)',
+    doi: '10.3389/fnins.2022.983950',
+  },
+  {
+    year: 2022,
+    authors: 'Balafrej, I., Alibart, F., Rouat, J.',
+    title: 'P-CRITICAL: a reservoir autoregulation plasticity rule for neuromorphic hardware.',
+    venue: 'Neuromorphic Computing and Engineering (2022)',
+    doi: '10.1088/2634-4386/ac6533',
+  },
+  {
+    year: 2021,
+    authors: 'Garg, N., Balafrej, I., Beilliard, Y., Drouin, D., Alibart, F., Rouat, J.',
+    title: 'Signals to Spikes for Neuromorphic Regulated Reservoir Computing and EMG Hand Gesture Recognition.',
+    venue: 'International Conference on Neuromorphic Systems (ICONS 2021), ACM',
+    doi: '10.1145/3477145.3477267',
+  },
+  {
+    year: 2020,
+    authors: 'Celotti, L., Balafrej, I., Calvet, E.',
+    title: 'Improving Zero-Shot Neural Architecture Search with Parameters Scoring.',
+    venue: '(2020)',
+    doi: undefined,
+  },
+];
+
+type Pub = typeof publications[0];
+const byYear = publications.reduce<Record<number, Pub[]>>((acc, pub) => {
+  (acc[pub.year] ??= []).push(pub);
+  return acc;
+}, {});
+const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+
+const presentations = [
+  { year: 2022, text: 'Garg, N., Balafrej, I., et al. Unsupervised Learning with Ferroelectric Synapses. IEEE 52nd European Solid-State Device Research Conference (2022).' },
+  { year: 2021, text: 'Balafrej, I., Alibart, F., Rouat, J. Neuromorphic Reservoirs for Energy-Efficient Task-Abstract Machine Learning Devices. Neural Interfaces and Systems Symposium (2021).' },
+  { year: 2021, text: 'Balafrej, I. Building hardware-friendly models for neuromorphic engineering. Workshop at the University of Montreal (2021).' },
+  { year: 2021, text: 'Garg, N., Balafrej, I., et al. Signals to Spikes for Neuromorphic Regulated Reservoir Computing. ICONS 2021, ACM.', doi: '10.1145/3477145.3477267' },
+  { year: 2020, text: 'Balafrej, I., Rouat, J. P-CRITICAL: A Reservoir Autoregulation Plasticity Rule Designed for Loihi. Intel Neuromorphic Research Community Forum (2020).' },
+  { year: 2019, text: 'Balafrej, I., Rouat, J. Running the CRITICAL Plasticity Rule for Loihi. 3rd Intel Neuromorphic Research Community Workshop, Austria (2019).' },
+  { year: 2018, text: 'Tremblay, J.P., Balafrej, I., et al. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. NeurIPS 2018, Demonstration track.' },
+];
+---
+
+<Base
+  title="Publications"
+  description="Academic publications by Ismael Balafrej — neuromorphic computing, ML, spiking neural networks."
+>
+  <div class="pub-page">
+    <header class="page-header reveal">
+      <h1>Publications</h1>
+      <p>
+        Also indexed on{' '}
+        <a href="https://scholar.google.com/citations?user=PAuRZWgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+        {' '}and{' '}
+        <a href="https://www.semanticscholar.org/author/Ismael-Balafrej/1942665571" target="_blank" rel="noopener noreferrer">Semantic Scholar</a>.
+      </p>
+    </header>
+
+    <section class="pub-section">
+      {years.map(year => (
+        <div class="year-group">
+          {byYear[year].map(pub => (
+            <PubRow
+              authors={pub.authors}
+              title={pub.title}
+              venue={pub.venue}
+              year={pub.year}
+              doi={pub.doi}
+            />
+          ))}
+        </div>
+      ))}
+    </section>
+
+    <section class="presentations-section">
+      <h2 class="reveal">Presentations</h2>
+      <ul class="presentation-list">
+        {presentations.map(p => (
+          <li class="reveal">
+            <span class="pres-year">{p.year}</span>
+            <span class="pres-text" set:html={p.text.replace(/Balafrej, I\.?/g, '<strong>Balafrej, I.</strong>')} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .pub-page {
+    max-width: 860px;
+    margin-inline: auto;
+    padding: 5rem 1.5rem 6rem;
+  }
+
+  .page-header {
+    margin-bottom: 3.5rem;
+  }
+  .page-header h1 { margin-bottom: 0.6rem; }
+  .page-header p { color: var(--color-muted); }
+
+  .year-group {
+    margin-bottom: 0.5rem;
+  }
+
+  .year-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+    padding: 1.5rem 0 0.6rem;
+    border-top: 1px solid var(--color-rule);
+    margin-top: 1rem;
+  }
+
+  .year-pubs {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .presentations-section {
+    margin-top: 4rem;
+    padding-top: 0.5rem;
+  }
+
+  .presentations-section h2 {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 1.5rem;
+  }
+
+  .presentation-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .presentation-list li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .pres-year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    padding-top: 0.1rem;
+  }
+
+  .pres-text {
+    color: var(--color-muted);
+  }
+
+  .pres-text :global(strong) {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+</style>

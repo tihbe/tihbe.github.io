@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0c;
+  --color-surface: #111114;
+  --color-text: #e2ddd4;
+  --color-muted: #6b6660;
+  --color-accent: #7c6dfa;
+  --color-rule: rgba(255, 255, 255, 0.07);
+
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0;
+}
+
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+h3 { font-size: clamp(1.15rem, 2.5vw, 1.5rem); }
+
+p {
+  line-height: 1.75;
+  margin: 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: 2.5rem 0;
+}
+
+pre,
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+pre {
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  line-height: 1.65;
+}
+
+:not(pre) > code {
+  background: var(--color-surface);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  border: 1px solid var(--color-rule);
+}
+
+/* Prose container */
+.prose {
+  max-width: 68ch;
+}
+
+.prose > * + * {
+  margin-top: 1.5rem;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  line-height: 1.75;
+}
+
+.prose li + li {
+  margin-top: 0.4rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1.25rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.prose img {
+  border-radius: 6px;
+  border: 1px solid var(--color-rule);
+  margin: 2rem auto;
+  display: block;
+}
+
+.prose figure {
+  margin: 2.5rem 0;
+}
+
+.prose figcaption {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.prose pre {
+  margin: 1.75rem 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-rule);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.prose td {
+  color: var(--color-muted);
+}
+
+/* KaTeX override for dark mode */
+.katex {
+  color: var(--color-text);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tag pill */
+.tag-pill {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  border: 1px solid rgba(124, 109, 250, 0.4);
+  padding: 0.15em 0.6em;
+  border-radius: 3px;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+}

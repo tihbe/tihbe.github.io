@@ -1,0 +1,42 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-name">Ismael Balafrej</span>
+    <span class="sep">&mdash;</span>
+    <span class="footer-year">{year}</span>
+    <span class="sep">&mdash;</span>
+    <a href="/rss.xml" class="footer-rss">RSS</a>
+    <span class="sep">&mdash;</span>
+    <a href="https://github.com/tihbe" target="_blank" rel="noopener noreferrer" class="footer-ext">GitHub</a>
+    <a href="https://scholar.google.com/citations?user=PAuRZWgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="footer-ext">Scholar</a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-rule);
+    padding: 1.75rem 1.5rem;
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+  }
+
+  .footer-name { color: var(--color-text); }
+  .sep { opacity: 0.35; }
+  .footer-rss { color: var(--color-accent); }
+  .footer-rss:hover, .footer-ext:hover { opacity: 0.8; text-decoration: none; }
+  .footer-ext { color: var(--color-muted); }
+</style>
