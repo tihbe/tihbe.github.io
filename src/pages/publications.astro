@@ -68,18 +68,11 @@ const publications = [
   },
 ];
 
-type Pub = typeof publications[0];
-const byYear = publications.reduce<Record<number, Pub[]>>((acc, pub) => {
-  (acc[pub.year] ??= []).push(pub);
-  return acc;
-}, {});
-const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
-
 const presentations = [
   { year: 2022, text: 'Garg, N., Balafrej, I., et al. Unsupervised Learning with Ferroelectric Synapses. IEEE 52nd European Solid-State Device Research Conference (2022).' },
   { year: 2021, text: 'Balafrej, I., Alibart, F., Rouat, J. Neuromorphic Reservoirs for Energy-Efficient Task-Abstract Machine Learning Devices. Neural Interfaces and Systems Symposium (2021).' },
   { year: 2021, text: 'Balafrej, I. Building hardware-friendly models for neuromorphic engineering. Workshop at the University of Montreal (2021).' },
-  { year: 2021, text: 'Garg, N., Balafrej, I., et al. Signals to Spikes for Neuromorphic Regulated Reservoir Computing. ICONS 2021, ACM.', doi: '10.1145/3477145.3477267' },
+  { year: 2021, text: 'Garg, N., Balafrej, I., et al. Signals to Spikes for Neuromorphic Regulated Reservoir Computing. ICONS 2021, ACM.' },
   { year: 2020, text: 'Balafrej, I., Rouat, J. P-CRITICAL: A Reservoir Autoregulation Plasticity Rule Designed for Loihi. Intel Neuromorphic Research Community Forum (2020).' },
   { year: 2019, text: 'Balafrej, I., Rouat, J. Running the CRITICAL Plasticity Rule for Loihi. 3rd Intel Neuromorphic Research Community Workshop, Austria (2019).' },
   { year: 2018, text: 'Tremblay, J.P., Balafrej, I., et al. A Cooperative Visually Grounded Dialogue Game with a Humanoid Robot. NeurIPS 2018, Demonstration track.' },
@@ -90,8 +83,8 @@ const presentations = [
   title="Publications"
   description="Academic publications by Ismael Balafrej — neuromorphic computing, ML, spiking neural networks."
 >
-  <div class="pub-page">
-    <header class="page-header reveal">
+  <article class="pub-page">
+    <header class="page-head">
       <h1>Publications</h1>
       <p>
         Also indexed on{' '}
@@ -102,112 +95,121 @@ const presentations = [
     </header>
 
     <section class="pub-section">
-      {years.map(year => (
-        <div class="year-group">
-          {byYear[year].map(pub => (
-            <PubRow
-              authors={pub.authors}
-              title={pub.title}
-              venue={pub.venue}
-              year={pub.year}
-              doi={pub.doi}
-            />
-          ))}
-        </div>
+      {publications.map(pub => (
+        <PubRow
+          authors={pub.authors}
+          title={pub.title}
+          venue={pub.venue}
+          year={pub.year}
+          doi={pub.doi}
+        />
       ))}
     </section>
 
-    <section class="presentations-section">
-      <h2 class="reveal">Presentations</h2>
-      <ul class="presentation-list">
+    <section class="pres-section">
+      <h2>Presentations</h2>
+      <ul class="pres-list">
         {presentations.map(p => (
-          <li class="reveal">
+          <li>
             <span class="pres-year">{p.year}</span>
-            <span class="pres-text" set:html={p.text.replace(/Balafrej, I\.?/g, '<strong>Balafrej, I.</strong>')} />
+            <span
+              class="pres-text"
+              set:html={p.text.replace(/Balafrej, I\.?/g, '<strong>Balafrej, I.</strong>')}
+            />
           </li>
         ))}
       </ul>
     </section>
-  </div>
+  </article>
 </Base>
 
 <style>
   .pub-page {
-    max-width: 860px;
+    max-width: 900px;
     margin-inline: auto;
-    padding: 5rem 1.5rem 6rem;
+    padding: var(--space-2xl) var(--space-md) var(--space-3xl);
   }
 
-  .page-header {
-    margin-bottom: 3.5rem;
+  .page-head {
+    margin-bottom: var(--space-2xl);
+    max-width: 60ch;
   }
-  .page-header h1 { margin-bottom: 0.6rem; }
-  .page-header p { color: var(--color-muted); }
-
-  .year-group {
-    margin-bottom: 0.5rem;
+  .page-head h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--space-2xs);
   }
-
-  .year-label {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+  .page-head p {
+    color: var(--color-ink-2);
+    font-size: var(--text-md);
+    line-height: 1.55;
+  }
+  .page-head a {
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-accent-dim);
+    transition: color var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out);
+  }
+  .page-head a:hover {
     color: var(--color-accent);
-    letter-spacing: 0.1em;
-    padding: 1.5rem 0 0.6rem;
-    border-top: 1px solid var(--color-rule);
-    margin-top: 1rem;
+    border-color: var(--color-accent);
+    text-decoration: none;
   }
 
-  .year-pubs {
-    border-top: 1px solid var(--color-rule);
+  .pub-section {
+    margin-top: var(--space-lg);
   }
 
-  .presentations-section {
-    margin-top: 4rem;
-    padding-top: 0.5rem;
+  .pres-section {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-lg);
+    border-top: var(--rule-hair);
+  }
+  .pres-section h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-md);
   }
 
-  .presentations-section h2 {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--color-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    border-top: 1px solid var(--color-rule);
-    padding-top: 1.5rem;
-  }
-
-  .presentation-list {
+  .pres-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: var(--space-md);
   }
 
-  .presentation-list li {
+  .pres-list li {
     display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 1.25rem;
-    font-size: 0.875rem;
-    line-height: 1.6;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    align-items: baseline;
   }
 
   .pres-year {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-accent);
-    padding-top: 0.1rem;
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    letter-spacing: 0.01em;
   }
 
-  .pres-text {
-    color: var(--color-muted);
-  }
-
+  .pres-text { color: var(--color-ink-2); }
   .pres-text :global(strong) {
-    color: var(--color-text);
-    font-weight: 600;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .pres-list li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3xs);
+    }
   }
 </style>

@@ -7,7 +7,7 @@ interface Project {
   type: 'web' | 'package';
   url: string;
   screenshot?: string;
-  badge?: string;  // e.g. "PyPI" or "GitHub"
+  badge?: string;
   badgeUrl?: string;
 }
 
@@ -57,188 +57,199 @@ const projects: Project[] = [
     badgeUrl: 'https://github.com/tihbe/dirlog',
   },
 ];
+
+const cleanUrl = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
 ---
 
 <Base
   title="Projects"
   description="Personal projects by Ismael Balafrej — web tools, Python packages, and side experiments."
 >
-  <div class="projects-page">
-    <header class="page-header reveal">
+  <article class="projects-page">
+    <header class="page-head">
       <h1>Projects</h1>
       <p>Side projects, tools, and experiments.</p>
     </header>
 
-    <div class="projects-grid">
+    <div class="proj-list">
       {projects.map(p => (
-        <a href={p.url} target="_blank" rel="noopener noreferrer" class="project-card reveal">
-          {p.screenshot && (
-            <div class="card-screenshot">
-              <img src={p.screenshot} alt={`${p.title} screenshot`} loading="lazy" />
+        <a
+          href={p.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="proj-row"
+          data-kind={p.type}
+        >
+          <div class="proj-visual">
+            {p.screenshot ? (
+              <img src={p.screenshot} alt="" loading="lazy" />
+            ) : (
+              <div class="proj-mark" aria-hidden="true">
+                <span class="proj-mark-type">{p.badge ?? 'package'}</span>
+              </div>
+            )}
+          </div>
+
+          <div class="proj-body">
+            <div class="proj-head">
+              <h2 class="proj-title">{p.title}</h2>
+              <span class="proj-kind">{p.type === 'web' ? 'web app' : (p.badge ?? 'package').toLowerCase()}</span>
             </div>
-          )}
-          {!p.screenshot && (
-            <div class="card-icon-area">
-              <span class="card-icon-glyph">{p.title[0]}</span>
-            </div>
-          )}
-          <div class="card-body">
-            <div class="card-header-row">
-              <h2 class="card-title">{p.title}</h2>
-              <span class={`card-type ${p.type}`}>
-                {p.type === 'web' ? 'web app' : p.badge ?? 'package'}
-              </span>
-            </div>
-            <p class="card-desc">{p.description}</p>
-            <span class="card-link">
-              {p.type === 'web' ? p.url.replace('https://', '') : p.url.replace('https://', '')}
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10L10 2M10 2H5M10 2v5"/></svg>
+            <p class="proj-desc">{p.description}</p>
+            <span class="proj-url">
+              {cleanUrl(p.url)}
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 10L10 2M10 2H5M10 2v5"/></svg>
             </span>
           </div>
         </a>
       ))}
     </div>
-  </div>
+  </article>
 </Base>
 
 <style>
   .projects-page {
-    max-width: 900px;
+    max-width: 1000px;
     margin-inline: auto;
-    padding: 5rem 1.5rem 6rem;
+    padding: var(--space-2xl) var(--space-md) var(--space-3xl);
   }
 
-  .page-header {
-    margin-bottom: 3.5rem;
+  .page-head {
+    margin-bottom: var(--space-2xl);
   }
-  .page-header h1 { margin-bottom: 0.5rem; }
-  .page-header p { color: var(--color-muted); }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 1.5rem;
+  .page-head h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--space-2xs);
+  }
+  .page-head p {
+    color: var(--color-ink-2);
+    font-size: var(--text-md);
+    max-width: 48ch;
   }
 
-  .project-card {
+  .proj-list {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-rule);
-    border-radius: 6px;
-    overflow: hidden;
-    text-decoration: none;
-    background: var(--color-surface);
-    transition: border-color 0.22s, transform 0.22s;
-  }
-  .project-card:hover {
-    border-color: rgba(124, 109, 250, 0.45);
-    transform: translateY(-2px);
-    text-decoration: none;
+    border-top: var(--rule-hair);
   }
 
-  .card-screenshot {
+  .proj-row {
+    display: grid;
+    grid-template-columns: minmax(0, 44%) minmax(0, 1fr);
+    gap: var(--space-lg);
+    padding: var(--space-lg) 0;
+    border-bottom: var(--rule-hair);
+    text-decoration: none;
+    color: inherit;
+    align-items: start;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .proj-row:hover { text-decoration: none; }
+
+  .proj-visual {
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-bottom: 1px solid var(--color-rule);
-    background: #0d0d10;
+    background: var(--color-paper-2);
+    border: var(--rule-hair);
+    min-width: 0;
   }
-  .card-screenshot img {
+  .proj-visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top;
     display: block;
-    filter: brightness(0.92);
-    transition: filter 0.22s;
+    filter: saturate(0.9) brightness(0.9);
+    transition: filter var(--dur-med) var(--ease-out);
   }
-  .project-card:hover .card-screenshot img {
-    filter: brightness(1);
+  .proj-row:hover .proj-visual img {
+    filter: saturate(1) brightness(1);
   }
 
-  .card-icon-area {
-    aspect-ratio: 16 / 7;
+  .proj-mark {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0d0d10 0%, #15121f 100%);
-    border-bottom: 1px solid var(--color-rule);
+    background: var(--color-paper-2);
   }
-  .card-icon-glyph {
-    font-family: var(--font-serif);
-    font-size: 3.5rem;
-    color: var(--color-accent);
-    opacity: 0.4;
-    user-select: none;
+  .proj-mark-type {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink-3);
+    letter-spacing: 0.02em;
   }
 
-  .card-body {
-    padding: 1.25rem 1.4rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    flex: 1;
+  .proj-body {
+    min-width: 0;
+    padding-top: var(--space-3xs);
   }
 
-  .card-header-row {
+  .proj-head {
     display: flex;
     align-items: baseline;
-    gap: 0.75rem;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xs);
+    flex-wrap: wrap;
   }
 
-  .card-title {
-    font-size: 1.05rem;
-    font-family: var(--font-serif);
-    color: var(--color-text);
+  .proj-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-xl);
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
     margin: 0;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-
-  .card-type {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.18em 0.6em;
-    border-radius: 3px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .card-type.web {
-    color: #5fb89a;
-    border: 1px solid rgba(95, 184, 154, 0.3);
-  }
-  .card-type.package {
+  .proj-row:hover .proj-title {
     color: var(--color-accent);
-    border: 1px solid rgba(124, 109, 250, 0.35);
   }
 
-  .card-desc {
-    font-size: 0.84rem;
-    color: var(--color-muted);
-    line-height: 1.65;
-    margin: 0;
-    flex: 1;
+  .proj-kind {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    letter-spacing: 0.02em;
   }
 
-  .card-link {
+  .proj-desc {
+    font-size: var(--text-sm);
+    color: var(--color-ink-2);
+    line-height: 1.6;
+    margin: 0 0 var(--space-sm);
+    max-width: 56ch;
+  }
+
+  .proj-url {
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-muted);
-    margin-top: 0.25rem;
-    transition: color 0.2s;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    letter-spacing: 0.005em;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-  .project-card:hover .card-link {
+  .proj-row:hover .proj-url {
     color: var(--color-accent);
   }
+  .proj-url svg { flex-shrink: 0; }
 
-  @media (max-width: 480px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 700px) {
+    .proj-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-sm);
+    }
+    .proj-visual {
+      aspect-ratio: 16 / 9;
+    }
+    .proj-title {
+      font-size: var(--text-lg);
     }
   }
 </style>

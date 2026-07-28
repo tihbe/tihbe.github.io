@@ -8,26 +8,30 @@ interface Props {
 }
 const { data, layout = {}, dataSrc, height = 380, caption } = Astro.props;
 
+// Plotly needs literal colour strings; mirror the design.md token values.
+// paper  ≈ oklch(19% 0.006 240)  → #1a1c1f
+// ink    ≈ oklch(93% 0.010 85)   → #e8dfc9
+// rule   ≈ oklch(30% 0.005 240)  → alpha-white for axis chrome
 const base = {
-  paper_bgcolor: '#111114',
-  plot_bgcolor: '#111114',
-  font: { color: '#e2ddd4', family: 'JetBrains Mono, Fira Code, monospace', size: 12 },
+  paper_bgcolor: '#1a1c1f',
+  plot_bgcolor: '#1a1c1f',
+  font: { color: '#e8dfc9', family: 'IBM Plex Mono, ui-monospace, monospace', size: 12 },
   xaxis: {
-    gridcolor: 'rgba(255,255,255,0.07)',
-    zerolinecolor: 'rgba(255,255,255,0.10)',
-    linecolor: 'rgba(255,255,255,0.15)',
-    tickcolor: 'rgba(255,255,255,0.15)',
+    gridcolor: 'rgba(255,255,255,0.05)',
+    zerolinecolor: 'rgba(255,255,255,0.09)',
+    linecolor: 'rgba(255,255,255,0.14)',
+    tickcolor: 'rgba(255,255,255,0.14)',
   },
   yaxis: {
-    gridcolor: 'rgba(255,255,255,0.07)',
-    zerolinecolor: 'rgba(255,255,255,0.10)',
-    linecolor: 'rgba(255,255,255,0.15)',
-    tickcolor: 'rgba(255,255,255,0.15)',
+    gridcolor: 'rgba(255,255,255,0.05)',
+    zerolinecolor: 'rgba(255,255,255,0.09)',
+    linecolor: 'rgba(255,255,255,0.14)',
+    tickcolor: 'rgba(255,255,255,0.14)',
   },
   margin: { t: 40, r: 24, b: 56, l: 64 },
   legend: {
-    bgcolor: 'rgba(17,17,20,0.85)',
-    bordercolor: 'rgba(255,255,255,0.10)',
+    bgcolor: 'rgba(26,28,31,0.9)',
+    bordercolor: 'rgba(255,255,255,0.09)',
     borderwidth: 1,
   },
   height,
@@ -100,12 +104,12 @@ const inlineSpec = !dataSrc && data ? JSON.stringify({ data, layout: merged }) :
 
 <style>
   .plotly-figure {
-    margin: 1.75rem 0;
+    margin: var(--space-lg) 0;
   }
   .plotly-wrap {
     width: 100%;
-    border-radius: 6px;
+    border-radius: 2px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: var(--rule-hair);
   }
 </style>

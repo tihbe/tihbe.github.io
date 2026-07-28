@@ -5,136 +5,191 @@ const links = [
   { label: 'Projects',     href: '/projects' },
   { label: 'About',        href: '/about' },
 ];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 ---
 
-<header id="site-nav">
-  <div class="nav-inner">
-    <a href="/" class="wordmark">Ismael Balafrej</a>
+<header class="masthead">
+  <div class="mast-inner">
+    <a href="/" class="wordmark" aria-label="Ismael Balafrej — home">
+      Ismael Balafrej
+    </a>
 
-    <nav aria-label="Site navigation">
+    <nav aria-label="Primary" class="mast-nav">
       {links.map(l => (
-        <a href={l.href} class="nav-link">{l.label}</a>
+        <a
+          href={l.href}
+          class:list={['mast-link', { 'is-active': isActive(l.href) }]}
+        >
+          {l.label}
+        </a>
       ))}
     </nav>
 
-    <!-- Mobile toggle -->
-    <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
+    <button
+      id="nav-toggle"
+      class="mast-toggle"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      Menu
     </button>
   </div>
 
-  <!-- Mobile menu -->
-  <div id="mobile-menu" aria-hidden="true">
+  <div id="mobile-menu" class="mobile-menu" hidden>
     {links.map(l => (
-      <a href={l.href} class="mobile-link">{l.label}</a>
+      <a
+        href={l.href}
+        class:list={['mobile-link', { 'is-active': isActive(l.href) }]}
+      >
+        {l.label}
+      </a>
     ))}
   </div>
 </header>
 
 <style>
-  #site-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10, 10, 12, 0.88);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--color-rule);
+  .masthead {
+    background: var(--color-paper);
+    border-bottom: var(--rule-hair);
   }
 
-  .nav-inner {
-    max-width: 1100px;
+  .mast-inner {
+    max-width: 1120px;
     margin-inline: auto;
-    padding: 0 1.5rem;
-    height: 56px;
+    padding: var(--space-md) var(--space-md);
     display: flex;
-    align-items: center;
-    gap: 2rem;
+    align-items: baseline;
+    gap: var(--space-md);
   }
 
   .wordmark {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    color: var(--color-text);
-    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-md);
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
     margin-right: auto;
-    letter-spacing: 0.01em;
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
   }
-  .wordmark:hover { text-decoration: none; opacity: 0.85; }
+  .wordmark:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
 
-  nav {
+  .mast-nav {
     display: flex;
-    gap: 1.75rem;
+    gap: var(--space-md);
+    align-items: baseline;
   }
 
-  .nav-link {
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    transition: color 0.2s;
+  .mast-link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-ink-2);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+    white-space: nowrap;
   }
-  .nav-link:hover { color: var(--color-text); text-decoration: none; }
+  .mast-link:hover {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .mast-link.is-active {
+    color: var(--color-ink);
+    position: relative;
+  }
+  .mast-link.is-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--color-accent);
+  }
 
-#nav-toggle {
+  .mast-toggle {
     display: none;
-    flex-direction: column;
-    gap: 5px;
     background: none;
     border: none;
+    color: var(--color-ink-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
     cursor: pointer;
-    padding: 6px;
-    margin-right: -6px;
+    padding: var(--space-2xs) var(--space-xs);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-input);
+  }
+  .mast-toggle:hover {
+    color: var(--color-ink);
+    border-color: var(--color-ink-3);
   }
 
-  .burger-line {
-    display: block;
-    width: 20px;
-    height: 1.5px;
-    background: var(--color-text);
-    transition: transform 0.25s, opacity 0.25s;
-  }
-
-  #mobile-menu {
+  .mobile-menu {
     display: none;
     flex-direction: column;
-    padding: 1rem 1.5rem 1.5rem;
-    gap: 1.25rem;
-    border-top: 1px solid var(--color-rule);
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    gap: var(--space-2xs);
+    border-top: var(--rule-hair);
   }
-
-  #mobile-menu.open {
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu.open {
     display: flex;
   }
 
   .mobile-link {
-    font-size: 1.1rem;
-    color: var(--color-text);
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-lg);
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    padding: var(--space-2xs) 0;
+    text-decoration: none;
+  }
+  .mobile-link.is-active {
+    color: var(--color-accent);
   }
 
-  @media (max-width: 700px) {
-    nav, .social-links { display: none; }
-    #nav-toggle { display: flex; }
+  @media (max-width: 640px) {
+    .mast-inner {
+      padding: var(--space-sm) var(--space-md);
+    }
+    .mast-nav { display: none; }
+    .mast-toggle { display: inline-block; }
+    .wordmark { font-size: var(--text-md); }
   }
 </style>
 
 <script>
-const toggle = document.getElementById('nav-toggle');
-const menu   = document.getElementById('mobile-menu');
+  function bindMenu() {
+    const toggle = document.getElementById('nav-toggle');
+    const menu   = document.getElementById('mobile-menu');
+    if (!toggle || !menu || toggle.dataset.bound) return;
+    toggle.dataset.bound = '1';
 
-toggle?.addEventListener('click', () => {
-  const open = menu?.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
-  menu?.setAttribute('aria-hidden', String(!open));
-});
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle('open', open);
+      menu.toggleAttribute('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Close' : 'Menu';
+    };
 
-menu?.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    menu.classList.remove('open');
-    toggle?.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-  });
-});
+    toggle.addEventListener('click', () => {
+      setOpen(!menu.classList.contains('open'));
+    });
+
+    menu.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => setOpen(false))
+    );
+  }
+
+  document.addEventListener('astro:page-load', bindMenu);
 </script>

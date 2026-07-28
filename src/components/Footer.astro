@@ -2,33 +2,47 @@
 const year = new Date().getFullYear();
 ---
 
-<footer>
-  <div class="footer-inner">
-    <span class="footer-name">Ismael Balafrej</span>
-    <span class="sep">&mdash;</span>
-    <span class="footer-year">{year}</span>
+<footer class="site-foot">
+  <div class="foot-inner">
+    <a href="/" class="foot-name">Ismael Balafrej</a>
+    <span class="foot-year">{year}</span>
   </div>
 </footer>
 
 <style>
-  footer {
-    border-top: 1px solid var(--color-rule);
-    padding: 1.75rem 1.5rem;
-    margin-top: auto;
+  .site-foot {
+    border-top: var(--rule-hair);
+    padding: var(--space-lg) var(--space-md);
+    margin-top: var(--space-3xl);
   }
 
-  .footer-inner {
-    max-width: 1100px;
+  .foot-inner {
+    max-width: 1120px;
     margin-inline: auto;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
-    font-size: 0.78rem;
-    font-family: var(--font-mono);
-    color: var(--color-muted);
+    gap: var(--space-sm);
   }
 
-  .footer-name { color: var(--color-text); }
-  .sep { opacity: 0.35; }
+  .foot-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: -0.005em;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .foot-name:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .foot-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    letter-spacing: 0.02em;
+  }
 </style>

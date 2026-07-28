@@ -7,7 +7,7 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', p => !p.data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 6);
+  .slice(0, 4);
 
 const selectedPubs = [
   {
@@ -36,65 +36,58 @@ const selectedPubs = [
 
 <Base title="Ismael Balafrej" description="ML researcher & engineer. PhD in neuromorphic computing. Montreal.">
 
-  <!-- Hero -->
   <section class="hero">
     <ShaderCanvas />
+    <div class="hero-scrim" aria-hidden="true"></div>
     <div class="hero-content">
-      <h1>Ismael Balafrej</h1>
+      <h1 class="hero-name">Ismael Balafrej</h1>
       <p class="hero-tagline">
         I work on machine learning across the compute spectrum,<br />
-        from neuromorphic chips to large-scale training. Based in Montreal.
+        from neuromorphic hardware to large-scale training. Based in Montreal.
       </p>
-      <div class="hero-actions">
-        <a href="/blog" class="btn-primary">Read the blog</a>
-        <a href="/publications" class="btn-secondary">Publications</a>
-      </div>
-    </div>
-    <a href="#latest" class="scroll-hint" aria-label="Scroll down">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M8 3 L8 13 M4 9 L8 13 L12 9" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </section>
-
-  <!-- Recent posts -->
-  <section id="latest" class="section">
-    <div class="section-inner">
-      <div class="section-header reveal">
-        <h2>Recent posts</h2>
-        <a href="/blog" class="see-all">All posts →</a>
-      </div>
-      <div class="post-grid">
-        {posts.map(p => (
-          <PostCard
-            title={p.data.title}
-            description={p.data.description}
-            date={p.data.date}
-            slug={p.id}
-            tags={p.data.tags}
-          />
-        ))}
-      </div>
+      <ul class="hero-actions">
+        <li><a href="/blog" class="link-cta">Read the blog</a></li>
+        <li><a href="/publications" class="link-cta">Publications</a></li>
+      </ul>
     </div>
   </section>
 
-  <!-- Selected publications -->
-  <section class="section section-pubs">
-    <div class="section-inner section-inner--narrow">
-      <div class="section-header reveal">
-        <h2>Recent publications</h2>
-        <a href="/publications" class="see-all">All papers →</a>
+  <section class="split">
+    <div class="split-inner">
+      <div class="split-col">
+        <div class="col-head">
+          <h2>Recent posts</h2>
+          <a href="/blog" class="col-more">All posts →</a>
+        </div>
+        <div class="col-list">
+          {posts.map(p => (
+            <PostCard
+              title={p.data.title}
+              description={p.data.description}
+              date={p.data.date}
+              slug={p.id}
+              tags={p.data.tags}
+            />
+          ))}
+        </div>
       </div>
-      <div class="pub-list">
-        {selectedPubs.map(p => (
-          <PubRow
-            authors={p.authors}
-            title={p.title}
-            venue={p.venue}
-            year={p.year}
-            doi={p.doi}
-          />
-        ))}
+
+      <div class="split-col">
+        <div class="col-head">
+          <h2>Recent publications</h2>
+          <a href="/publications" class="col-more">All papers →</a>
+        </div>
+        <div class="col-list">
+          {selectedPubs.map(p => (
+            <PubRow
+              authors={p.authors}
+              title={p.title}
+              venue={p.venue}
+              year={p.year}
+              doi={p.doi}
+            />
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -104,130 +97,132 @@ const selectedPubs = [
 <style>
   .hero {
     position: relative;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: min(100svh, 780px);
+    min-height: 520px;
     overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    isolation: isolate;
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        to top,
+        color-mix(in oklch, var(--color-paper) 92%, transparent) 0%,
+        color-mix(in oklch, var(--color-paper) 65%, transparent) 35%,
+        transparent 70%
+      );
+    pointer-events: none;
   }
 
   .hero-content {
     position: relative;
-    z-index: 10;
-    text-align: center;
-    padding: 2rem 1.5rem;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-
-  .hero-content h1 {
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 40px rgba(0,0,0,0.8);
-  }
-
-  .hero-tagline {
-    color: var(--color-muted);
-    font-size: 1rem;
-    line-height: 1.75;
-    margin-bottom: 2rem;
-    text-shadow: 0 1px 20px rgba(0,0,0,0.9);
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .btn-primary {
-    background: var(--color-accent);
-    color: #fff;
-    padding: 0.6em 1.4em;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .btn-primary:hover { opacity: 0.87; transform: translateY(-1px); text-decoration: none; }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--color-rule);
-    color: var(--color-text);
-    padding: 0.6em 1.4em;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: border-color 0.2s, transform 0.2s;
-    backdrop-filter: blur(6px);
-  }
-  .btn-secondary:hover { border-color: var(--color-muted); transform: translateY(-1px); text-decoration: none; }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    color: var(--color-muted);
-    animation: bounce 2.5s ease-in-out infinite;
-    text-decoration: none;
-  }
-  .scroll-hint:hover { text-decoration: none; }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%       { transform: translateX(-50%) translateY(6px); }
-  }
-
-  .section {
-    padding: 5rem 1.5rem;
-  }
-
-  .section-pubs {
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-rule);
-  }
-
-  .section-inner {
-    max-width: 1100px;
+    z-index: 2;
+    max-width: 720px;
+    padding: var(--space-2xl) var(--space-md) var(--space-2xl);
+    width: 100%;
     margin-inline: auto;
   }
 
-  .section-inner--narrow {
-    max-width: 860px;
+  .hero-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-display);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-md);
+    max-width: 14ch;
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
 
-  .section-header {
+  .hero-tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    max-width: 46ch;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .hero-actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    align-items: flex-start;
+  }
+
+  .split {
+    padding: var(--space-2xl) var(--space-md) var(--space-xl);
+  }
+
+  .split-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
+  }
+
+  .split-col {
+    min-width: 0;
+  }
+
+  .col-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
-  .see-all {
-    font-size: 0.8rem;
+  .col-head h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-xl);
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+
+  .col-more {
     font-family: var(--font-mono);
-    color: var(--color-muted);
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    text-decoration: none;
+    letter-spacing: 0.01em;
     white-space: nowrap;
-    transition: color 0.2s;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .col-more:hover {
+    color: var(--color-accent);
     text-decoration: none;
   }
-  .see-all:hover { color: var(--color-accent); text-decoration: none; }
 
-  .post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
+  @media (max-width: 900px) {
+    .split-inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
   }
 
-  .pub-list {
-    border-top: 1px solid var(--color-rule);
+  @media (max-width: 640px) {
+    .hero {
+      min-height: 460px;
+    }
+    .hero-content {
+      padding: var(--space-xl) var(--space-md);
+    }
+    .split {
+      padding: var(--space-xl) var(--space-md);
+    }
   }
 </style>

@@ -8,14 +8,16 @@ const posts = (await getCollection('blog', p => !p.data.draft))
 ---
 
 <Base title="Blog" description="Posts on machine learning, neuromorphic computing, and data science by Ismael Balafrej.">
-  <div class="blog-page">
-    <header class="page-header reveal">
+  <article class="blog-page">
+    <header class="page-head">
       <h1>Blog</h1>
-      <p>Machine learning, neuromorphic computing, data science.</p>
-      <a href="/rss.xml" class="rss-btn">RSS feed</a>
+      <p>
+        Machine learning, neuromorphic computing, data science.
+        <a href="/rss.xml" class="rss">RSS feed</a>
+      </p>
     </header>
 
-    <div class="post-grid">
+    <div class="post-list">
       {posts.map(p => (
         <PostCard
           title={p.data.title}
@@ -26,47 +28,49 @@ const posts = (await getCollection('blog', p => !p.data.draft))
         />
       ))}
     </div>
-  </div>
+  </article>
 </Base>
 
 <style>
   .blog-page {
-    max-width: 1100px;
+    max-width: 900px;
     margin-inline: auto;
-    padding: 5rem 1.5rem 6rem;
+    padding: var(--space-2xl) var(--space-md) var(--space-3xl);
   }
 
-  .page-header {
-    margin-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+  .page-head {
+    margin-bottom: var(--space-xl);
+    max-width: 60ch;
+  }
+  .page-head h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--space-2xs);
+  }
+  .page-head p {
+    color: var(--color-ink-2);
+    font-size: var(--text-md);
+    line-height: 1.55;
   }
 
-  .page-header h1 { margin-bottom: 0.15rem; }
-
-  .page-header p {
-    color: var(--color-muted);
-    font-size: 1rem;
-  }
-
-  .rss-btn {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
+  .rss {
     font-family: var(--font-mono);
-    color: var(--color-muted);
-    border: 1px solid var(--color-rule);
-    padding: 0.25em 0.75em;
-    border-radius: 4px;
-    transition: color 0.2s, border-color 0.2s;
+    font-size: var(--text-xs);
+    color: var(--color-ink-3);
+    margin-left: var(--space-2xs);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .rss:hover {
+    color: var(--color-accent);
     text-decoration: none;
   }
-  .rss-btn:hover { color: var(--color-accent); border-color: rgba(124,109,250,0.4); text-decoration: none; }
 
-  .post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
+  .post-list {
+    display: flex;
+    flex-direction: column;
   }
 </style>
